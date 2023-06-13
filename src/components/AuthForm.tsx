@@ -21,8 +21,8 @@ const AuthForm = () => {
   const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user.profile === null) {
-      navigate("/");
+    if (user.profile) {
+      navigate("/me");
     }
   }, [navigate, user]);
 
@@ -64,12 +64,10 @@ const AuthForm = () => {
     if (variant === "LOGIN") {
       try {
         const token = await axios.post(
-          "http://localhost:3001/api/users/login",
-          data
+          "http://localhost:3001/api/auth/login",
+          data,
+          { withCredentials: true }
         );
-
-        // set Cookie here
-
         dispatch(logIn(token.data));
         toast.success("Sesión iniciada!");
         navigate("/me");
