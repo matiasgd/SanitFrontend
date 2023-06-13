@@ -3,13 +3,13 @@ import { useState, useCallback, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "../commons/Input";
 import Button from "../commons/Button";
-import { toast } from "react-hot-toast";
+import customMessage from "../commons/customMessage";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { logIn } from "../store/user";
-import logo from "/logo.jpeg";
+import logo from "/logo.png";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -55,7 +55,8 @@ const AuthForm = () => {
     //       .post("/api/register", data)
     //       .then(() => {
     //         signIn("credentials", data);
-    //         toast.success("Cuenta creada!");
+    //         customMessage("success", "Cuenta creada!");
+    //         setVariant("LOGIN")
     //       })
     //       .catch(() => toast.error("Algo salió mal, intente más tarde."))
     //       .finally(() => setLoading(false));
@@ -69,10 +70,10 @@ const AuthForm = () => {
           { withCredentials: true }
         );
         dispatch(logIn(token.data));
-        toast.success("Sesión iniciada!");
+        customMessage("success", "Sesión iniciada!");
         navigate("/me");
       } catch (error) {
-        toast.error("Credenciales Inválidas");
+        customMessage("error", "Credenciales Inválidas");
       } finally {
         setLoading(false);
       }
@@ -80,77 +81,88 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 md:px-7 lg:px-8 bg-gray-200">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img src={logo} alt="logo" className="mx-auto w-auto h-20 rounded-lg" />
-      </div>
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
-          <h2 className="mb-8 text-center text-3xl font-bold tracking-tight text-gray-800">
-            Ingresar
-          </h2>
-          <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-            {variant === "REGISTER" && (
+    <div className="relative">
+      <div className="absolute top-0 right-0 w-[20vh] h-[10vh] sm:w-[25vh] sm:h-[15vh] md:w-[35vh] md:h-[25vh] lg:w-[45vh] lg:h-[35vh] bg-[#EB6350] rounded-bl-[75vh] z-20" />
+      <div className="absolute w-full h-[5vh] sm:h-[10vh] md:h-[20vh] lg:h-[30vh] bg-[#2AAAE1] z-10" />
+      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 md:px-7 lg:px-8 bg-[#154E64]">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md z-30">
+          <img
+            src={logo}
+            alt="logo"
+            className="mx-auto w-auto h-20 rounded-lg"
+          />
+        </div>
+        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md z-30">
+          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+            <h2 className="mb-8 text-center text-3xl font-bold tracking-tight text-gray-800">
+              {variant === "REGISTER" ? "Registrarse" : "Ingresar"}
+            </h2>
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+              {variant === "REGISTER" && (
+                <Input
+                  id="name"
+                  label="Nombre"
+                  register={register}
+                  errors={errors}
+                  disabled={loading}
+                />
+              )}
               <Input
-                id="name"
-                label="Nombre"
+                id="email"
+                label="Email"
+                type="email"
                 register={register}
                 errors={errors}
                 disabled={loading}
               />
-            )}
-            <Input
-              id="email"
-              label="Email"
-              type="email"
-              register={register}
-              errors={errors}
-              disabled={loading}
-            />
-            <Input
-              id="password"
-              label="Contraseña"
-              type="password"
-              register={register}
-              errors={errors}
-              disabled={loading}
-            />
-            <div>
-              <Button disabled={loading} fullWidth type="submit">
-                {variant === "LOGIN" ? "Iniciar Sesión" : "Registrarse"}
-              </Button>
-            </div>
-          </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="bg-white px-2 text-gray-500" />
-              </div>
-            </div>
-            <div className="mt-6 flex relative justify-center">
-              <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
-                }}
-                onError={() => {
-                  toast.error("Google login failed, try later");
-                }}
+              <Input
+                id="password"
+                label="Contraseña"
+                type="password"
+                register={register}
+                errors={errors}
+                disabled={loading}
               />
-            </div>
-          </div>
+              <div>
+                <Button disabled={loading} fullWidth type="submit">
+                  {variant === "LOGIN" ? "Iniciar Sesión" : "Registrarse"}
+                </Button>
+              </div>
+            </form>
 
-          <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
-            <div>
-              {variant === "LOGIN"
-                ? "No tienes una cuenta?"
-                : "Ya tienes tu cuenta?"}
+            <div className="mt-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300" />
+                </div>
+                <div className="relative flex justify-center text-sm">
+                  <span className="bg-white px-2 text-gray-500" />
+                </div>
+              </div>
+              <div className="mt-6 flex relative justify-center">
+                <GoogleLogin
+                  onSuccess={(credentialResponse) => {
+                    console.log(credentialResponse);
+                  }}
+                  onError={() => {
+                    customMessage(
+                      "error",
+                      "Inicio de sesión de Google fallido."
+                    );
+                  }}
+                />
+              </div>
             </div>
-            <div onClick={toggleVariant} className="underline cursor-pointer">
-              {variant === "LOGIN" ? "Crear cuenta" : "Iniciar sesión"}
+
+            <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
+              <div>
+                {variant === "LOGIN"
+                  ? "No tienes una cuenta?"
+                  : "Ya tienes tu cuenta?"}
+              </div>
+              <div onClick={toggleVariant} className="underline cursor-pointer">
+                {variant === "LOGIN" ? "Crear cuenta" : "Iniciar sesión"}
+              </div>
             </div>
           </div>
         </div>
@@ -160,3 +172,8 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+
+/**
+ * <div className="w-full h-full bg-white z-40">
+      <div className="bg-red-500 w-[150px] h-[150px]  z-50"></div>
+ */

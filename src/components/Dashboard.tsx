@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 import { logOut } from "../store/user";
-import { toast } from "react-hot-toast";
+import customMessage from "../commons/customMessage";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
 
   useEffect(() => {
     if (user?.profile === null) {
@@ -24,7 +23,7 @@ const Dashboard = () => {
     try {
       await axios.post("http://localhost:3001/api/auth/logout");
       dispatch(logOut());
-      toast.success("Sesión Finalizada.");
+      customMessage("success", "Sesión finalizada, hasta la próxima!");
       document.cookie =
         "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       navigate("/");
