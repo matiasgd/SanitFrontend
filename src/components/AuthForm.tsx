@@ -40,9 +40,9 @@ const AuthForm = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
+      repeatPassword: "",
     },
   });
 
@@ -50,17 +50,27 @@ const AuthForm = () => {
     setLoading(true);
 
     // New User
-    //   if (variant === "REGISTER") {
-    //     axios
-    //       .post("/api/register", data)
-    //       .then(() => {
-    //         signIn("credentials", data);
-    //         customMessage("success", "Cuenta creada!");
-    //         setVariant("LOGIN")
-    //       })
-    //       .catch(() => toast.error("Algo salió mal, intente más tarde."))
-    //       .finally(() => setLoading(false));
-    //   }
+    if (variant === "REGISTER") {
+      if (data.password !== data.repeatPassword) {
+        customMessage("error", "Las contraseñas no coinciden.");
+        setLoading(false);
+        return;
+      }
+      console.log("DATAAAAAAAAAA", data);
+
+      axios
+        .post("http://localhost:3001/api/users/new", data)
+        .then(() => {
+          customMessage("success", "Cuenta creada!");
+          setVariant("LOGIN");
+        })
+        .catch((error: any) => {
+          console.log(error.message);
+          customMessage("error", "Algo salió mal, intente nuevamente.");
+        })
+        .finally(() => setLoading(false));
+    }
+
     // Login User
     if (variant === "LOGIN") {
       try {
@@ -72,7 +82,7 @@ const AuthForm = () => {
         dispatch(logIn(token.data));
         customMessage("success", "Sesión iniciada!");
         navigate("/me");
-      } catch (error) {
+      } catch (error: any) {
         customMessage("error", "Credenciales Inválidas");
       } finally {
         setLoading(false);
@@ -98,15 +108,6 @@ const AuthForm = () => {
               {variant === "REGISTER" ? "Registrarse" : "Ingresar"}
             </h2>
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
-              {variant === "REGISTER" && (
-                <Input
-                  id="name"
-                  label="Nombre"
-                  register={register}
-                  errors={errors}
-                  disabled={loading}
-                />
-              )}
               <Input
                 id="email"
                 label="Email"
@@ -123,6 +124,16 @@ const AuthForm = () => {
                 errors={errors}
                 disabled={loading}
               />
+              {variant === "REGISTER" && (
+                <Input
+                  id="repeatPassword"
+                  label="Repetir Contraseña"
+                  type="password"
+                  register={register}
+                  errors={errors}
+                  disabled={loading}
+                />
+              )}
               <div>
                 <Button disabled={loading} fullWidth type="submit">
                   {variant === "LOGIN" ? "Iniciar Sesión" : "Registrarse"}
@@ -172,8 +183,3 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
-
-/**
- * <div className="w-full h-full bg-white z-40">
-      <div className="bg-red-500 w-[150px] h-[150px]  z-50"></div>
- */

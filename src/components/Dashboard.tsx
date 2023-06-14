@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
 import { logOut } from "../store/user";
 import customMessage from "../commons/customMessage";
+import Stepper from "./Stepper";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -33,9 +34,16 @@ const Dashboard = () => {
   };
 
   return (
-    <Button type="button" onClick={handleLogOut}>
-      Log Out
-    </Button>
+    <div>
+      <div className="flex justify-center mt-4 mb-10">
+        <Button type="button" onClick={handleLogOut}>
+          Log Out
+        </Button>
+      </div>
+      <div className="p-10">
+        <Stepper />
+      </div>
+    </div>
   );
 };
 
