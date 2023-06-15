@@ -5,6 +5,7 @@ import Input from "../commons/Input";
 import Button from "../commons/Button";
 import customMessage from "../commons/customMessage";
 import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
@@ -13,15 +14,20 @@ import logo from "/logo.png";
 
 type Variant = "LOGIN" | "REGISTER";
 
+interface DecodedToken {
+  email: string;
+  sub: string;
+}
+
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
+  let user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user.profile) {
+    if (user.profile !== null) {
       navigate("/me");
     }
   }, [navigate, user]);
@@ -42,35 +48,34 @@ const AuthForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      repeatPassword: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-
     // New User
     if (variant === "REGISTER") {
-      if (data.password !== data.repeatPassword) {
+      if (data.password !== data.confirmPassword) {
         customMessage("error", "Las contraseñas no coinciden.");
         setLoading(false);
         return;
       }
-      console.log("DATAAAAAAAAAA", data);
 
-      axios
-        .post("http://localhost:3001/api/users/new", data)
-        .then(() => {
-          customMessage("success", "Cuenta creada!");
-          setVariant("LOGIN");
-        })
-        .catch((error: any) => {
-          console.log(error.message);
-          customMessage("error", "Algo salió mal, intente nuevamente.");
-        })
-        .finally(() => setLoading(false));
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/api/users/new",
+          data
+        );
+        customMessage("success", response.data);
+        setVariant("LOGIN");
+      } catch (error: any) {
+        console.log(error);
+        customMessage("error", error?.response?.data);
+      } finally {
+        setLoading(false);
+      }
     }
-
     // Login User
     if (variant === "LOGIN") {
       try {
@@ -81,7 +86,52 @@ const AuthForm = () => {
         );
         dispatch(logIn(token.data));
         customMessage("success", "Sesión iniciada!");
-        navigate("/me");
+        user = token.data; // Triggers the useEffect
+      } catch (error: any) {
+        customMessage("error", "Credenciales Inválidas");
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    setLoading(true);
+    const decoded = jwt_decode(credentialResponse.credential) as DecodedToken;
+    // New Google User
+    if (variant === "REGISTER") {
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/api/users/new",
+          {
+            email: decoded.email,
+            password: decoded.sub,
+            confirmPassword: decoded.sub,
+          }
+        );
+        customMessage("success", response.data);
+        setVariant("LOGIN");
+      } catch (error: any) {
+        console.log(error);
+        customMessage("error", error?.response?.data);
+      } finally {
+        setLoading(false);
+      }
+    }
+    // Login Google User
+    if (variant === "LOGIN") {
+      try {
+        const token = await axios.post(
+          "http://localhost:3001/api/auth/login",
+          {
+            email: decoded.email,
+            password: decoded.sub,
+          },
+          { withCredentials: true }
+        );
+        dispatch(logIn(token.data));
+        customMessage("success", "Sesión iniciada!");
+        user = token.data; // Triggers the useEffect
       } catch (error: any) {
         customMessage("error", "Credenciales Inválidas");
       } finally {
@@ -126,7 +176,7 @@ const AuthForm = () => {
               />
               {variant === "REGISTER" && (
                 <Input
-                  id="repeatPassword"
+                  id="confirmPassword"
                   label="Repetir Contraseña"
                   type="password"
                   register={register}
@@ -153,7 +203,7 @@ const AuthForm = () => {
               <div className="mt-6 flex relative justify-center">
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
-                    console.log(credentialResponse);
+                    handleGoogleSuccess(credentialResponse);
                   }}
                   onError={() => {
                     customMessage(
