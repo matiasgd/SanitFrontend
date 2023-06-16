@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Input from "../commons/Input";
@@ -10,18 +9,26 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { logIn } from "../store/user";
 import logo from "/logo.png";
+import { handleFormLogin, handleFormRegister } from "../actions/formAuth";
+import { handleGoogleLogin, handleGoogleRegister } from "../actions/googleAuth";
 
 type Variant = "LOGIN" | "REGISTER";
+
+interface RegistrationData {
+  email: FieldValues;
+  password: FieldValues;
+  confirmPassword?: FieldValues;
+}
 
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state: RootState) => state.user);
+  let user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user.profile) {
+    if (user.profile !== null) {
       navigate("/me");
     }
   }, [navigate, user]);
@@ -42,52 +49,54 @@ const AuthForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      repeatPassword: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-
     // New User
     if (variant === "REGISTER") {
-      if (data.password !== data.repeatPassword) {
-        customMessage("error", "Las contraseñas no coinciden.");
-        setLoading(false);
-        return;
+      try {
+        await handleFormRegister(data as RegistrationData);
+        setVariant("LOGIN");
+      } catch (error: any) {
+        console.log(error);
       }
-      console.log("DATAAAAAAAAAA", data);
-
-      axios
-        .post("http://localhost:3001/api/users/new", data)
-        .then(() => {
-          customMessage("success", "Cuenta creada!");
-          setVariant("LOGIN");
-        })
-        .catch((error: any) => {
-          console.log(error.message);
-          customMessage("error", "Algo salió mal, intente nuevamente.");
-        })
-        .finally(() => setLoading(false));
     }
-
     // Login User
     if (variant === "LOGIN") {
       try {
-        const token = await axios.post(
-          "http://localhost:3001/api/auth/login",
-          data,
-          { withCredentials: true }
-        );
-        dispatch(logIn(token.data));
-        customMessage("success", "Sesión iniciada!");
-        navigate("/me");
+        const token: any = await handleFormLogin(data as RegistrationData);
+        dispatch(logIn(token));
       } catch (error: any) {
-        customMessage("error", "Credenciales Inválidas");
-      } finally {
-        setLoading(false);
+        console.log(error.message);
       }
     }
+    setLoading(false);
+  };
+
+  const handleGoogleSuccess = async (credentialResponse: any) => {
+    setLoading(true);
+    // New Google User
+    if (variant === "REGISTER") {
+      try {
+        await handleGoogleRegister(credentialResponse);
+        setVariant("LOGIN");
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
+    // Login Google User
+    if (variant === "LOGIN") {
+      try {
+        const token = await handleGoogleLogin(credentialResponse);
+        dispatch(logIn(token));
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    }
+    setLoading(false);
   };
 
   return (
@@ -126,7 +135,7 @@ const AuthForm = () => {
               />
               {variant === "REGISTER" && (
                 <Input
-                  id="repeatPassword"
+                  id="confirmPassword"
                   label="Repetir Contraseña"
                   type="password"
                   register={register}
@@ -153,7 +162,7 @@ const AuthForm = () => {
               <div className="mt-6 flex relative justify-center">
                 <GoogleLogin
                   onSuccess={(credentialResponse) => {
-                    console.log(credentialResponse);
+                    handleGoogleSuccess(credentialResponse);
                   }}
                   onError={() => {
                     customMessage(
