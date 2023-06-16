@@ -28,7 +28,7 @@ const AuthForm = () => {
   let user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user.profile !== null) {
+    if (user.profile) {
       navigate("/me");
     }
   }, [navigate, user]);
@@ -55,7 +55,6 @@ const AuthForm = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     setLoading(true);
-    // New User
     if (variant === "REGISTER") {
       try {
         await handleFormRegister(data as RegistrationData);
@@ -64,13 +63,12 @@ const AuthForm = () => {
         console.log(error);
       }
     }
-    // Login User
     if (variant === "LOGIN") {
       try {
         const token: any = await handleFormLogin(data as RegistrationData);
         dispatch(logIn(token));
       } catch (error: any) {
-        console.log(error.message);
+        console.log(error);
       }
     }
     setLoading(false);

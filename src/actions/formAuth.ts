@@ -9,36 +9,31 @@ interface RegistrationData {
 }
 
 export const handleFormRegister = async (data: RegistrationData) => {
-  // New User
   if (data.password !== data.confirmPassword) {
     customMessage("error", "Las contraseñas no coinciden.");
     return;
   }
-
-  try {
-    const response = await axios.post(
-      "http://localhost:3001/api/users/new",
-      data
-    );
-    customMessage("success", response.data.message);
-    return response;
-  } catch (error: any) {
-    console.log(error);
-    customMessage("error", error.message);
-  }
+  // New User
+  await axios
+    .post("http://localhost:3001/api/users/new", data)
+    .then((res) => {
+      customMessage("success", res?.data?.message);
+    })
+    .catch((err) => customMessage("error", err?.response?.data?.error));
 };
 
 export const handleFormLogin = async (data: RegistrationData) => {
+  let res: any;
   // Login User
-  try {
-    const token = await axios.post(
-      "http://localhost:3001/api/auth/login",
-      data,
-      { withCredentials: true }
-    );
-    customMessage("success", "Sesión iniciada!");
-    return token.data;
-  } catch (error: any) {
-    customMessage("error", "Credenciales Inválidas");
-  }
+  await axios
+    .post("http://localhost:3001/api/auth/login", data, {
+      withCredentials: true,
+    })
+    .then((token) => {
+      res = token;
+      customMessage("success", "Sesión iniciada!");
+    })
+    .catch((err) => customMessage("error", err.response.data));
+
+  return res.data;
 };

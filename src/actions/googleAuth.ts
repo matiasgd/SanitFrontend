@@ -10,19 +10,32 @@ interface DecodedToken {
 export const handleGoogleRegister = async (credentialResponse: any) => {
   const decoded = jwt_decode(credentialResponse.credential) as DecodedToken;
   // New Google User
-  try {
-    const response = await axios.post("http://localhost:3001/api/users/new", {
+  // try {
+  //   const response = await axios.post("http://localhost:3001/api/users/new", {
+  //     email: decoded.email,
+  //     password: decoded.sub,
+  //     confirmPassword: decoded.sub,
+  //   });
+  //   //customMessage("success", response.data);
+  //   console.log(response);
+
+  //   return response;
+  //   //setVariant("LOGIN");
+  // } catch (error: any) {
+  //   console.log(error);
+  //   customMessage("error", error?.response?.data);
+  // }
+
+  await axios
+    .post("http://localhost:3001/api/users/new", {
       email: decoded.email,
       password: decoded.sub,
       confirmPassword: decoded.sub,
-    });
-    customMessage("success", response.data);
-    return response;
-    //setVariant("LOGIN");
-  } catch (error: any) {
-    console.log(error);
-    customMessage("error", error?.response?.data);
-  }
+    })
+    .then((res) => {
+      customMessage("success", res?.data?.message);
+    })
+    .catch((err) => customMessage("error", err?.response?.data?.error));
 };
 
 export const handleGoogleLogin = async (credentialResponse: any) => {
@@ -40,6 +53,6 @@ export const handleGoogleLogin = async (credentialResponse: any) => {
     customMessage("success", "Sesión iniciada!");
     return token.data;
   } catch (error: any) {
-    customMessage("error", "Credenciales Inválidas");
+    customMessage("error", "Algo salió mal, intente nuevamente");
   }
 };
