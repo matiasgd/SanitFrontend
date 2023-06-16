@@ -1,7 +1,5 @@
 import axios from "axios";
 import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
-import { logIn } from "../store/user";
 import customMessage from "../commons/customMessage";
 
 interface DecodedToken {
@@ -28,7 +26,6 @@ export const handleGoogleRegister = async (credentialResponse: any) => {
 };
 
 export const handleGoogleLogin = async (credentialResponse: any) => {
-  const dispatch = useDispatch();
   const decoded = jwt_decode(credentialResponse.credential) as DecodedToken;
   // Login Google User
   try {
@@ -40,10 +37,8 @@ export const handleGoogleLogin = async (credentialResponse: any) => {
       },
       { withCredentials: true }
     );
-    dispatch(logIn(token.data));
     customMessage("success", "Sesión iniciada!");
-    //user = token.data; // Triggers the useEffect
-    return token;
+    return token.data;
   } catch (error: any) {
     customMessage("error", "Credenciales Inválidas");
   }

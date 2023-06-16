@@ -1,8 +1,6 @@
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { logIn } from "../store/user";
-import customMessage from "../commons/customMessage";
 import { FieldValues } from "react-hook-form";
+import customMessage from "../commons/customMessage";
 
 interface RegistrationData {
   email: FieldValues;
@@ -24,15 +22,13 @@ export const handleFormRegister = async (data: RegistrationData) => {
     );
     customMessage("success", response.data.message);
     return response;
-    //   setVariant("LOGIN"); ACA HABRIA QUE LOGUEAR AL NUEVO USUARIO
   } catch (error: any) {
     console.log(error);
-    customMessage("error", error?.response?.data);
+    customMessage("error", error.message);
   }
 };
 
 export const handleFormLogin = async (data: RegistrationData) => {
-  const dispatch = useDispatch();
   // Login User
   try {
     const token = await axios.post(
@@ -40,9 +36,8 @@ export const handleFormLogin = async (data: RegistrationData) => {
       data,
       { withCredentials: true }
     );
-    dispatch(logIn(token.data));
     customMessage("success", "Sesión iniciada!");
-    return token;
+    return token.data;
   } catch (error: any) {
     customMessage("error", "Credenciales Inválidas");
   }
