@@ -1,54 +1,156 @@
-import React, { useState } from "react";
-import { Button, message, Steps, theme } from "antd";
-
-const initialFormData = {
-  name: "",
-  education: "",
-};
+import { useState } from "react";
+import { Steps, theme } from "antd";
+import { SubmitHandler, useForm } from "react-hook-form";
+import Input from "../commons/Input";
+import Button from "../commons/Button";
+import RHFDatePicker from "../commons/DatePicker";
+import CustomSelect from "../commons/Select";
+import CustomSegmented from "../commons/Segmented";
 
 const Stepper: React.FC = () => {
-  // States
   const [current, setCurrent] = useState(0);
-  const [formData, setFormData] = useState(initialFormData);
   const { token } = theme.useToken();
-  // Handlers
-  const handleInputChange = (name: string, value: any) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<{
+    name: string;
+    lastname: string;
+    identityType: string;
+    identityNumber: number;
+    birthdate: string;
+    gender: string;
+    country: string;
+    specialty: string;
+    medicalRegistration: string;
+    objective: string;
+  }>();
+
+  const submitProfile: SubmitHandler<{
+    name: string;
+    lastname: string;
+    identityType: string;
+    identityNumber: number;
+    birthdate: string;
+    gender: string;
+    country: string;
+    specialty: string;
+    medicalRegistration: string;
+    objective: string;
+  }> = (data) => {
+    console.log(data);
   };
+
   const stepContents = [
     {
       title: "Datos Personales",
       content: (
-        <div>
-          <input
+        <form
+          className="grid grid-cols-3 gap-6 justify-center p-2"
+          onSubmit={handleSubmit(submitProfile)}
+        >
+          <Input
+            id="name"
+            label="Nombre"
+            placeholder="Ingrese su nombre"
             type="text"
-            name="name"
-            value={formData.name || ""}
-            onChange={(e) => handleInputChange("name", e.target.value)}
+            register={register}
+            errors={errors}
           />
-          {/* Add other inputs for this step */}
-        </div>
+          <Input
+            id="lastname"
+            label="Apellido"
+            placeholder="Ingrese su apellido"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+          <CustomSelect
+            label="Tipo de Documento"
+            placeholder="Seleccione una opción"
+            control={control}
+            name="identityType"
+            options={[
+              { value: "nationalId", label: "Documento de Identidad" },
+              { value: "passport", label: "Pasaporte" },
+              { value: "foreignId", label: "Cédula Extranjera" },
+              { value: "other", label: "Otro" },
+            ]}
+          />
+          <Input
+            id="identityNumber"
+            label="Número de Documento"
+            placeholder="XX XXX XXX"
+            type="number"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            id="country"
+            label="País de Residencia"
+            placeholder="País de Residencia"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+          <CustomSelect
+            label="Género"
+            placeholder="Seleccione una opción"
+            control={control}
+            name="gender"
+            options={[
+              { value: "male", label: "Masculino" },
+              { value: "female", label: "Femenino" },
+              { value: "nongender", label: "No Binario" },
+              { value: "other", label: "Otro" },
+            ]}
+          />
+          <RHFDatePicker
+            label="Fecha de Nacimiento"
+            placeholder="Seleccione una fecha"
+            control={control}
+            name="birthdate"
+          />
+        </form>
       ),
     },
     {
       title: "Estudios y Experiencia",
       content: (
-        <div>
-          <input
+        <div className="grid grid-cols-2 gap-6 justify-center p-2">
+          <Input
+            id="specialty"
+            label="Especialidad"
+            placeholder="Ingrese su especialidad"
             type="text"
-            name="education"
-            value={formData.education || ""}
-            onChange={(e) => handleInputChange("education", e.target.value)}
+            register={register}
+            errors={errors}
           />
-          {/* Add other inputs for this step */}
+          <Input
+            id="medicalRegistration"
+            label="Matrícula Médica"
+            placeholder="Ingrese su matrícula"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Objetivo",
+      content: (
+        <div className="flex justify-center p-2">
+          <CustomSegmented name="objective" control={control} />
         </div>
       ),
     },
     // Add other steps here
   ];
+
   const items = stepContents.map((item) => ({
     key: item.title,
     title: item.title,
@@ -63,7 +165,7 @@ const Stepper: React.FC = () => {
   };
 
   const contentStyle: React.CSSProperties = {
-    lineHeight: "260px",
+    lineHeight: "60px",
     textAlign: "center",
     color: token.colorTextTertiary,
     backgroundColor: token.colorFillAlter,
@@ -76,23 +178,20 @@ const Stepper: React.FC = () => {
     <>
       <Steps current={current} items={items} />
       <div style={contentStyle}>{stepContents[current].content}</div>
-      <div style={{ marginTop: 24 }}>
-        {current < stepContents.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Next
+      <div className="mt-4 flex justify-between">
+        {current > 0 && (
+          <Button type="button" onClick={prev}>
+            Volver
           </Button>
         )}
         {current === stepContents.length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => message.success("Processing complete!")}
-          >
-            Done
+          <Button type="submit" onClick={handleSubmit(submitProfile)}>
+            Finalizar
           </Button>
         )}
-        {current > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-            Previous
+        {current < stepContents.length - 1 && (
+          <Button type="button" onClick={next}>
+            Siguiente
           </Button>
         )}
       </div>
