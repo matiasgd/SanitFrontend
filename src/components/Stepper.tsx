@@ -1,15 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Steps, theme } from "antd";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 import Input from "../commons/Input";
 import Button from "../commons/Button";
 import RHFDatePicker from "../commons/DatePicker";
 import CustomSelect from "../commons/Select";
 import CustomSegmented from "../commons/Segmented";
+import axios from "axios";
 
 const Stepper: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const { token } = theme.useToken();
+
+  let user = useSelector((state: RootState) => state.user);
+
+  const getUser = async () => {
+    await axios
+      .get(`http://localhost:3001/api/users/${user.id}`)
+      .then((user) => {
+        console.log(user);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      getUser();
+    }
+  }, [user]);
 
   const {
     register,

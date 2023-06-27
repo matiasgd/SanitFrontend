@@ -28,7 +28,7 @@ const AuthForm = () => {
   let user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user.profile) {
+    if (user?.id) {
       navigate("/me");
     }
   }, [navigate, user]);
