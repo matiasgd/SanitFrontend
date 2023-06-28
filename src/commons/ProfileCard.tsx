@@ -14,26 +14,14 @@ const ProfileCard: React.FC<CommonCardProps> = ({
   description,
 }) => {
   return (
-    <div
-    className="bg-tertiary p-5 rounded-2xl sm:w-[300px] w-full cursor-pointer justify-center items-center"
-      style={{
-        backgroundColor: "#ECF3FC",
-      }}
-    >
-      <h2 style={{ color: "blue", fontWeight: "bold", fontSize: "1.2rem", textAlign: "center" }}>
+    <div className="bg-[#ECF3FC] p-5 rounded-2xl sm:w-[300px] w-full cursor-pointer justify-center items-center">
+      <h2 className="text-[#EB6350] font-bold text-lg justify-center text-center">
         {name}
       </h2>
-      <h3 style={{ color: "black", fontSize: "1.2rem", textAlign: "center" }}>
+      <p className="font-semibold mt-2 text-secondary text-[14px] text-center">
         {title}
-      </h3>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "1rem",
-        }}
-      >
+      </p>
+      <div className="flex justify-center items-center mt-2">
         <div>
           <div
             style={{
@@ -45,6 +33,7 @@ const ProfileCard: React.FC<CommonCardProps> = ({
               marginBottom: "1rem",
               marginTop: "1rem",
             }}
+            className="border-2 border-[#2AAAE1]"
           >
             <img
               src={imagePath}
@@ -54,7 +43,9 @@ const ProfileCard: React.FC<CommonCardProps> = ({
           </div>
         </div>
       </div>
-      <p style={{ color: "gray", marginTop: "1rem" }}>{description}</p>
+      <p className="mt-2 text-secondary text-[14px] text-center">
+        {description}
+      </p>
     </div>
   );
 };

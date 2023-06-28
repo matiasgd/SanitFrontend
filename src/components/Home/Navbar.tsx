@@ -1,23 +1,23 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "antd";
 import { CloseOutlined, MenuOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
   // States
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(false);
+
   const navLinks = [
     {
-        id: "services",
-        title: "Servicios",
+      id: "services",
+      title: "Servicios",
     },
     {
-        id: "benefits",
-        title: "Beneficios",
-      },
+      id: "benefits",
+      title: "Beneficios",
+    },
     {
-      id: "about",
+      id: "team",
       title: "Equipo",
     },
     {
@@ -27,9 +27,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav
-      className={`sm:px-16 px-6 w-full flex items-center py-5 fixed top-0 z-20 bg-black`}
-    >
+    <nav className="sm:px-16 px-6 w-full flex items-center py-5 fixed top-0 z-20 bg-[#154E64]">
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
         <Link
           to="/"
@@ -39,12 +37,17 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <p className="text-white text-[18px] font-bold cursor-pointer flex hover:text-[#DE4C36]">
-            Sanit &nbsp;
-            <span className="sm:block hidden">
-              <span className="text-[#DE4C36]">|&nbsp;</span> We
-              Care
-            </span>
+          <p className="text-white text-[18px] font-bold cursor-pointer flex hover:text-[#EB6350]">
+            Sanit &nbsp; <span className="text-[#EB6350]">|&nbsp;&nbsp;</span>
+            <span className="sm:block hidden"> We Care</span>
+          </p>
+        </Link>
+        <Link
+          to="/login"
+          className="outline-none border-none text-white text-[18px] font-bold cursor-pointer flex hover:text-[#EB6350]"
+        >
+          <p className="text-white text-[18px] font-bold cursor-pointer flex hover:text-[#EB6350]">
+            Iniciar Sesión
           </p>
         </Link>
         <ul className="list-none hidden sm:flex flex-row gap-10">
@@ -52,8 +55,8 @@ const Navbar = () => {
             <li
               key={link.id}
               className={`${
-                active === link.title ? "text-[#DE4C36]" : "text-white"
-              } hover:text-[#DE4C36] text-[18px] font-medium cursor:pointer`}
+                active === link.title ? "text-[#EB6350]" : "text-white"
+              } hover:text-[#EB6350] text-[18px] font-medium cursor:pointer`}
               onClick={() => {
                 setActive(link.title);
               }}
@@ -67,7 +70,11 @@ const Navbar = () => {
             className="w-[28px] h-[28px] object-contain cursor-pointer"
             onClick={() => setToggle(!toggle)}
           >
-            {toggle ? <CloseOutlined /> : <MenuOutlined />}
+            {toggle ? (
+              <CloseOutlined className="text-white" />
+            ) : (
+              <MenuOutlined className="text-white" />
+            )}
           </div>
           <div
             className={`${
@@ -79,8 +86,8 @@ const Navbar = () => {
                 <li
                   key={link.id}
                   className={`${
-                    active === link.title ? "text-[#DE4C36]" : "text-white"
-                  } font-poppins font-medium cursor-pointer text-[16px] hover:text-[#DE4C36]`}
+                    active === link.title ? "text-[#EB6350]" : "text-white"
+                  } font-poppins font-medium cursor-pointer text-[16px] hover:text-[#EB6350]`}
                   onClick={() => {
                     setToggle(!toggle);
                     setActive(link.title);
@@ -93,9 +100,10 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-      <Button type="primary" className="text-white text-[18px] font-bold cursor-pointer flex hover:text-white">Iniciar sesion</Button>
     </nav>
   );
 };
 
 export default Navbar;
+
+// className="text-white text-[18px] font-bold cursor-pointer flex hover:text-white" BUTTON INICIAR SESION

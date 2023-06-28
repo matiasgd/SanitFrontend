@@ -1,10 +1,9 @@
-import React from 'react';
-import Navbar from './Navbar';
-import Banner from './Banner';
-import OurTeam from './OurTeam';
+import React from "react";
+import Navbar from "./Navbar";
+import Banner from "./Banner";
+import OurTeam from "./OurTeam";
 
-const MyComponent: React.FC = () => {
-
+const Home: React.FC = () => {
   return (
     <div>
       <Navbar />
@@ -14,4 +13,4 @@ const MyComponent: React.FC = () => {
   );
 };
 
-export default MyComponent;
+export default Home;

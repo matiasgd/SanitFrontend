@@ -6,10 +6,10 @@ import Home from "./components/Home/Home";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<AuthForm />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<AuthForm />} />
       <Route path="/me" element={<Dashboard />} />
       <Route path="/404">ERROR 404</Route>
-      <Route path="/home"element={<Home />} />
     </Routes>
   );
 }
