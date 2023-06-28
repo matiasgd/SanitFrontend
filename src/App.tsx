@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 
 export default function App() {
   return (
