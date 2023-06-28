@@ -105,5 +105,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-// className="text-white text-[18px] font-bold cursor-pointer flex hover:text-white" BUTTON INICIAR SESION

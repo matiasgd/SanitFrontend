@@ -2,7 +2,7 @@ import React from "react";
 import ProfileCard from "../../commons/ProfileCard";
 import members from "../../constans/members";
 
-const MyComponent: React.FC = () => {
+const OurTeam: React.FC = () => {
   return (
     <div className=" xl:ml-20 mr-20 sm:px-16 px-6 sm:py-16 py-10">
       <h2 className="text-center text-black font-black md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]">
@@ -29,4 +29,4 @@ const MyComponent: React.FC = () => {
   );
 };
 
-export default MyComponent;
+export default OurTeam;
