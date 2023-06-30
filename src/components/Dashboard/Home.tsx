@@ -1,7 +1,7 @@
 import React from "react";
 import Sidebar from "./Sidebar";
 import SearchBar from "./SearchBar";
-import Patients from "./Patients";
+import Patient from "./Patient";
 
 const Home = () => {
   return (
@@ -10,7 +10,7 @@ const Home = () => {
       <div>
         <SearchBar />
         <div style={{marginTop:"20px"}}>
-          <Patients />
+          <Patient/>
         </div>
       </div>
     </div>
