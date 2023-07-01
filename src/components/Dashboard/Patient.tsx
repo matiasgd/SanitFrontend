@@ -5,19 +5,22 @@ const Patient: React.FC = () => {
   return (
     <div
       style={{
+        display: "flex",
         borderRadius: "15px",
         boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
-        width: "auto",
+        flexDirection: "column",
+        flexGrow: 1,
       }}
     >
       <div
         style={{
           display: "flex",
-          padding: "10px",
+          padding: "10px 20px",
           borderTopLeftRadius: "15px",
           borderTopRightRadius: "15px",
           justifyContent: "space-between",
-          alignItems:"center"
+          alignItems:"center",
+          backgroundColor: "#EEEFF4",
         }}
       >
         <div style={{ display: "flex", gap: "20px", alignItems: "end" }}>
@@ -38,15 +41,17 @@ const Patient: React.FC = () => {
       </div>
       <div
         style={{
-          backgroundColor: "#EEEFF4",
-          padding: "10px",
+          padding: "20px",
           borderBottomLeftRadius: "15px",
           borderBottomRightRadius: "15px",
-          height: "100px",
-          paddingTop: "20px",
+          height: "80px",
         }}
       >
-        <div style={{ display: "flex", gap: "30px" }}>
+        <div style={{ display: "flex", justifyContent:"space-between" }}>
+        <div>
+            <p style={{ fontSize: "12px", color: "#888888" }}>cellphone</p>
+            <p>{defaultPatients[1].cellphone}</p>
+          </div>
           <div>
             <p style={{ fontSize: "12px", color: "#888888" }}>Email</p>
             <p>{defaultPatients[1].email}</p>

@@ -14,8 +14,7 @@ const Sidebar: React.FC = () => {
   ];
 
   const sidebarStyle = {
-    margin: "20px",
-    height: "100%",
+    flex: "1",
     width: "230px",
     backgroundColor: "#FCFDFE",
     borderRadius: "15px",
@@ -44,7 +43,6 @@ const Sidebar: React.FC = () => {
 
   const listado = {
     backgroundColor: "#FCFDFE",
-    height: "80%",
   };
 
   const fecha = {
@@ -112,7 +110,7 @@ const Sidebar: React.FC = () => {
       <div style={fecha}>{formattedDate}</div>
       <div
         className="container"
-        style={{ display: "flex", alignItems: "center",     borderTop: "1px solid #DDD",
+        style={{ display: "flex", alignItems: "center", borderTop: "1px solid #DDD",
         marginTop: "10px",
         paddingTop: "10px", }}
       >
