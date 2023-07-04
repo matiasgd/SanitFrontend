@@ -14,7 +14,7 @@ const Dashboard = () => {
   const user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user?.id === null) {
+    if (!user?.id) {
       navigate("/");
     }
   }, [navigate, user]);

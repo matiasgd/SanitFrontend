@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Steps, theme } from "antd";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import Input from "../commons/Input";
@@ -33,35 +33,26 @@ const Stepper: React.FC = () => {
 
   const {
     register,
-    handleSubmit,
     control,
+    handleSubmit,
     formState: { errors },
-  } = useForm<{
-    name: string;
-    lastname: string;
-    identityType: string;
-    identityNumber: number;
-    birthdate: string;
-    gender: string;
-    country: string;
-    specialty: string;
-    medicalRegistration: string;
-    objective: string;
-  }>();
+  } = useForm<FieldValues>({
+    defaultValues: {
+      name: "",
+      lastname: "",
+      identityType: "",
+      identityNumber: "",
+      birthdate: "",
+      gender: "",
+      country: "",
+      specialty: "",
+      medicalRegistration: "",
+      objective: "",
+    },
+  });
 
-  const submitProfile: SubmitHandler<{
-    name: string;
-    lastname: string;
-    identityType: string;
-    identityNumber: number;
-    birthdate: string;
-    gender: string;
-    country: string;
-    specialty: string;
-    medicalRegistration: string;
-    objective: string;
-  }> = (data) => {
-    console.log(data);
+  const submitProfile: SubmitHandler<FieldValues> = async (data) => {
+    console.log("UPDATE_PROFILE", data);
   };
 
   const stepContents = [
