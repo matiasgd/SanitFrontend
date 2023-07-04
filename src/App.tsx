@@ -1,7 +1,9 @@
 import { Routes, Route } from "react-router";
 import AuthForm from "./components/AuthForm";
 import Dashboard from "./components/Dashboard";
-import Home from "./components/Home/Home";
+import Home from "./components/Dashboard/Home";
+
+
 
 export default function App() {
   return (
@@ -9,6 +11,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<AuthForm />} />
       <Route path="/me" element={<Dashboard />} />
+      <Route path="/home" element={<Home />} />
       <Route path="/404">ERROR 404</Route>
     </Routes>
   );
