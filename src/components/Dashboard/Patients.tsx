@@ -9,7 +9,7 @@ import React, { useRef, useState } from 'react';
 interface DataType {
   key: string;
   name: string;
-  lastname: string;
+  lastName: string;
   age: number;
   address: string;
   tags: string[];
