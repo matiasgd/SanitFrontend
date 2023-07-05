@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 const ClinicalHistory = () => {
   const [selectedButton, setSelectedButton] = useState("general");
@@ -27,7 +27,7 @@ const ClinicalHistory = () => {
     border: "none"
   };
 
-  const handleClick = (button) => {
+  const handleClick = (button:any) => {
     setSelectedButton(button);
   };
 

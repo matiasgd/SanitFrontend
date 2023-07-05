@@ -5,6 +5,7 @@ import jwt_decode from "jwt-decode";
 interface UserState {
   id: string;
   email: string;
+  profileCompleted?: string;
 }
 
 export const logIn = createAction<UserState>("LOG_IN");
@@ -14,17 +15,18 @@ const token = Cookies.get("token");
 
 const user: UserState = token
   ? (jwt_decode(token) as UserState)
-  : { id: "", email: "" };
+  : { id: "", email: "", profileCompleted: "" };
 
 const initialState: UserState = user;
 
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(logIn, (state, action: PayloadAction<UserState>) => {
+      console.log(action.payload)
       return { ...state, ...action.payload };
     })
     .addCase(logOut, () => {
-      return { id: "", email: "" };
+      return { id: "", email: "", profileCompleted: "" };
     });
 });
 
