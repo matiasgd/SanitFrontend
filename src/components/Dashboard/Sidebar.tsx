@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
 
   const sidebarStyle = {
     flex: "1",
-    width: "auto",
+    width: "200px",
     backgroundColor: "#FCFDFE",
     borderRadius: "15px",
     boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",

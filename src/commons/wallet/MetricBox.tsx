@@ -1,12 +1,21 @@
 import React from 'react';
 
-const MetricBox: React.FC<{}> = () => {
+interface MetricBoxProps {
+  title: string;
+  metric: string;
+  color: string;
+  currency?: string;
+}
+
+const MetricBox: React.FC<MetricBoxProps> = ({ title, metric, color, currency }) => {
   const boxStyle = {
-    backgroundColor: 'rgba(0, 191, 255, 0.5)',
-    border: '1px solid blue',
+    backgroundColor: color,
+    boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
     padding: '10px',
     display: 'inline-block',
-    borderRadius: '7,5px',
+    borderRadius: '7.5px',
+    minWidth: '175px',
+    textAlign: 'center',
   };
 
   const titleStyle = {
@@ -15,13 +24,14 @@ const MetricBox: React.FC<{}> = () => {
   };
 
   const metricStyle = {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontSize: '25px',
   };
 
   return (
     <div style={boxStyle}>
-      <h2 style={titleStyle}>Consultas</h2>
-      <p style={metricStyle}>12</p>
+      <p style={metricStyle}>{`${currency} ${metric}`}</p>
+      <h2 style={titleStyle}>{title}</h2>
     </div>
   );
 };
