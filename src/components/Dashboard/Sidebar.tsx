@@ -1,8 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Space } from "antd";
+import { Avatar } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { getUser } from "../../utils"
 
 const Sidebar: React.FC = () => {
+  let user = useSelector((state: RootState) => state.user);
+  const [userInformation, setUserInformation] = useState<any>([]);
+
   const sections = [
     { name: "Dashboard", route: "dashboardIcon.svg" },
     { name: "Calendar", route: "calendarIcon.svg" },
@@ -75,6 +81,18 @@ const Sidebar: React.FC = () => {
     setHoveredItem(null);
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userData = await getUser(user.id);
+        setUserInformation(userData);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div style={sidebarStyle}>
       <div style={logoStyle}>
@@ -110,9 +128,13 @@ const Sidebar: React.FC = () => {
       <div style={fecha}>{formattedDate}</div>
       <div
         className="container"
-        style={{ display: "flex", alignItems: "center", borderTop: "1px solid #DDD",
-        marginTop: "10px",
-        paddingTop: "10px", }}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          borderTop: "1px solid #DDD",
+          marginTop: "10px",
+          paddingTop: "10px",
+        }}
       >
         <div
           className="avatar"
@@ -125,13 +147,13 @@ const Sidebar: React.FC = () => {
             className="name"
             style={{ fontSize: "12px", fontWeight: "bold" }}
           >
-            Matias Dominguez
+            {userInformation.email} {userInformation.lastname}
           </div>
           <div
             className="specialty"
             style={{ fontSize: "10px", color: "#999" }}
           >
-            Especialista en casi todo
+            {userInformation.specialty}
           </div>
         </div>
       </div>

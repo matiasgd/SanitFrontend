@@ -1,4 +1,3 @@
-import React from "react";
 import Sidebar from "./Sidebar";
 import Patient from "./Patient";
 import ClinicalHistory from "./ClinicalHistory";

@@ -38,21 +38,31 @@ const Stepper: React.FC = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
+      // user
       name: "",
-      lastname: "",
+      lastName: "",
       identityType: "",
       identityNumber: "",
       birthdate: "",
       gender: "",
       country: "",
+      province: "",
+      field: "",
       specialty: "",
       medicalRegistration: "",
-      objective: "",
     },
   });
 
   const submitProfile: SubmitHandler<FieldValues> = async (data) => {
-    console.log("UPDATE_PROFILE", data);
+    try {
+      console.log(data, "Datos enviados");
+      await axios.post(
+        `http://localhost:3001/api/users/complete/${user.id}`,
+        data
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const stepContents = [
@@ -99,14 +109,6 @@ const Stepper: React.FC = () => {
             register={register}
             errors={errors}
           />
-          <Input
-            id="country"
-            label="País de Residencia"
-            placeholder="País de Residencia"
-            type="text"
-            register={register}
-            errors={errors}
-          />
           <CustomSelect
             label="Género"
             placeholder="Seleccione una opción"
@@ -118,6 +120,22 @@ const Stepper: React.FC = () => {
               { value: "nongender", label: "No Binario" },
               { value: "other", label: "Otro" },
             ]}
+          />
+          <Input
+            id="country"
+            label="País de Residencia"
+            placeholder="País de Residencia"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            id="province"
+            label="Provincia de Residencia"
+            placeholder="Provincia de Residencia"
+            type="text"
+            register={register}
+            errors={errors}
           />
           <RHFDatePicker
             label="Fecha de Nacimiento"
@@ -132,6 +150,14 @@ const Stepper: React.FC = () => {
       title: "Estudios y Experiencia",
       content: (
         <div className="grid grid-cols-2 gap-6 justify-center p-2">
+          <Input
+            id="field"
+            label="Campo"
+            placeholder="Campo de estudio"
+            type="text"
+            register={register}
+            errors={errors}
+          />
           <Input
             id="specialty"
             label="Especialidad"

@@ -1,5 +1,4 @@
 import React from "react";
-import defaultPatients from "../../../public/defaultPatients.tsx";
 import { Button, Tag } from "antd";
 
 const Patient: React.FC = () => {

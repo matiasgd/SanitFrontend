@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Finance from "./generalInfo/Finance";
 
@@ -28,7 +29,7 @@ const ClinicalHistory = () => {
     border: "none"
   };
 
-  const handleClick = (button) => {
+  const handleClick = (button:any) => {
     setSelectedButton(button);
   };
 

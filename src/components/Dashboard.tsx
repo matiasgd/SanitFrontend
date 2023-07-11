@@ -7,6 +7,7 @@ import { RootState } from "../store/store";
 import { logOut } from "../store/user";
 import customMessage from "../commons/customMessage";
 import Stepper from "./Stepper";
+import Patients from "./Dashboard/Patients";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -41,7 +42,10 @@ const Dashboard = () => {
         </Button>
       </div>
       <div className="p-10">
-        <Stepper />
+       { !user.profileCompleted
+        ? <Stepper />
+        : <Patients />      
+      }
       </div>
     </div>
   );
