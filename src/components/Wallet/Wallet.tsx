@@ -37,7 +37,7 @@ const Wallet: React.FC = () => {
             <Button>
               (+) New Income
             </Button>
-          </div>0.2{ññññññññññ_
+          </div>
         </div>
         <div>
           <IncomeTable incomes={defaultPayments} />
