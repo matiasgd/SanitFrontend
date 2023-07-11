@@ -3,7 +3,6 @@ import IncomeTable from "./IncomeTable";
 import Sidebar from "../Dashboard/Sidebar";
 import Keypad from "./Keypad";
 import defaultPayments from "../../../public/defaultPayments";
-import SearchBar from "../Dashboard/SearchBar";
 import DateRangePicker from "./DataRangePicker";
 import { Button } from "antd";
 

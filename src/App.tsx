@@ -4,6 +4,7 @@ import Dashboard from "./components/Dashboard";
 import Patient from "./components/Dashboard/Home";
 import Home from "./components/Home/Home";
 import Wallet from "./components/Wallet/Wallet";
+import Calendar from "./components/Calendar/Calendar";
 
 
 
@@ -17,6 +18,7 @@ export default function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/wallet" element={<Wallet />} />
       <Route path="/404">ERROR 404</Route>
+      <Route path="/calendar" element={<Calendar />} />
     </Routes>
   );
 }
