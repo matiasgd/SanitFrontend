@@ -1,4 +1,6 @@
-import { useState } from "react";
+
+import React, { useState } from "react";
+import Finance from "./generalInfo/Finance";
 
 const ClinicalHistory = () => {
   const [selectedButton, setSelectedButton] = useState("general");
@@ -59,8 +61,11 @@ const ClinicalHistory = () => {
           Studies
         </div>
       </div>
-      <div style={{backgroundColor: "#EEEFF4", borderRadius: "0 20px 20px 20px", marginBottom: "20px", boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)", height:"470px"}}>
-  {selectedButton === "clinical" && <p>Clinical History content</p>}
+      <div style={{backgroundColor: "", borderRadius: "0 20px 20px 20px", marginBottom: "20px", boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)", height:"470px"}}>
+      {selectedButton === "general" && <div>
+        <Finance/>
+        </div>}
+  {selectedButton === "clinical" && <div>holis </div>}
   {selectedButton === "recipes" && <p>Recipes content</p>}
   {selectedButton === "studies" && <p>Studies content</p>}
 </div>

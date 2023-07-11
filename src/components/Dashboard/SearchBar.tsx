@@ -5,7 +5,6 @@ import { SearchOutlined } from "@ant-design/icons";
 const SearchBarStyle = {
   display: "flex",
   alignItems: "center",
-  margin: "20px 20px 0px 5px",
   height: "40px",
   width: "100%",
   borderRadius: "100px",
@@ -30,7 +29,7 @@ const HoverButtonStyle = {
 
 const SearchBar: React.FC = () => {
   const [selectedButton, setSelectedButton] = useState<string | null>(
-    "All Patients"
+    "Patients"
   );
 
   const handleButtonSelect = (buttonName: string) => {
@@ -80,18 +79,18 @@ const SearchBar: React.FC = () => {
         }}
       >
         {renderButton(
-          "All Patients",
-          selectedButton === "All Patients" ? "#F2F7FD" : "white",
+          "Patients",
+          selectedButton === "Patients" ? "#F2F7FD" : "white",
           "#5F8DCA"
         )}
         {renderButton(
-          "Prescriptions",
-          selectedButton === "Prescriptions" ? "F2F7FD" : "white",
+          "Servicies",
+          selectedButton === "Servicies" ? "F2F7FD" : "white",
           "#5F8DCA"
         )}
         {renderButton(
-          "Test Results",
-          selectedButton === "Test Results" ? "F2F7FD" : "white",
+          "Amounts",
+          selectedButton === "Amounts" ? "F2F7FD" : "white",
           "#5F8DCA"
         )}
       </div>
