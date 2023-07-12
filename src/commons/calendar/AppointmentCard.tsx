@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { EllipsisOutlined } from "@ant-design/icons";
+import { Dropdown, Menu } from "antd";
 
 const container = {
   display: "flex",
@@ -27,7 +29,7 @@ const colorBox = {
 };
 
 const boxStyle = {
-  margin: "20px",
+  paddingLeft: "20px",
 };
 
 const hourStyle = { lineHeight: "1", textAlign: "center" };
@@ -57,10 +59,29 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
 
   const cardStyle = {
     ...container,
-    transform: isHovered ? "scale(1.03)" : "scale(1)",
-    boxShadow: isHovered ? "0 0 10px rgba(231, 200, 250, 0.3)" : "none",
+    boxShadow: isHovered ? "0 0 10px rgba(0, 0, 250, 0.3)" : "none",
     cursor: "pointer",
   };
+
+  const handleMenuClick = (e) => {
+    switch (e.key) {
+      case "edit":
+        // Lógica para editar
+        break;
+      case "delete":
+        // Lógica para eliminar
+        break;
+      default:
+        break;
+    }
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick}>
+      <Menu.Item key="edit">Editar</Menu.Item>
+      <Menu.Item key="delete" style={{ color: "red" }}>Eliminar</Menu.Item>
+    </Menu>
+  );
 
   return (
     <div
@@ -70,7 +91,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
       onClick={onClick}
     >
       <div style={colorBox}>
-        <div>
+        <div style={{ justifyContent: "space-between" }}>
           <div
             style={{
               backgroundColor: circleColor,
@@ -87,9 +108,14 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
           </div>
         </div>
       </div>
-      <div style={boxStyle}>
-        <div style={titleStyle}>{title}</div>
-        <div style={subTitleStyle}>{subtitle}</div>
+      <div style={{ display: "flex", justifyContent: "space-between", width: "70%" }}>
+        <div style={boxStyle}>
+          <div style={titleStyle}>{title}</div>
+          <div style={subTitleStyle}>{subtitle}</div>
+        </div>
+        <Dropdown overlay={menu} trigger={["click"]}>
+          <EllipsisOutlined className="flex justify-center items-center pr-5" />
+        </Dropdown>
       </div>
     </div>
   );

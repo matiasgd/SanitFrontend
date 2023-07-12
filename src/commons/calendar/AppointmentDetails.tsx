@@ -5,7 +5,7 @@ import {
   CloseOutlined,
   IdcardOutlined,
   ArrowRightOutlined,
-  FileTextOutlined,
+  //FileTextOutlined,
 } from "@ant-design/icons";
 import { Space, Tag, Divider, Button } from "antd";
 
@@ -46,7 +46,7 @@ const fieldStyle = {
 
 const fieldTitleStyle = {
   color: "grey",
-  fontSize: "16px",
+  fontSize: "15px",
   width: "100px",
   alignItems: "flex-start",
   marginRight: "15px",
@@ -55,7 +55,7 @@ const fieldTitleStyle = {
 const fieldContentStyle = {
   display: "flex",
   color: "black",
-  fontSize: "16px",
+  fontSize: "14px",
   width: "70%",
 };
 
@@ -98,7 +98,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
               >
                 Digital
               </Tag>
-              <Tag
+              {/* <Tag
                 icon={<HomeOutlined />}
                 className="flex justify-center items-center"
                 color="#55acee"
@@ -111,18 +111,22 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
                 color="#55acee"
               >
                 Presencial
-              </Tag>
+              </Tag> */}
             </Space>
           </div>
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Location </p>
             <p style={fieldContentStyle}> South Office, floor 2, room 201 </p>
           </div>
+          <div style={fieldStyle}>
+            <p style={fieldTitleStyle}> Insurance </p>
+            <p style={fieldContentStyle}> Particular </p>
+          </div>
           <Divider style={{ margin: "5px", backgroundColor: "#3B6FB6" }} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={fieldStyle}>
               <p style={fieldTitleStyle}> Last Consult </p>
-              <p style={{ width: "30%" }}> 15/08/2023 </p>
+              <p style={{ width: "30%", fontSize: "14px" }}> 15/08/2023 </p>
             </div>
             <Button type="link">
               <Space>
@@ -132,12 +136,24 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
             </Button>
           </div>
           <div style={fieldStyle}>
+            <p style={fieldTitleStyle}> Payment </p>
+            <Tag> pending </Tag>
+          </div>
+          <div style={fieldStyle}>
+            <p style={fieldTitleStyle}> Attendance </p>
+            <p style={fieldContentStyle}> Asiste</p>
+          </div>
+          <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Notes </p>
             <p style={fieldContentStyle}>
               Vimos la relacion familiar con la madre y como le resulta jugar a
-              la pelota con el hijo no reconocido de la pareja{" "}
+              la pelota con el hijo no reconocido de la pareja
             </p>
           </div>
+
+          {/* 
+          Style for files   ---------------------------------------------------------------
+
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Files </p>
             <div
@@ -158,29 +174,22 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
                 <FileTextOutlined className="flex justify-center items-center ml-1 mr-2" />
                 <p>Estudio de sangre</p>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  backgroundColor: "white",
-                  padding: "4px 10px 5px 5px",
-                  fontSize: "13px",
-                  borderRadius: "5px",
-                  textAlign: "center",
-                  width: "auto",
-                  cursor: "pointer",
-                }}
-              >
-                <FileTextOutlined className="flex justify-center items-center ml-1 mr-2" />
-                <p>Imagen del perrito del ex</p>
-              </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "20px", gap: "10px" }}
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "20px",
+          gap: "10px",
+        }}
       >
-        <Button type="primary" style={{backgroundColor:"#55acee"}} > Ingresar a la consulta </Button>
+        <Button type="primary" style={{ backgroundColor: "#55acee" }}>
+          {" "}
+          Ingresar a la consulta{" "}
+        </Button>
       </div>
     </div>
   );
