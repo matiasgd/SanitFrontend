@@ -57,10 +57,9 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
 
   const cardStyle = {
     ...container,
-    transform: isHovered ? "scale(1.02)" : "scale(1)",
+    transform: isHovered ? "scale(1.03)" : "scale(1)",
     boxShadow: isHovered ? "0 0 10px rgba(231, 200, 250, 0.3)" : "none",
     cursor: "pointer",
-    
   };
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AppointmentCard from "../../commons/calendar/AppointmentCard";
 import AppointmentDetails from "../../commons/calendar/AppointmentDetails";
+import { Button } from "antd";
 
 interface Appointment {
   startTime: string;
@@ -136,7 +137,7 @@ const Calendar: React.FC = () => {
       <div style={boxStyle}>
         <div style={header}>
           <div style={title}>Today's timeline</div>
-          <div>flechita</div>
+          <Button type="default"> (+) Add consult</Button>
         </div>
         <div style={appointmentsBox}>
           {appointments.map((appointment, index) => (
