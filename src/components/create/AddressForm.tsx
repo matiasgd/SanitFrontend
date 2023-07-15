@@ -1,45 +1,109 @@
-import React, { useState } from "react";
+
+import { Button } from "antd";
+import { useState } from "react";
+import Axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const AddressForm = () => {
-  const [address, setAddress] = useState({
-    street: "",
-    number: "",
-    floor: "",
-    letter: "",
-    addressType: "",
-    webAddress: "",
-    houseApartment: "",
-    province: "",
-    country: "",
-    city: "",
-    postalCode: "",
+  let user = useSelector((state: RootState) => state.user);
+  const doctorId = user.id;
+
+  interface AddressState {
+    street: string;
+    number: string;
+    floor: string;
+    addressType: string;
+    webAddress: string;
+    houseApartment: string;
+    province: string;
+    country: string;
+    city: string;
+    zipCode: string;
+  }
+
+  interface ChangeEvent<T> {
+    target: T;
+  }
+  
+  interface ValueType {
+    value: string ;
+  }
+
+  const [address, setAddress] = useState<AddressState>({
+    street: '',
+    number: '',
+    floor: '',
+    addressType: '', 
+    webAddress: '',
+    houseApartment: '',
+    province: '',
+    country: '',
+    city: '',
+    zipCode: '',
   });
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAddress((prevAddress) => ({
       ...prevAddress,
       [name]: value,
     }));
   };
-
-  const handleAddressTypeChange = (value) => {
+  
+  const handleAddressTypeChange = (value: ValueType['value']) => {
     setAddress((prevAddress) => ({
       ...prevAddress,
       addressType: value,
     }));
   };
+    
 
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (name: keyof AddressState, value: string) => {
     setAddress((prevAddress) => ({
       ...prevAddress,
       [name]: value,
     }));
   };
 
+  const handleCancel = () => {
+    // Lógica para cancelar
+    console.log("Cancelado");
+  };
+
+  const handleSaveNew = () => {
+    // Lógica para guardar y crear nuevo
+    Axios.post(
+      `http://localhost:3001/api/address/new/doctor/${doctorId}`,
+      address
+    )
+      .then((res) => {
+        console.log(`http://localhost:3001/api/address/new/doctor/${doctorId}`);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleSave = () => {
+    // Lógica para guardar y crear nuevo
+    Axios.post(
+      `http://localhost:3001/api/address/new/doctor/${doctorId}`,
+      address
+    )
+      .then((res) => {
+        console.log(`http://localhost:3001/api/address/new/doctor/${doctorId}`);
+        return res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const container = {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     margin: "auto",
     alignItems: "center",
     borderRadius: "10px",
@@ -47,10 +111,21 @@ const AddressForm = () => {
     backgroundColor: "white",
   };
 
+  const header = {
+    display: "flex",
+    flexDirection: "column" as const,
+    padding: "10px 20px",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "#E7EFFA",
+    borderRadius: "10px 10px 0 0",
+    width: "100%",
+  };
+
   const fieldStyle = {
     width: "50%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as const,
     gap: "5px",
   };
 
@@ -148,7 +223,7 @@ const AddressForm = () => {
                 </div>
               </div>
               <div style={{ display: "flex", gap: "20px" }}>
-              <div style={fieldStyle}>
+                <div style={fieldStyle}>
                   <label style={labelStyle}>Casa/Departamento</label>
                   <select
                     id="houseApartment"
@@ -178,16 +253,15 @@ const AddressForm = () => {
               <div style={fieldStyle}>
                 <label style={labelStyle}>Código Postal</label>
                 <input
-                  id="postalCode"
-                  name="postalCode"
-                  value={address.postalCode}
+                  id="zipCode"
+                  name="zipCode"
+                  value={address.zipCode}
                   onChange={handleInputChange}
                   style={inputStyle}
                 />
               </div>
             </div>
           )}
-
           {address.addressType === "digital" && (
             <>
               <label style={labelStyle}>Dirección web</label>
