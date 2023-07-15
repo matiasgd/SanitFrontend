@@ -1,4 +1,3 @@
-import { Button } from "antd";
 import React, { useState } from "react";
 
 const AddressForm = () => {
@@ -38,42 +37,14 @@ const AddressForm = () => {
     }));
   };
 
-  const handleCancel = () => {
-    // Lógica para cancelar
-    console.log("Cancelado");
-  };
-
-  const handleSaveNew = () => {
-    // Lógica para guardar y crear nuevo
-    console.log("Guardado y nuevo");
-  };
-
-  const handleSave = () => {
-    // Lógica para guardar
-    console.log("Guardado");
-  };
-
   const container = {
     display: "flex",
     flexDirection: "column",
     margin: "auto",
     alignItems: "center",
     borderRadius: "10px",
-    width: "35%",
     height: "fit-content",
-    border: "1px solid #E7EFFA",
     backgroundColor: "white",
-  };
-
-  const header = {
-    display: "flex",
-    flexDirection: "column",
-    padding: "10px 20px",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#E7EFFA",
-    borderRadius: "10px 10px 0 0",
-    width: "100%",
   };
 
   const fieldStyle = {
@@ -93,23 +64,12 @@ const AddressForm = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        backgroundColor: "#848282",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
+    <div>
       <div style={container}>
-        <div style={header}>
-          <p>Nueva dirección</p>
-        </div>
         <form
           style={{
             display: "flex",
             flexDirection: "column",
-            padding: "40px",
             gap: "20px",
             width: "100%",
           }}
@@ -241,18 +201,6 @@ const AddressForm = () => {
             </>
           )}
         </form>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "20px",
-            gap: "5px",
-          }}
-        >
-          <Button onClick={handleCancel}>Cancelar</Button>
-          <Button onClick={handleSaveNew}>Guardar y Nuevo</Button>
-          <Button onClick={handleSave}>Guardar</Button>
-        </div>
       </div>
     </div>
   );
