@@ -1,3 +1,4 @@
+
 import { Button } from "antd";
 import { useState } from "react";
 import Axios from "axios";
@@ -106,9 +107,7 @@ const AddressForm = () => {
     margin: "auto",
     alignItems: "center",
     borderRadius: "10px",
-    width: "35%",
     height: "fit-content",
-    border: "1px solid #E7EFFA",
     backgroundColor: "white",
   };
 
@@ -140,23 +139,12 @@ const AddressForm = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        backgroundColor: "#848282",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
+    <div>
       <div style={container}>
-        <div style={header}>
-          <p>Nueva dirección</p>
-        </div>
         <form
           style={{
             display: "flex",
             flexDirection: "column",
-            padding: "40px",
             gap: "20px",
             width: "100%",
           }}
@@ -287,18 +275,6 @@ const AddressForm = () => {
             </>
           )}
         </form>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "20px",
-            gap: "5px",
-          }}
-        >
-          <Button onClick={handleCancel}>Cancelar</Button>
-          <Button onClick={handleSaveNew}>Guardar y Nuevo</Button>
-          <Button onClick={handleSave}>Guardar</Button>
-        </div>
       </div>
     </div>
   );
