@@ -37,26 +37,24 @@ const Navbar = () => {
             window.scrollTo(0, 0);
           }}
         >
-          <p className="text-white text-[18px] font-bold cursor-pointer flex hover:text-[#EB6350]">
+          <p className="text-white text-lg font-bold cursor-pointer flex hover:text-[#EB6350]">
             Sanit &nbsp; <span className="text-[#EB6350]">|&nbsp;&nbsp;</span>
-            <span className="sm:block hidden"> We Care</span>
+            <span className="lg:block hidden"> We Care</span>
           </p>
         </Link>
         <Link
           to="/login"
-          className="outline-none border-none text-white text-[18px] font-bold cursor-pointer flex hover:text-[#EB6350]"
+          className="outline-none border-none text-white hover:text-[#EB6350] hover:font-bold font-medium text-lg cursor-pointer"
         >
-          <p className="text-white text-[18px] font-bold cursor-pointer flex hover:text-[#EB6350]">
-            Iniciar Sesión
-          </p>
+          Iniciar Sesión
         </Link>
-        <ul className="list-none hidden sm:flex flex-row gap-10">
+        <ul className="list-none hidden md:flex flex-row gap-10">
           {navLinks.map((link) => (
             <li
               key={link.id}
               className={`${
                 active === link.title ? "text-[#EB6350]" : "text-white"
-              } hover:text-[#EB6350] text-[18px] font-medium cursor:pointer`}
+              } hover:text-[#EB6350] hover:font-bold text-lg font-medium cursor:pointer`}
               onClick={() => {
                 setActive(link.title);
               }}
@@ -65,7 +63,7 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <div className="sm:hidden flex flex-1 justify-end items-center">
+        <div className="md:hidden flex flex-1 justify-end items-center">
           <div
             className="w-[28px] h-[28px] object-contain cursor-pointer"
             onClick={() => setToggle(!toggle)}

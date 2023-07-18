@@ -1,8 +1,8 @@
-import javier from "../assets/javier.jpg";
-import matias from "../assets/matias.jpg";
-import luciano from "../assets/luciano.jpg";
-import camilo from "../assets/camilo.jpg";
-import francisco from "../assets/francisco.jpg";
+import javier from "../images/javier.jpg";
+import matias from "../images/matias.jpg";
+import luciano from "../images/luciano.jpg";
+import camilo from "../images/camilo.jpg";
+import francisco from "../images/francisco.jpg";
 
 const members = [
   {

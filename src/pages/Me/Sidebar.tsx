@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { getUser } from "../../utils"
+import { RootState } from "../../store/store.js";
+import { getUser } from "../../utils/getUser.js";
 
 const Sidebar: React.FC = () => {
   let user = useSelector((state: RootState) => state.user);
