@@ -1,5 +1,5 @@
 import React from "react";
-import defaultPatients from "../../../public/defaultPatients.tsx";
+import { defaultPatients } from "../../../constans/defaultPatients";
 
 const Patient: React.FC = () => {
   return (
@@ -19,17 +19,17 @@ const Patient: React.FC = () => {
           borderTopLeftRadius: "15px",
           borderTopRightRadius: "15px",
           justifyContent: "space-between",
-          alignItems:"center",
+          alignItems: "center",
           backgroundColor: "#EEEFF4",
         }}
       >
         <div style={{ display: "flex", gap: "20px", alignItems: "end" }}>
           <strong style={{ color: "Black" }}>Javier Lema</strong>
           <p style={{ color: "blue", fontSize: "12px" }}>
-          Próximo turno - Vie, 16 de julio del 2023 (1 mes y 14 días)
-        </p>
+            Próximo turno - Vie, 16 de julio del 2023 (1 mes y 14 días)
+          </p>
         </div>
-       
+
         <div
           style={{
             backgroundColor: "green",
@@ -47,8 +47,8 @@ const Patient: React.FC = () => {
           height: "80px",
         }}
       >
-        <div style={{ display: "flex", justifyContent:"space-between" }}>
-        <div>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div>
             <p style={{ fontSize: "12px", color: "#888888" }}>cellphone</p>
             <p>{defaultPatients[1].cellphone}</p>
           </div>

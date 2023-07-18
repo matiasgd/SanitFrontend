@@ -1,13 +1,13 @@
 import { Routes, Route } from "react-router";
-import AuthForm from "./components/AuthForm";
-import Dashboard from "./components/Dashboard";
-import Patient from "./components/Dashboard/Home";
-import Patients from "./components/Dashboard/Patients";
-import Home from "./components/Home/Home";
-import Wallet from "./components/Wallet/Wallet";
-import Calendar from "./components/Calendar/Calendar";
-import AddressForm from "./components/create/AddressForm";
-import Modal from "./components/create/ModalTest";
+import AuthForm from "./pages/Login/AuthForm";
+import Dashboard from "./pages/Me/Dashboard";
+import Patient from "./pages/Me/Home";
+import Patients from "./pages/Me/components/Patients";
+import Home from "./pages/Home/Home";
+import Wallet from "./pages/Wallet/Wallet";
+import Calendar from "./pages/Calendar/Calendar";
+import AddressForm from "./pages/create/AddressForm";
+import Modal from "./pages/create/ModalTest";
 
 export default function App() {
   return (

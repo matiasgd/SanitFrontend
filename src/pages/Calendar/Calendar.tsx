@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AppointmentCard from "../../commons/calendar/AppointmentCard";
-import AppointmentDetails from "../../commons/calendar/AppointmentDetails";
+import AppointmentCard from "./components/AppointmentCard";
+import AppointmentDetails from "./components/AppointmentDetails";
 import { Button } from "antd";
 
 interface Appointment {
@@ -86,7 +86,11 @@ const Calendar: React.FC = () => {
     width: "100%",
   };
 
-  const generateColorScale = (startColor: string, endColor: string, steps: number): string[] => {
+  const generateColorScale = (
+    startColor: string,
+    endColor: string,
+    steps: number
+  ): string[] => {
     const startRGB = hexToRGB(startColor);
     const endRGB = hexToRGB(endColor);
     const scale: string[] = [];
@@ -124,7 +128,11 @@ const Calendar: React.FC = () => {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
   };
 
-  const colorScale = generateColorScale("#3B6FB6", "#F2F2F2", appointments.length);
+  const colorScale = generateColorScale(
+    "#3B6FB6",
+    "#F2F2F2",
+    appointments.length
+  );
 
   const [selectedCard, setSelectedCard] = useState<number | null>(0);
 

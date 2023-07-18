@@ -45,7 +45,6 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
     onDateRangeChange(fromDate, date);
   };
 
-
   return (
     <div style={styleBar}>
       <div style={stylePicker}>

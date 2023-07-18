@@ -1,24 +1,23 @@
 import axios from "axios";
-import Button from "../commons/Button";
-import { useEffect } from "react";
+import Button from "../../commons/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { RootState } from "../store/store";
-import { logOut } from "../store/user";
-import customMessage from "../commons/customMessage";
+import { RootState } from "../../store/store";
+import { logOut } from "../../store/user";
+import customMessage from "../../commons/customMessage";
 import Stepper from "./Stepper";
-import Patients from "./Dashboard/Patients";
+import Patients from "./components/Patients";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
-  useEffect(() => {
-    if (!user?.id) {
-      navigate("/");
-    }
-  }, [navigate, user]);
+  // useEffect(() => {
+  //   if (!user?.id) {
+  //     navigate("/");
+  //   }
+  // }, [navigate, user]);
 
   // Handlers
   const handleLogOut = async () => {
@@ -42,10 +41,7 @@ const Dashboard = () => {
         </Button>
       </div>
       <div className="p-10">
-       { !user.profileCompleted
-        ? <Stepper />
-        : <Patients />      
-      }
+        {!user.profileCompleted ? <Stepper /> : <Patients />}
       </div>
     </div>
   );

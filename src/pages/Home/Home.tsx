@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "./Navbar";
-import Banner from "./Banner";
-import OurTeam from "./OurTeam";
+import Navbar from "./components/Navbar";
+import Banner from "./components/Banner";
+import OurTeam from "./components/OurTeam";
 
 const Home: React.FC = () => {
   return (

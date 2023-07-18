@@ -1,10 +1,10 @@
 import React from "react";
-import IncomeTable from "./IncomeTable";
-import Sidebar from "../Dashboard/Sidebar";
-import Keypad from "./Keypad";
-import defaultPayments from "../../../public/defaultPayments";
-import DateRangePicker from "./DataRangePicker";
+import IncomeTable from "./components/IncomeTable";
+import Sidebar from "../Me/Sidebar";
+import Keypad from "./components/Keypad";
+import DateRangePicker from "./components/DataRangePicker";
 import { Button } from "antd";
+import { payments } from "../../constans/defaultPayments";
 
 const Wallet: React.FC = () => {
   return (
@@ -33,13 +33,11 @@ const Wallet: React.FC = () => {
             }}
           >
             <DateRangePicker />
-            <Button>
-              (+) New Income
-            </Button>
+            <Button>(+) New Income</Button>
           </div>
         </div>
         <div>
-          <IncomeTable incomes={defaultPayments} />
+          <IncomeTable incomes={payments} />
         </div>
       </div>
     </div>

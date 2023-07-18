@@ -1,16 +1,19 @@
 import { useState, useCallback, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Input from "../commons/Input";
-import Button from "../commons/Button";
-import customMessage from "../commons/customMessage";
+import Input from "../../commons/Input";
+import Button from "../../commons/Button";
+import customMessage from "../../commons/customMessage";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import { logIn } from "../store/user";
+import { RootState } from "../../store/store";
+import { logIn } from "../../store/user";
 import logo from "/logo.png";
-import { handleFormLogin, handleFormRegister } from "../actions/formAuth";
-import { handleGoogleLogin, handleGoogleRegister } from "../actions/googleAuth";
+import { handleFormLogin, handleFormRegister } from "../../actions/formAuth";
+import {
+  handleGoogleLogin,
+  handleGoogleRegister,
+} from "../../actions/googleAuth";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -106,7 +109,8 @@ const AuthForm = () => {
           <img
             src={logo}
             alt="logo"
-            className="mx-auto w-auto h-20 rounded-lg"
+            className="mx-auto w-auto h-20 rounded-lg cursor-pointer"
+            onClick={() => navigate("/")}
           />
         </div>
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md z-30">

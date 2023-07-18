@@ -1,6 +1,6 @@
 import React from "react";
-import ProfileCard from "../../commons/ProfileCard";
-import members from "../../constans/members";
+import ProfileCard from "../../../commons/ProfileCard";
+import members from "../../../constans/members";
 
 const OurTeam: React.FC = () => {
   return (
@@ -9,12 +9,12 @@ const OurTeam: React.FC = () => {
         {" "}
         Nuestro Equipo
       </h2>
-      <h3 className="mt-10 text-secondary text-[17px] leading-[30px] text-center">
+      <h3 className="mt-10 text-secondary text-lg leading-[30px] text-center">
         Somos un equipo interdisciplinario de médicos, profesionales de salud y
         de tecnología con más de 10 años de experiencia en desarrollo de
         servicios digitales.
       </h3>
-      <div className="mt-10 flex flex-wrap  justify-center gap-10 ">
+      <div className="mt-10 flex flex-wrap justify-center gap-10 ">
         {members.map((member, i) => (
           <ProfileCard
             key={i}

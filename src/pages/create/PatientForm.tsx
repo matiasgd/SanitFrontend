@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AutoComplete, DatePicker, Input, Select } from "antd";
 import moment from "moment";
 import "moment/locale/es";
 import { Option } from "antd/lib/mentions";
 import AddressForm from "./AddressForm";
-import Nationalities from "../../../public/nationalities";
+import { nationalities } from "../../constans/nationalities";
 
 const PatientForm = () => {
   const [patient, setPatient] = useState({
@@ -32,7 +32,7 @@ const PatientForm = () => {
   const [options, setOptions] = useState<string[]>([]);
 
   const handleSearch = (value: string) => {
-    const filteredOptions = Nationalities.filter((nationality) =>
+    const filteredOptions = nationalities.filter((nationality) =>
       nationality.toLowerCase().includes(value.toLowerCase())
     );
     setOptions(filteredOptions);
@@ -88,7 +88,7 @@ const PatientForm = () => {
     borderRadius: "5px",
     height: "35px",
     alignItems: "center",
-  }
+  };
 
   const fieldStyle = {
     width: "50%",
@@ -118,9 +118,7 @@ const PatientForm = () => {
             width: "100%",
           }}
         >
-          <div
-            style={header}
-          >
+          <div style={header}>
             <p style={{ fontSize: "16px", padding: "15px" }}>Datos generales</p>
           </div>
           <div style={{ display: "flex", gap: "20px" }}>
@@ -203,9 +201,7 @@ const PatientForm = () => {
               />
             </div>
           </div>
-          <div
-            style={header}
-          >
+          <div style={header}>
             <p style={{ fontSize: "16px", padding: "15px" }}>Contacto</p>
           </div>
           <div style={{ display: "flex", gap: "20px" }}>
@@ -254,9 +250,7 @@ const PatientForm = () => {
               />
             </div>
           </div>
-          <div
-            style={header}
-          >
+          <div style={header}>
             <p style={{ fontSize: "16px", padding: "15px" }}>Seguro Médico</p>
           </div>
           <div style={{ display: "flex", gap: "20px" }}>
@@ -311,15 +305,11 @@ const PatientForm = () => {
               />
             </div>
           </div>
-          <div
-            style={header}
-          >
+          <div style={header}>
             <p style={{ fontSize: "16px", padding: "15px" }}>Dirección</p>
           </div>
           <AddressForm />
-          <div
-            style={header}
-          >
+          <div style={header}>
             <p style={{ fontSize: "16px", padding: "15px" }}>
               Contacto de emergencia
             </p>
