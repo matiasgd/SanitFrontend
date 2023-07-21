@@ -8,6 +8,7 @@ import Wallet from "./pages/Wallet/Wallet";
 import Calendar from "./pages/Calendar/Calendar";
 import AddressForm from "./pages/create/AddressForm";
 import Modal from "./pages/create/ModalTest";
+import Origin from "./pages/Me/Origin";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/adress" element={<AddressForm />} />
       <Route path="/modal" element={<Modal />} />
+      <Route path="/origin" element={<Origin />} />
     </Routes>
   );
 }

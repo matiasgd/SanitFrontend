@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 27.5.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 50 47.4" style="enable-background:new 0 0 50 47.4;" xml:space="preserve">
+     viewBox="0 0 50 47.4" style="enable-background:new 0 0 50 47.4;" xml:space="preserve">
 <style type="text/css">
-	.st0{fill:#647185;}
-	.st1{fill:none;stroke:#FFFFFF;stroke-width:4;stroke-miterlimit:10;}
+    .cambio-color {
+        fill: red; /* Cambia el color de relleno */
+        stroke: red; /* Cambia el color del borde */
+    }
 </style>
-<circle class="st0" cx="74.28" cy="36.81" r="10.6"/>
-<circle class="st0" cx="101.34" cy="36.81" r="10.6"/>
-<circle class="st0" cx="74.28" cy="10.6" r="10.6"/>
-<circle class="st0" cx="101.34" cy="10.6" r="10.6"/>
+<circle class="cambio-color" cx="74.28" cy="36.81" r="10.6"/>
+<circle class="cambio-color" cx="101.34" cy="36.81" r="10.6"/>
+<circle class="cambio-color" cx="74.28" cy="10.6" r="10.6"/>
+<circle class="cambio-color" cx="101.34" cy="10.6" r="10.6"/>
 <g>
-	<path class="st0" d="M43.98,47.72H6.02c-2.07,0-3.74-1.68-3.74-3.74V6.35c0-2.07,1.68-3.74,3.74-3.74h37.95
-		c2.07,0,3.74,1.68,3.74,3.74v37.62C47.72,46.04,46.05,47.72,43.98,47.72z"/>
-	<path class="st0" d="M11.86,6.49v-6.4c0-0.22,0.18-0.4,0.4-0.4h6.4c0.22,0,0.4,0.18,0.4,0.4v6.4c0,0.22-0.18,0.4-0.4,0.4h-6.4
-		C12.04,6.89,11.86,6.71,11.86,6.49z"/>
-	<path class="st0" d="M31.09,6.49v-6.4c0-0.22,0.18-0.4,0.4-0.4h6.4c0.22,0,0.4,0.18,0.4,0.4v6.4c0,0.22-0.18,0.4-0.4,0.4h-6.4
-		C31.27,6.89,31.09,6.71,31.09,6.49z"/>
-	<line class="st1" x1="10.28" y1="16.27" x2="38.96" y2="16.27"/>
-	<line class="st1" x1="28.34" y1="31.8" x2="38.96" y2="31.8"/>
+    <path class="cambio-color" d="M43.98,47.72H6.02c-2.07,0-3.74-1.68-3.74-3.74V6.35c0-2.07,1.68-3.74,3.74-3.74h37.95
+        c2.07,0,3.74,1.68,3.74,3.74v37.62C47.72,46.04,46.05,47.72,43.98,47.72z"/>
+    <path class="cambio-color" d="M11.86,6.49v-6.4c0-0.22,0.18-0.4,0.4-0.4h6.4c0.22,0,0.4,0.18,0.4,0.4v6.4c0,0.22-0.18,0.4-0.4,0.4h-6.4
+        C12.04,6.89,11.86,6.71,11.86,6.49z"/>
+    <path class="cambio-color" d="M31.09,6.49v-6.4c0-0.22,0.18-0.4,0.4-0.4h6.4c0.22,0,0.4,0.18,0.4,0.4v6.4c0,0.22-0.18,0.4-0.4,0.4h-6.4
+        C31.27,6.89,31.09,6.71,31.09,6.49z"/>
+    <line class="cambio-color" x1="10.28" y1="16.27" x2="38.96" y2="16.27"/>
+    <line class="cambio-color" x1="28.34" y1="31.8" x2="38.96" y2="31.8"/>
 </g>
 </svg>
