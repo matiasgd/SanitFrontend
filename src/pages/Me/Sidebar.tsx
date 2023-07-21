@@ -1,33 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { UserOutlined } from "@ant-design/icons";
+import React, { useState } from "react";
+import { LeftOutlined, RightOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store.js";
-import { getUser } from "../../utils/getUser.js";
+import {
+  MdSpaceDashboard,
+  MdAccountBalanceWallet,
+  MdCalendarToday,
+  MdInsertChart,  
+  MdOutlineSupportAgent,
+} from "react-icons/md";
+import { BsPersonFill } from "react-icons/bs";
+import { BiPlusMedical } from "react-icons/bi";
+import { LuPill } from "react-icons/lu";
 
-const Sidebar: React.FC = () => {
-  let user = useSelector((state: RootState) => state.user);
-  const [userInformation, setUserInformation] = useState<any>([]);
-
+const Sidebar: React.FC = ({ onSelect }) => {
   const sections = [
-    { name: "Dashboard", route: "dashboardIcon.svg" },
-    { name: "Calendar", route: "calendarIcon.svg" },
-    { name: "Patients", route: "patienIcon.svg" },
-    { name: "Metrics", route: "graphicIcon.svg" },
-    { name: "Presciptions", route: "vitaminIcon.svg" },
-    { name: "Help Center", route: "helpIcon.svg" },
-    { name: "Notifications", route: "notificationIcon.svg" },
+    { name: "Panel", icon: <MdSpaceDashboard /> },
+    { name: "Ingresos", icon: <MdAccountBalanceWallet /> },
+    { name: "Pacientes", icon: <BsPersonFill /> },
+    { name: "Turnos", icon: <MdCalendarToday /> },
+    { name: "Consultas", icon: <BiPlusMedical /> },
+    { name: "Recetas", icon: <LuPill /> },
+    { name: "Informes", icon: <MdInsertChart /> },
+    { name: "Soporte", icon: <MdOutlineSupportAgent /> },
   ];
 
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
+  const [hoveredItems, setHoveredItems] = useState(
+    Array(sections.length).fill(false)
+  );
+
+  const handleToggle = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleItemClick = (index: number) => {
+    setSelectedItemIndex(index);
+    if (onSelect) {
+      onSelect(sections[index].name);
+    }
+  };
+
+  const handleMouseEnter = (index: number) => {
+    setHoveredItems((prevState) => {
+      const updatedState = [...prevState];
+      updatedState[index] = true;
+      return updatedState;
+    });
+  };
+
+  const handleMouseLeave = (index: number) => {
+    setHoveredItems((prevState) => {
+      const updatedState = [...prevState];
+      updatedState[index] = false;
+      return updatedState;
+    });
+  };
+
   const sidebarStyle = {
-    flex: "1",
-    width: "200px",
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
     backgroundColor: "#FCFDFE",
     borderRadius: "15px",
     boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
     padding: "10px",
-    alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",
   };
 
   const logoStyle = {
@@ -47,115 +85,108 @@ const Sidebar: React.FC = () => {
     borderRadius: "10px",
   };
 
-  const listado = {
-    backgroundColor: "#FCFDFE",
+  const listItemStyleSelected = {
+    ...listItemStyle,
+    backgroundColor: "#E3F0FC",
+    color: "#1D83D8",
   };
 
-  const fecha = {
-    backgroundColor: "#F2F7FD",
+  const listIconStyle = {
+    display: "flex",
+    alignItems: "center",
+    gap: "15px",
+    width: "20px",
+    height: "25px",
+    marginRight: "15px",
+  };
+
+  const listButtonStyle = {
+    display: "flex",
+    alignItems: "center",
     padding: "10px",
-    borderRadius: "5px",
-    color: "#5F8DCA",
-    marginBottom: "10px",
+    cursor: "pointer",
+    transition: "background-color 0.3s, color 0.3s",
+    borderRadius: "10px",
   };
 
-  const currentDate = new Date();
-  const options = {
-    weekday: "short",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
+  const avatarStyle = {
+    display: "flex",
+    alignItems: "center",
+    borderTop: "1px solid #DDD",
+    marginTop: "10px",
+    paddingTop: "10px",
+    cursor: "pointer",
   };
-  const formattedDate = currentDate.toLocaleString("en-US", options);
-
-  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
-
-  const handleMouseEnter = (index: number) => {
-    setHoveredItem(index.toString());
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredItem(null);
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userData = await getUser(user.id);
-        setUserInformation(userData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
-    <div style={sidebarStyle}>
-      <div style={logoStyle}>
-        <img src="logo.png" alt="Logo" />
-      </div>
-      <div style={listado}>
-        <ul>
-          <li>
-            <strong style={listItemStyle}>Manage</strong>
-          </li>
-          {sections.map((section, index) => (
-            <li
-              key={index}
-              style={{
-                ...listItemStyle,
-                backgroundColor:
-                  hoveredItem === index.toString() ? "#F2F7FD" : "initial",
-                color: hoveredItem === index.toString() ? "#5F8DCA" : "black",
-              }}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div
-                style={{ width: "20px", height: "20px", marginRight: "15px" }}
-              >
-                <img src={section.route} alt="Logo" />
-              </div>
-              <div>{section.name}</div>
+    <div style={{display:"flex", height: "100%", alignItems:"center"}}>
+      <div style={
+                  isExpanded === true
+                    ? {...sidebarStyle, width: "200px",}
+                    : {...sidebarStyle, width: "60px",
+                      }
+                }>
+        <div>
+          <div style={logoStyle}>
+            <img src="logo.png" alt="Logo" />
+          </div>
+          <ul>
+            <li>
+              <strong style={listItemStyle}>Manage</strong>
             </li>
-          ))}
-        </ul>
+            {sections.map((section, index) => (
+              <li
+                key={index}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={() => handleMouseLeave(index)}
+                onClick={() => handleItemClick(index)}
+                style={
+                  selectedItemIndex === index
+                    ? listItemStyleSelected
+                    : {
+                        ...listButtonStyle,
+                        backgroundColor: hoveredItems[index]
+                          ? "#F2F7FD"
+                          : "initial",
+                        color: hoveredItems[index] ? "#7EC0ED" : "#999",
+                      }
+                }
+              >
+                <div
+                  style={{
+                    ...listIconStyle,
+                  }}
+                >
+                  <div>{section.icon}</div>
+                  <div>{isExpanded && <div>{section.name}</div>}</div>
+                </div>
+                <div></div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={avatarStyle}>
+          <div style={{ flex: "0 0 auto", marginRight: "10px" }}>
+            <Avatar size="large" icon={<UserOutlined />} />
+          </div>
+          {isExpanded && (
+          <div className="text" style={{ flex: "1 1 auto" }}>
+            <div style={{ fontSize: "12px", fontWeight: "bold" }}>
+              nombre , apellido
+            </div>
+            <div
+              className="specialty"
+              style={{ fontSize: "10px", color: "#999" }}
+            >
+              especialidad
+            </div>
+          </div>)}
+        </div>
       </div>
-      <div style={fecha}>{formattedDate}</div>
-      <div
-        className="container"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          borderTop: "1px solid #DDD",
-          marginTop: "10px",
-          paddingTop: "10px",
-        }}
-      >
-        <div
-          className="avatar"
-          style={{ flex: "0 0 auto", marginRight: "10px" }}
-        >
-          <Avatar size="large" icon={<UserOutlined />} />
-        </div>
-        <div className="text" style={{ flex: "1 1 auto" }}>
-          <div
-            className="name"
-            style={{ fontSize: "12px", fontWeight: "bold" }}
-          >
-            {userInformation.email} {userInformation.lastname}
-          </div>
-          <div
-            className="specialty"
-            style={{ fontSize: "10px", color: "#999" }}
-          >
-            {userInformation.specialty}
-          </div>
-        </div>
+      <div style={{display:"flex", height:"45px", width:"25px", justifyContent: "center",  borderRadius:"0 20px 20px 0", backgroundColor:"#FCFDFE",  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",}}>
+        <button style={{display:"flex", alignItems:"center" }}onClick={handleToggle}>
+          {isExpanded ? <LeftOutlined /> : < RightOutlined/>}
+        </button>
       </div>
     </div>
   );
