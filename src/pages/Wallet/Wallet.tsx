@@ -9,14 +9,11 @@ import { payments } from "../../constans/defaultPayments";
 const Wallet: React.FC = () => {
   return (
     <div style={{ display: "flex", margin: "20px", gap: "20px" }}>
-      <div style={{ width: "10%", minWidth: "200px" }}>
-        <Sidebar />
-      </div>
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          width: "90%",
+          width: "100%",
           gap: "20px",
         }}
       >

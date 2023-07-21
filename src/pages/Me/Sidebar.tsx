@@ -11,6 +11,7 @@ import {
 import { BsPersonFill } from "react-icons/bs";
 import { BiPlusMedical } from "react-icons/bi";
 import { LuPill } from "react-icons/lu";
+import { BsReverseLayoutTextWindowReverse } from "react-icons/bs";
 
 const Sidebar: React.FC = ({ onSelect }) => {
   const sections = [
@@ -21,6 +22,7 @@ const Sidebar: React.FC = ({ onSelect }) => {
     { name: "Consultas", icon: <BiPlusMedical /> },
     { name: "Recetas", icon: <LuPill /> },
     { name: "Informes", icon: <MdInsertChart /> },
+    { name: "Modales", icon: <BsReverseLayoutTextWindowReverse /> },
     { name: "Soporte", icon: <MdOutlineSupportAgent /> },
   ];
 
@@ -183,7 +185,7 @@ const Sidebar: React.FC = ({ onSelect }) => {
           </div>)}
         </div>
       </div>
-      <div style={{display:"flex", height:"45px", width:"25px", justifyContent: "center",  borderRadius:"0 20px 20px 0", backgroundColor:"#FCFDFE",  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",}}>
+      <div style={{display:"flex", height:"45px", width:"25px", justifyContent: "center",  borderRadius:"0 20px 20px 0", backgroundColor:"#FCFDFE",  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)"}}>
         <button style={{display:"flex", alignItems:"center" }}onClick={handleToggle}>
           {isExpanded ? <LeftOutlined /> : < RightOutlined/>}
         </button>
