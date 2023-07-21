@@ -1,4 +1,3 @@
-import { Select } from "antd";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
 
 interface SelectProps {
@@ -30,13 +29,24 @@ const CustomSelect: React.FC<SelectProps> = ({
             <label className="block text-sm text-start font-medium leading-6 text-gray-800">
               {label}
             </label>
-            <Select
+            <select
               {...field}
-              placeholder={placeholder}
               onChange={field.onChange}
-              className="block w-full rounded-md border-0 mt-2 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
-              options={options}
-            />
+              className={`block w-full rounded-md border-0 mt-2 p-2 shadow-sm ring-1 ring-inset ring-gray-300 ${
+                field.value ? "text-gray-800" : "text-gray-400"
+              } focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6 outline-none`}
+            >
+              {!field.value && (
+                <option value="" disabled selected hidden>
+                  {placeholder}
+                </option>
+              )}
+              {options.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
           </div>
         );
       }}

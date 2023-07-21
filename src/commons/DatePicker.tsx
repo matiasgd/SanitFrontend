@@ -31,7 +31,7 @@ const RHFDatePicker: React.FC<RHFDatePickerProps> = ({
             </label>
             <DatePicker
               placeholder={placeholder}
-              className="w-full block mt-2"
+              className="w-full block mt-2 py-1.5"
               ref={field.ref}
               name={field.name}
               onBlur={field.onBlur}

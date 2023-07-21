@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
-import GenericModal from "./GenericModal";
 import PatientForm from "./PatientForm";
 import AddressForm from "./AddressForm";
+import PatientModal from "./PatientModal";
 
 const ModalTest: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
+
+  const [isOpen, setOpen] = useState(false);
 
   const handleButtonClick = (title: string) => {
     setModalTitle(title);
@@ -19,6 +21,10 @@ const ModalTest: React.FC = () => {
 
   return (
     <div style={{ margin: "auto", textAlign: "center" }}>
+      <PatientModal isOpen={isOpen} onClose={() => setOpen(false)} />
+      <button type="button" onClick={() => setOpen(true)}>
+        Modal
+      </button>
       <Button
         style={{ margin: "8px" }}
         onClick={() => handleButtonClick("New Patient")}
