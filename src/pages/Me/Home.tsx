@@ -5,11 +5,8 @@ import PatientApointments from "./components/PatientAppointments";
 
 const Home = () => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", margin: "20px" }}>
+    <div style={{ display: "flex", flexDirection: "column"}}>
       <div style={{ display: "flex", width: "100%" }}>
-        <div style={{ flexGrow: 0 }}>
-          <Sidebar />
-        </div>
         <div style={{ flexGrow: 1 }}>
           <div
             style={{

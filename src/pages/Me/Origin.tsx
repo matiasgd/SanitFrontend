@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import Patient from "./components/Patient"; 
+import Patients from "./components/Patients"; 
+import Patient from "./Home"; 
 import ClinicalHistory from "./components/ClinicalHistory"; // Importa el componente específico 2
 import Modal from "../create/ModalTest"; 
 import Wallet from "../Wallet/Wallet";
@@ -19,11 +20,12 @@ const Origin = () => {
         <Sidebar onSelect={handleComponentSelect} />
       </div>
       <div style={{ width: "100%", height: "100%" }}>
-        {selectedComponent === "Pacientes" && <Patient />}
+        {selectedComponent === "Pacientes" && <Patients />}
         {selectedComponent === "ClinicalHistory" && <ClinicalHistory />}
         {selectedComponent === "Modales" && <Modal />}
         {selectedComponent === "Ingresos" && <Wallet />}
         {selectedComponent === "Turnos" && <Calendar />}
+        {selectedComponent === "Panel" && <Patient />}
       </div>
     </div>
   );
