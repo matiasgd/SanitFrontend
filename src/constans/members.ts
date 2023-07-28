@@ -51,7 +51,8 @@ const members = [
     name: "Luciano Chiarelli",
     title: "Computer Engineering Student - Fullstack Developer",
     imagePath: luciano,
-    description: "[Inserte descripción aquí]",
+    description:
+      "Luciano is currently pursuing a Computer Engineering degree and has accquired experience working in multidiverse teams from his former role at ScaleAI. As a FullStack Developer, his goal is to deliver high-quality applications that meet the needs of end-users and exceed their expectations.",
     linkedin: "https://www.linkedin.com/in/luciano-chiarelli/",
     github: "https://www.github.com/ChiarelliLuciano",
     resume:

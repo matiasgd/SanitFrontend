@@ -35,7 +35,11 @@ const FlipCard: React.FC<FlipCardProps> = ({
             {title}
           </p>
           <div className="border-4 border-[#2AAAE1] rounded-full">
-            <img src={image} alt={name} className="rounded-full" />
+            <img
+              src={image}
+              alt={name}
+              className="rounded-full w-[300px] h-[240px]"
+            />
           </div>
         </div>
         <div className="absolute backface-hidden rotate-y-180 w-full h-full bg-[#154E64]  overflow-hidden rounded-3xl">
