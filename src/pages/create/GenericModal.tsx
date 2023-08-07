@@ -3,7 +3,6 @@ import { Button } from "antd";
 import PatientForm from "./PatientForm";
 
 const GenericModal = () => {
-
   const handleCancel = () => {
     console.log("Cancelado");
   };
@@ -18,7 +17,7 @@ const GenericModal = () => {
 
   const containerStyle = {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as "column",
     margin: "auto",
     alignItems: "center",
     borderRadius: "10px",
@@ -30,7 +29,7 @@ const GenericModal = () => {
 
   const headerStyle = {
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as "column",
     padding: "10px 20px",
     justifyContent: "space-between",
     alignItems: "center",

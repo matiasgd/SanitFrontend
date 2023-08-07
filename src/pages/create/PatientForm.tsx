@@ -74,7 +74,6 @@ const PatientForm = () => {
 
   const container = {
     display: "flex",
-    flexDirection: "column",
     margin: "auto",
     alignItems: "center",
     borderRadius: "10px",
@@ -93,7 +92,7 @@ const PatientForm = () => {
   const fieldStyle = {
     width: "50%",
     display: "flex",
-    flexDirection: "column",
+    flexDirection: "column" as "column",
     gap: "5px",
   };
 
