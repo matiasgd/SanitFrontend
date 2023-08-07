@@ -1,4 +1,3 @@
-
 import { Button } from "antd";
 import { useState } from "react";
 import Axios from "axios";
@@ -25,22 +24,22 @@ const AddressForm = () => {
   interface ChangeEvent<T> {
     target: T;
   }
-  
+
   interface ValueType {
-    value: string ;
+    value: string;
   }
 
   const [address, setAddress] = useState<AddressState>({
-    street: '',
-    number: '',
-    floor: '',
-    addressType: '', 
-    webAddress: '',
-    houseApartment: '',
-    province: '',
-    country: '',
-    city: '',
-    zipCode: '',
+    street: "",
+    number: "",
+    floor: "",
+    addressType: "",
+    webAddress: "",
+    houseApartment: "",
+    province: "",
+    country: "",
+    city: "",
+    zipCode: "",
   });
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,14 +49,13 @@ const AddressForm = () => {
       [name]: value,
     }));
   };
-  
-  const handleAddressTypeChange = (value: ValueType['value']) => {
+
+  const handleAddressTypeChange = (value: ValueType["value"]) => {
     setAddress((prevAddress) => ({
       ...prevAddress,
       addressType: value,
     }));
   };
-    
 
   const handleSelectChange = (name: keyof AddressState, value: string) => {
     setAddress((prevAddress) => ({

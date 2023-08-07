@@ -8,6 +8,8 @@ import Button from "../../commons/Button";
 import CustomSelect from "../../commons/Select";
 import RHFDatePicker from "../../commons/DatePicker";
 import { commonNationalities } from "../../constans/nationalities";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 interface PatientModalProps {
   isOpen?: boolean;
@@ -16,6 +18,8 @@ interface PatientModalProps {
 
 const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
+  let user = useSelector((state: RootState) => state.user);
+  const doctorId = user.id;
 
   const {
     register,
@@ -26,7 +30,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
     defaultValues: {
       name: "",
       lastName: "",
-      identityNumber: "",
+      govermentId: "",
       nationality: "",
       email: "",
       birthdate: "",
@@ -55,15 +59,18 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
+    console.log(doctorId, "Doctor ID");
     console.log(data, "Datos enviados");
-    // try {
-    //   customMessage("success", "Abrir la Consola");
-
-    //   await axios.post(`http://localhost:3001/api/users/complete/`, data);
-    // } catch (error) {
-    //   customMessage("error", "Algo salió mal.");
-    //   console.error(error);
-    // }
+    try {
+      customMessage("success", "Abrir la Consola");
+      await axios.post(
+        `http://localhost:3001/api/patients/new/${doctorId}`,
+        data
+      );
+    } catch (error) {
+      customMessage("error", "Algo salió mal.");
+      console.error(error);
+    }
     setIsLoading(false);
     onClose();
   };
@@ -96,7 +103,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             errors={errors}
           />
           <Input
-            id="identityNumber"
+            id="govermentId"
             label="DNI / ID"
             placeholder="XX XXX XXX"
             type="number"
@@ -228,8 +235,8 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             control={control}
             name="addressType"
             options={[
-              { value: "house", label: "Casa" },
-              { value: "appartment", label: "Departamento" },
+              { value: "House", label: "Casa" },
+              { value: "Appartment", label: "Departamento" },
             ]}
           />
           <Input
@@ -286,7 +293,6 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             errors={errors}
           />
         </div>
-
         <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
           <p className="text-md p-4">Contacto de emergencia</p>
         </div>
