@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Button, Modal } from "antd";
 import AddressForm from "./AddressForm";
 import PatientModal from "./PatientModal";
+import AppointmentsModal from "./AppointmentsModal";
 
 const ModalTest: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalTitle, setModalTitle] = useState("");
-  const [isOpen, setOpen] = useState(false);
+  const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
+  const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
 
   const handleButtonClick = (title: string) => {
     setModalTitle(title);
@@ -19,8 +21,23 @@ const ModalTest: React.FC = () => {
 
   return (
     <div style={{ margin: "auto", textAlign: "center" }}>
-      <PatientModal isOpen={isOpen} onClose={() => setOpen(false)} />
-      <Button onClick={() => setOpen(true)}>New Patient</Button>
+      <PatientModal
+        isOpen={isOpenPatientsModal}
+        onClose={() => setOpenPatientsModal(false)}
+      />
+      <AppointmentsModal
+        isOpen={isOpenAppointmentsModal}
+        onClose={() => setOpenPatientsModal(false)}
+        />
+        <Button
+        style={{ margin: "8px" }}
+        onClick={() => setOpenPatientsModal(true)}
+      >
+        Nuevo paciente
+      </Button>
+      <Button onClick={() => setIsOpenAppointmentsModal(true)}>
+        Nuevo turno
+      </Button>
 
       <Button
         style={{ margin: "8px" }}
