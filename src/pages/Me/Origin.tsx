@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Sidebar from "./Sidebar";
-import Patients from "./components/Patients"; 
-import Patient from "./Home"; 
+import Patients from "./components/Patients";
+import Dashboard from "./Dashboard";
 import ClinicalHistory from "./components/ClinicalHistory"; // Importa el componente específico 2
-import Modal from "../create/ModalTest"; 
+import Modal from "../create/ModalTest";
 import Wallet from "../Wallet/Wallet";
 import Calendar from "../Calendar/Calendar";
 
@@ -15,7 +15,9 @@ const Origin = () => {
   };
 
   return (
-    <div style={{ display: "flex", height:"100vh", padding: "20px", gap: "5px" }}>
+    <div
+      style={{ display: "flex", height: "100vh", padding: "20px", gap: "5px" }}
+    >
       <div>
         <Sidebar onSelect={handleComponentSelect} />
       </div>
@@ -25,7 +27,7 @@ const Origin = () => {
         {selectedComponent === "Modales" && <Modal />}
         {selectedComponent === "Ingresos" && <Wallet />}
         {selectedComponent === "Turnos" && <Calendar />}
-        {selectedComponent === "Panel" && <Patient />}
+        {selectedComponent === "Panel" && <Dashboard />}
       </div>
     </div>
   );
