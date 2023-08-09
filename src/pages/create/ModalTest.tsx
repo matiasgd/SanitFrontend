@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
-import GenericModal from "./GenericModal";
 import PatientForm from "./PatientForm";
 import AddressForm from "./AddressForm";
+import ServiceForm from "../services/Service";
 
 const ModalTest: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -58,6 +58,7 @@ const ModalTest: React.FC = () => {
       >
         {modalTitle === "New Patient" && <PatientForm />}
         {modalTitle === "New Direction" && <AddressForm />}
+        {modalTitle === "New Service" && <ServiceForm />}
       </Modal>
     </div>
   );

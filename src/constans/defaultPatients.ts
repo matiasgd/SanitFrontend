@@ -4,7 +4,7 @@ export const defaultPatients = [
     name: "Enzo",
     surname: "Bustos Fierro",
     gender: "Male",
-    dni: "",
+    dni: "36.451.456",
     cellphone: "+54 9 3513 157284",
     email: "-",
     province: "Cordoba",
