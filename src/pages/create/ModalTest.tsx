@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
+
+import PatientForm from "./PatientForm";
 import AddressForm from "./AddressForm";
+import ServiceForm from "../services/Service";
 import PatientModal from "./PatientModal";
 import AppointmentsModal from "./AppointmentsModal";
 
@@ -71,6 +74,7 @@ const ModalTest: React.FC = () => {
         onOk={closeModal}
       >
         {modalTitle === "New Direction" && <AddressForm />}
+        {modalTitle === "New Service" && <ServiceForm />}
       </Modal>
     </div>
   );
