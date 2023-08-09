@@ -37,7 +37,7 @@ const CustomSelect: React.FC<SelectProps> = ({
               } focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6 outline-none`}
             >
               {!field.value && (
-                <option value="" disabled selected hidden>
+                <option value="" disabled defaultValue={placeholder} hidden>
                   {placeholder}
                 </option>
               )}
