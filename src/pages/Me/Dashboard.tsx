@@ -6,12 +6,7 @@ import { RootState } from "../../store/store";
 import { logOut } from "../../store/user";
 import customMessage from "../../commons/customMessage";
 import Stepper from "./Stepper";
-import {
-  TbStethoscope,
-  TbLogout,
-  TbUserPlus,
-  TbMedicalCross,
-} from "react-icons/tb";
+import { TbStethoscope, TbUserPlus, TbMedicalCross } from "react-icons/tb";
 import PatientModal from "../create/PatientModal";
 import { useState } from "react";
 import SearchBar from "./components/SearchBar";
@@ -112,9 +107,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-/**
- * <Button type="button" onClick={handleLogOut}>
-          Log Out
-        </Button>
- */
