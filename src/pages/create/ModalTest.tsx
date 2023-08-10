@@ -30,9 +30,9 @@ const ModalTest: React.FC = () => {
       />
       <AppointmentsModal
         isOpen={isOpenAppointmentsModal}
-        onClose={() => setOpenPatientsModal(false)}
-        />
-        <Button
+        onClose={() => setIsOpenAppointmentsModal(false)}
+      />
+      <Button
         style={{ margin: "8px" }}
         onClick={() => setOpenPatientsModal(true)}
       >
