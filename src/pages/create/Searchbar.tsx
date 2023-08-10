@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { defaultPatients } from "../../../constans/defaultPatients";
+//import { defaultPatients } from "../../constans/defaultPatients";
 import { Input, Dropdown, Menu } from "antd";
 import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import axios from "axios";
 
 interface Patient {
-  id: number;
+  _id: string;
   name: string;
-  surname: string;
-  dni: string; // Agregamos el DNI
-  // ... otros campos del paciente
+  lastName: string;
+  identityNumber: string; // Agregamos el DNI
 }
 
 const splitNameByMatch = (name: string, query: string) => {
@@ -23,11 +25,33 @@ const splitNameByMatch = (name: string, query: string) => {
   ];
 };
 
-const SearchInput: React.FC = () => {
+const Searchbar: React.FC = () => {
+  // usuario logueado
+  let user = useSelector((state: RootState) => state.user);
+  const doctorId = user.id;
+  // estados del componente
   const [inputValue, setInputValue] = useState<string>("");
   const [results, setResults] = useState<Patient[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(-1);
+  const [patients, setPatients] = useState([]);
+
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3001/api/users/patients/${doctorId}`
+        );
+        console.log(`http://localhost:3001/api/users/patients/${doctorId}`);
+        console.log(response.data.data, "Patients");
+        setPatients(response.data.data); // Update state with response.data
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchPatients(); // Call the fetch function
+  }, [doctorId]);
 
   useEffect(() => {
     if (inputValue.length < 3) {
@@ -37,7 +61,7 @@ const SearchInput: React.FC = () => {
     }
 
     const searchPatients = () => {
-      const filteredPatients = defaultPatients.filter((patient) =>
+      const filteredPatients = patients.filter((patient) =>
         patient.name.toLowerCase().includes(inputValue.toLowerCase())
       );
       setResults(filteredPatients.slice(0, 5));
@@ -74,14 +98,18 @@ const SearchInput: React.FC = () => {
         );
         return (
           <Menu.Item
-            key={patient.id}
+            key={patient._id}
             className={index === selectedIndex ? "selected" : ""}
           >
             <UserOutlined style={{ color: "blue", marginRight: "5px" }} />
             {beforeMatch}
             <strong>{match}</strong>
-            {afterMatch} {patient.surname}
-            <span style={{ color: 'grey', fontSize: '0.8em', marginLeft: '5px' }}>- ID: {patient.dni}</span>
+            {afterMatch} {patient.lastName}
+            <span
+              style={{ color: "grey", fontSize: "0.8em", marginLeft: "5px" }}
+            >
+              - ID: {patient._id}
+            </span>
           </Menu.Item>
         );
       })}
@@ -96,23 +124,23 @@ const SearchInput: React.FC = () => {
       )}
     </Menu>
   );
-  
+
   return (
     <div onKeyDown={handleKeyDown}>
-      <Dropdown overlay={menu} visible={inputValue.length >= 3}>
+      <Dropdown menu={menu} open={inputValue.length >= 3}>
         <Input
           type="text"
           value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
-            setSelectedIndex(-1); // Reset selected index on input change
+            setSelectedIndex(-1); 
           }}
           placeholder={
             inputValue.length < 3
               ? "Ingresar más de tres letras"
               : "Buscar paciente"
           }
-          prefix={<SearchOutlined />} // Añadimos la lupa al inicio del Input
+          prefix={<SearchOutlined />} 
         />
       </Dropdown>
       {isLoading && <span>Loading...</span>}
@@ -120,4 +148,4 @@ const SearchInput: React.FC = () => {
   );
 };
 
-export default SearchInput;
+export default Searchbar;

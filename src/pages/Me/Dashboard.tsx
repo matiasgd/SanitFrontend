@@ -41,7 +41,7 @@ const Dashboard = () => {
   return (
     <>
       <PatientModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
-      {user.profileCompleted ? (
+      {!user.profileCompleted ? (
         <Stepper />
       ) : (
         <div className="flex flex-col gap-4">
