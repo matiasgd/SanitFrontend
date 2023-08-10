@@ -1,16 +1,22 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useForm,
+} from "react-hook-form";
 import customMessage from "../../commons/customMessage";
 import Modal from "../../commons/Modal";
 import RHFDatePicker from "../../commons/DatePicker";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Select } from "antd";
+import { Button, Select } from "antd";
 const { Option } = Select;
 import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import PatientModal from "./PatientModal";
 import CustomSelect from "../../commons/Select";
+import PatientAutocomplete from "../../commons/PatientAutocomplete";
 
 interface AppointmentModalProps {
   isOpen?: boolean;
@@ -35,6 +41,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // Filtrar pacientes por nombre y apellido concatenados
@@ -55,6 +62,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   }, [searchQuery]);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchPatients = async () => {
       try {
         const response = await axios.get(
@@ -67,6 +75,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       }
     };
     fetchPatients(); // Call the fetch function
+    setIsLoading(false);
   }, [doctorId]);
 
   const {
@@ -74,11 +83,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FieldValues>({
     defaultValues: {
       date: "",
       timeOfAppointment: "",
-      patient: selectedPatient,
+      patient: "",
       doctor: doctorId,
       address: "",
       service: "",
@@ -97,6 +107,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       console.error(error);
     }
     onClose();
+    reset();
   };
 
   return (
@@ -106,7 +117,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         className="flex flex-col gap-4 w-full"
       >
         <p className="text-md font-semibold">Nuevo turno</p>
-
         <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
           <p className="text-md p-4">Datos requeridos</p>
         </div>
@@ -117,8 +127,9 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             control={control}
             name="date"
           />
-          <Select
-            onSearch={(value) => setSearchQuery(value)}
+          <PatientAutocomplete
+            control={control}
+            doctorId={doctorId}
             onSelect={(value) => {
               if (value === "create") {
                 return setIsCreatingPatient(true);
@@ -126,30 +137,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
               setSelectedPatient(value);
               console.log(value, "Selected Patient");
             }}
-            showSearch
-            optionFilterProp="children"
-            filterOption={false}
-            style={{ width: "100%" }}
-            placeholder={
-              patients.length > 3
-                ? "Ingresar más de tres letras"
-                : "Buscar paciente"
-            }
-          >
-            {filteredPatients.length === 0 ? (
-              <Option value="create">
-                <PlusOutlined style={{ marginRight: "5px" }} />
-                Crear nuevo paciente
-              </Option>
-            ) : (
-              filteredPatients.slice(0, 5).map((patient) => (
-                <Option key={patient._id} value={patient._id}>
-                  <UserOutlined style={{ color: "blue", marginRight: "5px" }} />
-                  {patient.name} {patient.lastName}
-                </Option>
-              ))
-            )}
-          </Select>
+          />
         </div>
         <CustomSelect
           label="Metodo de pago"
@@ -163,6 +151,21 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             { value: "MercadoPago", label: "Mercado pago" },
           ]}
         />
+        <div className="mt-6 flex items-center justify-end gap-x-6">
+          <button
+            disabled={isLoading}
+            type="button"
+            onClick={() => {
+              onClose();
+              reset();
+            }}
+          >
+            Cancelar
+          </button>
+          <button disabled={isLoading} type="submit">
+            Guardar
+          </button>
+        </div>
       </form>
       {isCreatingPatient && (
         <PatientModal
