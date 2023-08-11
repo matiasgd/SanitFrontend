@@ -32,7 +32,7 @@ const AuthForm = () => {
 
   useEffect(() => {
     if (user?.id) {
-      navigate("/me");
+      navigate("/dashboard");
     }
   }, [navigate, user]);
 
