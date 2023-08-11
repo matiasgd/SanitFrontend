@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
-
-import PatientForm from "./PatientForm";
+import Sidebar from "../Me/Sidebar";
+import AddressForm from "./AddressForm";
 import ServiceForm from "../services/Service";
 import PatientModal from "./PatientModal";
 import AppointmentsModal from "./AppointmentsModal";

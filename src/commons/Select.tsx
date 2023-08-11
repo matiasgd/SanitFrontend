@@ -6,7 +6,6 @@ interface SelectProps {
   label?: string;
   placeholder?: string;
   rules?: RegisterOptions;
-  register?: any;
   options: { value: string; label: string }[];
 }
 
