@@ -1,194 +1,132 @@
-import React, { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { useNavigate } from "react-router-dom";
+import { logOut } from "../../store/user";
+import customMessage from "../../commons/customMessage";
+import { useState, useEffect } from "react";
 import { LeftOutlined, RightOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import {
   MdSpaceDashboard,
   MdAccountBalanceWallet,
   MdCalendarToday,
-  MdInsertChart,  
-  MdOutlineSupportAgent,
 } from "react-icons/md";
 import { BsPersonFill } from "react-icons/bs";
 import { BiPlusMedical } from "react-icons/bi";
-import { LuPill } from "react-icons/lu";
 import { BsReverseLayoutTextWindowReverse } from "react-icons/bs";
+import { useLocation, Link } from "react-router-dom";
+import clsx from "clsx";
 
-const Sidebar: React.FC = ({ onSelect }) => {
-  const sections = [
-    { name: "Panel", icon: <MdSpaceDashboard /> },
-    { name: "Ingresos", icon: <MdAccountBalanceWallet /> },
-    { name: "Pacientes", icon: <BsPersonFill /> },
-    { name: "Turnos", icon: <MdCalendarToday /> },
-    { name: "Consultas", icon: <BiPlusMedical /> },
-    { name: "Recetas", icon: <LuPill /> },
-    { name: "Informes", icon: <MdInsertChart /> },
-    { name: "Modales", icon: <BsReverseLayoutTextWindowReverse /> },
-    { name: "Soporte", icon: <MdOutlineSupportAgent /> },
-  ];
+const sections = [
+  { name: "Panel", icon: <MdSpaceDashboard />, route: "/dashboard" },
+  { name: "Ingresos", icon: <MdAccountBalanceWallet />, route: "/wallet" },
+  { name: "Pacientes", icon: <BsPersonFill />, route: "/patients" },
+  { name: "Turnos", icon: <MdCalendarToday />, route: "/patient" },
+  { name: "Consultas", icon: <BiPlusMedical />, route: "/calendar" },
+  {
+    name: "Modales",
+    icon: <BsReverseLayoutTextWindowReverse />,
+    route: "/modal",
+  },
+];
 
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [selectedItemIndex, setSelectedItemIndex] = useState(-1);
-  const [hoveredItems, setHoveredItems] = useState(
-    Array(sections.length).fill(false)
+const Sidebar: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const user = useSelector((state: RootState) => state.user);
+
+  const matchedSection = sections.find(
+    (section) => location.pathname === section.route
   );
 
-  const handleToggle = () => {
-    setIsExpanded(!isExpanded);
-  };
+  useEffect(() => {
+    if (matchedSection) {
+      setSelectedItem(matchedSection.route);
+    }
+  }, [location.pathname, matchedSection]);
 
-  const handleItemClick = (index: number) => {
-    setSelectedItemIndex(index);
-    if (onSelect) {
-      onSelect(sections[index].name);
+  // useEffect(() => {
+  //   if (!user?.id) {
+  //     navigate("/");
+  //   }
+  // }, [navigate, user]);
+
+  const handleLogOut = async () => {
+    try {
+      await axios.post("http://localhost:3001/api/auth/logout");
+      dispatch(logOut());
+      customMessage("success", "Sesión finalizada, hasta la próxima!");
+      document.cookie =
+        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+      customMessage("error", "Intente otra vez.");
     }
   };
 
-  const handleMouseEnter = (index: number) => {
-    setHoveredItems((prevState) => {
-      const updatedState = [...prevState];
-      updatedState[index] = true;
-      return updatedState;
-    });
-  };
-
-  const handleMouseLeave = (index: number) => {
-    setHoveredItems((prevState) => {
-      const updatedState = [...prevState];
-      updatedState[index] = false;
-      return updatedState;
-    });
-  };
-
-  const sidebarStyle = {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%",
-    backgroundColor: "#FCFDFE",
-    borderRadius: "15px",
-    boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
-    padding: "10px",
-    justifyContent: "space-between",
-  };
-
-  const logoStyle = {
-    marginBottom: "20px",
-    display: "flex",
-    width: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-  };
-
-  const listItemStyle = {
-    padding: "10px",
-    cursor: "pointer",
-    transition: "background-color 0.3s, color 0.3s",
-    backgroundColor: "initial",
-    display: "flex",
-    borderRadius: "10px",
-  };
-
-  const listItemStyleSelected = {
-    ...listItemStyle,
-    backgroundColor: "#E3F0FC",
-    color: "#1D83D8",
-  };
-
-  const listIconStyle = {
-    display: "flex",
-    alignItems: "center",
-    gap: "15px",
-    width: "20px",
-    height: "25px",
-    marginRight: "15px",
-  };
-
-  const listButtonStyle = {
-    display: "flex",
-    alignItems: "center",
-    padding: "10px",
-    cursor: "pointer",
-    transition: "background-color 0.3s, color 0.3s",
-    borderRadius: "10px",
-  };
-
-  const avatarStyle = {
-    display: "flex",
-    alignItems: "center",
-    borderTop: "1px solid #DDD",
-    marginTop: "10px",
-    paddingTop: "10px",
-    cursor: "pointer",
-  };
-
   return (
-    <div style={{display:"flex", height: "100%", alignItems:"center"}}>
-      <div style={
-                  isExpanded === true
-                    ? {...sidebarStyle, width: "200px",}
-                    : {...sidebarStyle, width: "60px",
-                      }
-                }>
-        <div>
-          <div style={logoStyle}>
-            <img src="logo.png" alt="Logo" />
-          </div>
-          <ul>
-            <li>
-              <strong style={listItemStyle}>Manage</strong>
-            </li>
-            {sections.map((section, index) => (
-              <li
-                key={index}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={() => handleMouseLeave(index)}
-                onClick={() => handleItemClick(index)}
-                style={
-                  selectedItemIndex === index
-                    ? listItemStyleSelected
-                    : {
-                        ...listButtonStyle,
-                        backgroundColor: hoveredItems[index]
-                          ? "#F2F7FD"
-                          : "initial",
-                        color: hoveredItems[index] ? "#7EC0ED" : "#999",
-                      }
-                }
-              >
-                <div
-                  style={{
-                    ...listIconStyle,
-                  }}
+    <div className="flex h-[95vh]">
+      <div
+        className="flex flex-col justify-between rounded-e-2xl"
+        style={{ boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)" }}
+      >
+        <div className={isExpanded ? "w-48" : "w-[60px]"}>
+          {isExpanded && (
+            <div className="mb-4 p-2 flex w-[60%] justify-center items-center">
+              <img src="logo.png" alt="Logo" />
+            </div>
+          )}
+          <ul className="justify-center items-center p-1">
+            {isExpanded && <li className="font-bold p-4">Manage</li>}
+            {sections.map((section, i) => (
+              <Link to={section.route} key={i}>
+                <li
+                  className={clsx(
+                    `flex gap-4 p-4 text-gray-500 hover:text-blue-300 hover:bg-blue-50 rounded-xl`,
+                    selectedItem === section.route &&
+                      "text-blue-400 bg-blue-100"
+                  )}
                 >
-                  <div>{section.icon}</div>
-                  <div>{isExpanded && <div>{section.name}</div>}</div>
-                </div>
-                <div></div>
-              </li>
+                  <div className="text-xl">{section.icon}</div>
+                  <div className={!isExpanded ? "hidden" : ""}>
+                    {section.name}
+                  </div>
+                </li>
+              </Link>
             ))}
           </ul>
         </div>
-        <div style={avatarStyle}>
-          <div style={{ flex: "0 0 auto", marginRight: "10px" }}>
-            <Avatar size="large" icon={<UserOutlined />} />
-          </div>
+        <div className="flex gap-2 w-full px-2 py-4 border-t-2 border-gray-300 cursor-pointer">
+          <Avatar
+            size="large"
+            icon={<UserOutlined />}
+            className="bg-gray-400 hover:bg-blue-300"
+            onClick={() => handleLogOut()}
+          />
           {isExpanded && (
-          <div className="text" style={{ flex: "1 1 auto" }}>
-            <div style={{ fontSize: "12px", fontWeight: "bold" }}>
-              nombre , apellido
+            <div className="flex flex-col justify-around ">
+              <p className="text-sm font-semibold">nombre y apellido</p>
+              <p className="text-xs text-gray-400 font-bold">especialidad</p>
             </div>
-            <div
-              className="specialty"
-              style={{ fontSize: "10px", color: "#999" }}
-            >
-              especialidad
-            </div>
-          </div>)}
+          )}
         </div>
       </div>
-      <div style={{display:"flex", height:"45px", width:"25px", justifyContent: "center",  borderRadius:"0 20px 20px 0", backgroundColor:"#FCFDFE",  boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)"}}>
-        <button style={{display:"flex", alignItems:"center" }}onClick={handleToggle}>
-          {isExpanded ? <LeftOutlined /> : < RightOutlined/>}
-        </button>
+
+      <div className="flex justify-center items-center bg-transparent">
+        <div
+          className="items-center py-4 px-2 rounded-e-full"
+          style={{ boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)" }}
+        >
+          <button onClick={() => setIsExpanded(!isExpanded)}>
+            {isExpanded ? <LeftOutlined /> : <RightOutlined />}
+          </button>
+        </div>
       </div>
     </div>
   );

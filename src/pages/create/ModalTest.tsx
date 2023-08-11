@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
-
-import PatientForm from "./PatientForm";
+import Sidebar from "../Me/Sidebar";
 import AddressForm from "./AddressForm";
 import ServiceForm from "../services/Service";
 import PatientModal from "./PatientModal";
@@ -23,59 +22,61 @@ const ModalTest: React.FC = () => {
   };
 
   return (
-    <div style={{ margin: "auto", textAlign: "center" }}>
-      <PatientModal
-        isOpen={isOpenPatientsModal}
-        onClose={() => setOpenPatientsModal(false)}
-      />
-      <AppointmentsModal
-        isOpen={isOpenAppointmentsModal}
-        onClose={() => setIsOpenAppointmentsModal(false)}
-      />
-      <Button
-        style={{ margin: "8px" }}
-        onClick={() => setOpenPatientsModal(true)}
-      >
-        Nuevo paciente
-      </Button>
-      <Button onClick={() => setIsOpenAppointmentsModal(true)}>
-        Nuevo turno
-      </Button>
+    <div className="flex w-full">
+      <Sidebar />
+      <div>
+        <PatientModal
+          isOpen={isOpenPatientsModal}
+          onClose={() => setOpenPatientsModal(false)}
+        />
+        <AppointmentsModal
+          isOpen={isOpenAppointmentsModal}
+          onClose={() => setOpenPatientsModal(false)}
+        />
+        <Button
+          style={{ margin: "8px" }}
+          onClick={() => setOpenPatientsModal(true)}
+        >
+          Nuevo paciente
+        </Button>
+        <Button onClick={() => setIsOpenAppointmentsModal(true)}>
+          Nuevo turno
+        </Button>
+        <Button
+          style={{ margin: "8px" }}
+          onClick={() => handleButtonClick("New Direction")}
+        >
+          New Direction
+        </Button>
+        <Button
+          style={{ margin: "8px" }}
+          onClick={() => handleButtonClick("New Service")}
+        >
+          New Service
+        </Button>
+        <Button
+          style={{ margin: "8px" }}
+          onClick={() => handleButtonClick("New Consult")}
+        >
+          New Consult
+        </Button>
+        <Button
+          style={{ margin: "8px" }}
+          onClick={() => handleButtonClick("New Payment")}
+        >
+          New Payment
+        </Button>
 
-      <Button
-        style={{ margin: "8px" }}
-        onClick={() => handleButtonClick("New Direction")}
-      >
-        New Direction
-      </Button>
-      <Button
-        style={{ margin: "8px" }}
-        onClick={() => handleButtonClick("New Service")}
-      >
-        New Service
-      </Button>
-      <Button
-        style={{ margin: "8px" }}
-        onClick={() => handleButtonClick("New Consult")}
-      >
-        New Consult
-      </Button>
-      <Button
-        style={{ margin: "8px" }}
-        onClick={() => handleButtonClick("New Payment")}
-      >
-        New Payment
-      </Button>
-
-      <Modal
-        title={modalTitle}
-        open={modalVisible}
-        onCancel={closeModal}
-        onOk={closeModal}
-      >
-        {modalTitle === "New Direction" && <AddressForm />}
-        {modalTitle === "New Service" && <ServiceForm />}
-      </Modal>
+        <Modal
+          title={modalTitle}
+          open={modalVisible}
+          onCancel={closeModal}
+          onOk={closeModal}
+        >
+          {modalTitle === "New Direction" && <AddressForm />}
+          {modalTitle === "New Service" && <ServiceForm />}
+        </Modal>
+      </div>
     </div>
   );
 };
