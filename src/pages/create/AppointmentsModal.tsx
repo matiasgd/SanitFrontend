@@ -11,23 +11,15 @@ import Modal from "../../commons/Modal";
 import RHFDatePicker from "../../commons/DatePicker";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Button, Select } from "antd";
-const { Option } = Select;
-import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import PatientModal from "./PatientModal";
+import ServiceModal from "./ServiceModal";
 import CustomSelect from "../../commons/Select";
-import PatientAutocomplete from "../../commons/PatientAutocomplete";
+import SelectAutocomplete from "../../commons/SelectAutocomplete";
+import Input from "../../commons/Input";
 
 interface AppointmentModalProps {
   isOpen?: boolean;
   onClose: () => void;
-}
-
-interface Patient {
-  _id: string;
-  name: string;
-  lastName: string;
-  govermentId: string;
 }
 
 const AppointmentModal: React.FC<AppointmentModalProps> = ({
@@ -36,47 +28,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 }) => {
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
-  const [patients, setPatients] = useState([]);
-  const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
+  const [serviceData, setServiceData] = useState({});
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isCreatingService, setIsCreatingService] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // Filtrar pacientes por nombre y apellido concatenados
-    const filtered = patients
-      .map((patient) => ({
-        _id: patient._id,
-        name: patient.name,
-        lastName: patient.lastName,
-        governmentId: patient.govermentId,
-      }))
-      .filter(
-        (patient) =>
-          patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          patient.lastName.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    console.log(filtered, "Filtrados");
-    setFilteredPatients(filtered);
-  }, [searchQuery]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchPatients = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/api/users/patients/${doctorId}`
-        );
-        console.log(response.data.data, "Patients");
-        setPatients(response.data.data); // Update state with response.data
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPatients(); // Call the fetch function
-    setIsLoading(false);
-  }, [doctorId]);
 
   const {
     register,
@@ -84,6 +41,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<FieldValues>({
     defaultValues: {
       date: "",
@@ -93,22 +51,49 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       address: "",
       service: "",
       paymentMethod: "",
+      price: serviceData ? serviceData.price : "",
+      currency: "",
     },
   });
 
+  const service = watch("service");
+
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
-    console.log(doctorId, "Doctor ID");
-    console.log(data, "Datos enviados");
     try {
-      customMessage("success", "Abrir la Consola");
+      console.log(data, "data");
+      setIsLoading(true);
       await axios.post(`http://localhost:3001/api/appointments/new`, data);
+      customMessage("success", "Se creo una nueva cita.");
     } catch (error) {
       customMessage("error", "Algo salió mal.");
       console.error(error);
     }
     onClose();
     reset();
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    reset();
+  }, [onClose]);
+
+  useEffect(() => {
+    if (selectedService) {
+      const fetchData = async () => {
+        try {
+          const serviceData = await axios.get(
+            `http://localhost:3001/api/services/${service}`
+          );
+          console.log(serviceData.data.data, "serviceData");
+          setServiceData(serviceData.data.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }
+    return;
+  }, [selectedService]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -127,7 +112,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             control={control}
             name="date"
           />
-          <PatientAutocomplete
+          <SelectAutocomplete
             control={control}
             doctorId={doctorId}
             onSelect={(value) => {
@@ -135,8 +120,25 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 return setIsCreatingPatient(true);
               }
               setSelectedPatient(value);
-              console.log(value, "Selected Patient");
             }}
+            label="Paciente"
+            createText="Crear paciente"
+            typeOfSearch="patients"
+            name="patient"
+          />
+          <SelectAutocomplete
+            control={control}
+            doctorId={doctorId}
+            onSelect={(value) => {
+              if (value === "create") {
+                return setIsCreatingService(true);
+              }
+              setSelectedService(value);
+            }}
+            label="Servicio"
+            createText="Crear servicio"
+            typeOfSearch="services"
+            name="service"
           />
         </div>
         <CustomSelect
@@ -150,6 +152,15 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             { value: "creditCard", label: "Tarjeta de crédito" },
             { value: "MercadoPago", label: "Mercado pago" },
           ]}
+        />
+        <Input
+          id="price"
+          label="precio"
+          value={serviceData?.price || ""}
+          placeholder=""
+          type="text"
+          register={register}
+          errors={errors}
         />
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
@@ -171,6 +182,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         <PatientModal
           isOpen={true}
           onClose={() => setIsCreatingPatient(false)}
+        />
+      )}
+      {isCreatingService && (
+        <ServiceModal
+          isOpen={true}
+          onClose={() => setIsCreatingService(false)}
         />
       )}
     </Modal>

@@ -81,71 +81,79 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
         onSubmit={handleSubmit(submitModal)}
         className="flex flex-col gap-4 w-full"
       >
-        <p className="text-md font-semibold">Nuevo Paciente</p>
-        <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
-          <p className="text-md p-4">Datos Generales</p>
+        <div className="flex justify-center m-3 ">
+          <p className="text-md font-semibold">Nuevo paciente</p>
         </div>
-        <div className="grid grid-cols-2 gap-4 justify-center">
-          <Input
-            id="name"
-            label="Nombre"
-            placeholder="Nombre del paciente"
-            type="text"
-            register={register}
-            errors={errors}
-          />
-          <Input
-            id="lastName"
-            label="Apellido"
-            placeholder="Apellido del paciente"
-            type="text"
-            register={register}
-            errors={errors}
-          />
-          <Input
-            id="govermentId"
-            label="DNI / ID"
-            placeholder="XX XXX XXX"
-            type="number"
-            register={register}
-            errors={errors}
-          />
-          <CustomSelect
-            label="Nacionalidad"
-            placeholder="Seleccione una opción"
-            control={control}
-            name="nationality"
-            options={commonNationalities}
-          />
-          <CustomSelect
-            label="Género"
-            placeholder="Seleccione una opción"
-            control={control}
-            name="gender"
-            options={[
-              { value: "male", label: "Masculino" },
-              { value: "female", label: "Femenino" },
-              { value: "nongender", label: "No Binario" },
-              { value: "other", label: "Otro" },
-            ]}
-          />
-          <RHFDatePicker
-            label="Fecha de Nacimiento"
-            placeholder="Seleccione una fecha"
-            control={control}
-            name="birthdate"
-          />
+        <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
+          <p className="text-sm font-semibold">Datos Generales</p>
         </div>
+        <div>
+          <div className="grid grid-cols-2 gap-4 justify-center ">
+            <Input
+              id="name"
+              label="Nombre"
+              placeholder=""
+              type="text"
+              register={register}
+              errors={errors}
+            />
+            <Input
+              id="lastName"
+              label="Apellido"
+              placeholder=""
+              type="text"
+              register={register}
+              errors={errors}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4 justify-center">
+            <Input
+              id="govermentId"
+              label="DNI / ID"
+              placeholder=""
+              type="number"
+              register={register}
+              errors={errors}
+            />
+            <CustomSelect
+              label="Género"
+              placeholder="Seleccione una opción"
+              control={control}
+              name="gender"
+              options={[
+                { value: "male", label: "Masculino" },
+                { value: "female", label: "Femenino" },
+                { value: "nongender", label: "No Binario" },
+                { value: "other", label: "Otro" },
+              ]}
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-4 justify-center">
+            <CustomSelect
+              label="Nacionalidad"
+              placeholder="Seleccione una opción"
+              control={control}
+              name="nationality"
+              options={commonNationalities}
+            />
 
-        <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
-          <p className="text-md p-4">Contacto</p>
+            <RHFDatePicker
+              label="Fecha de Nacimiento"
+              placeholder="Seleccione una fecha"
+              control={control}
+              name="birthdate"
+            />
+          </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 justify-center">
-          <div className="flex">
+        <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
+          <p className="text-sm font-semibold">Contacto</p>
+        </div>
+        <div className="grid grid-rows gap-4 justify-center">
+          <div className="flex gap-4">
             <Input
               id="codCountry"
               label="Cód. País"
-              placeholder="XXX"
+              placeholder="+54"
               type="number"
               register={register}
               errors={errors}
@@ -153,7 +161,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             <Input
               id="codArea"
               label="Cód. Area"
-              placeholder="XXX"
+              placeholder="011"
               type="number"
               register={register}
               errors={errors}
@@ -161,7 +169,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             <Input
               id="cellphone"
               label="Teléfono"
-              placeholder="XXX XXX"
+              placeholder="123 - 4567"
               type="number"
               register={register}
               errors={errors}
@@ -176,8 +184,8 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             errors={errors}
           />
         </div>
-        <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
-          <p className="text-md p-4">Dirección</p>
+        <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
+          <p className="text-sm font-semibold">Direccion</p>
         </div>
         <div className="grid grid-cols-2 gap-4 justify-center">
           <CustomSelect
@@ -256,8 +264,8 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
             errors={errors}
           />
         </div>
-        <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
-          <p className="text-md p-4">Seguro Médico</p>
+        <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
+          <p className="text-sm font-semibold">Seguro médico</p>
         </div>
         <div className="grid grid-cols-2 gap-4 justify-center">
           <Input
@@ -271,7 +279,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
           <Input
             id="healthInsuranceNumber"
             label="Número OOSS"
-            placeholder="XXXX XXXX XXXX XXXX"
+            placeholder=""
             type="number"
             register={register}
             errors={errors}
@@ -287,20 +295,20 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
           <Input
             id="privateHealthInsuranceNumber"
             label="Número Prepaga"
-            placeholder="XXXX XXXX XXXX XXXX"
+            placeholder=""
             type="number"
             register={register}
             errors={errors}
           />
         </div>
-        <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
-          <p className="text-md p-4">Contacto de emergencia</p>
+        <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
+          <p className="text-sm font-semibold">Contacto de emergencia</p>
         </div>
         <div className="grid grid-cols-2 gap-4 justify-center">
           <Input
             id="contactName"
             label="Nombre"
-            placeholder="Nombre del contacto"
+            placeholder=""
             type="text"
             register={register}
             errors={errors}
@@ -308,7 +316,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
           <Input
             id="contactLastName"
             label="Apellido"
-            placeholder="Apellido del contacto"
+            placeholder=""
             type="text"
             register={register}
             errors={errors}
@@ -333,7 +341,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
           <Input
             id="contactPhone"
             label="Teléfono"
-            placeholder="XX XXX XXX"
+            placeholder="+54-119123-1234"
             type="number"
             register={register}
             errors={errors}
