@@ -10,6 +10,7 @@ interface InputProps {
   register: UseFormRegister<FieldValues>;
   errors: FieldErrors;
   disabled?: boolean;
+  onInput?: (event: React.FormEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -21,25 +22,27 @@ const Input: React.FC<InputProps> = ({
   register,
   errors,
   disabled,
+  onInput,
 }) => {
   return (
     <div>
       <label
         htmlFor={id}
-        className="block text-sm text-start font-medium leading-6 text-gray-800"
+        className="pl-4 pb-1 flex justify-start text-[13.5px]  text-gray-500 "
       >
         {label}
       </label>
-      <div className="mt-2">
+      <div>
         <input
           id={id}
           type={type}
           placeholder={placeholder}
           autoComplete={id}
           disabled={disabled}
+          onInput={onInput}
           {...register(id, { required })}
           className={clsx(
-            `form-input block w-full rounded-md border-0 py-1.5 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6`,
+            `form-input block w-full rounded-[20px] border-0 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6`,
             errors[id] && "focus:ring-rose-500",
             disabled && "opacity-50 cursor-default"
           )}

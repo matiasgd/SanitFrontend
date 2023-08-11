@@ -7,6 +7,7 @@ import Home from "./pages/Home/Home";
 import Wallet from "./pages/Wallet/Wallet";
 import Calendar from "./pages/Calendar/Calendar";
 import AddressForm from "./pages/create/AddressForm";
+import Service from "./pages/services/Service";
 import Modal from "./pages/create/ModalTest";
 import Origin from "./pages/Me/Origin";
 
@@ -22,7 +23,8 @@ export default function App() {
       <Route path="/wallet" element={<Wallet />} />
       <Route path="/404">ERROR 404</Route>
       <Route path="/calendar" element={<Calendar />} />
-      <Route path="/adress" element={<AddressForm />} />
+      <Route path="/address" element={<AddressForm />} />
+      <Route path="/service" element={<Service />} />
       <Route path="/modal" element={<Modal />} />
       <Route path="/origin" element={<Origin />} />
     </Routes>

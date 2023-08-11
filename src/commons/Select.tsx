@@ -26,13 +26,13 @@ const CustomSelect: React.FC<SelectProps> = ({
       render={({ field }) => {
         return (
           <div>
-            <label className="block text-sm text-start font-medium leading-6 text-gray-800">
+            <label className="pl-4 pb-1 flex justify-start text-[13.5px]  text-gray-500">
               {label}
             </label>
             <select
               {...field}
               onChange={field.onChange}
-              className={`block w-full rounded-md border-0 mt-2 p-2 shadow-sm ring-1 ring-inset ring-gray-300 ${
+              className={`block w-full rounded-[20px] border-0 p-2 shadow-sm ring-1 ring-inset ring-gray-300 ${
                 field.value ? "text-gray-800" : "text-gray-400"
               } focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6 outline-none`}
             >

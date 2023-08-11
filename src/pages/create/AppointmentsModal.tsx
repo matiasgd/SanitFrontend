@@ -15,8 +15,10 @@ import { Button, Select } from "antd";
 const { Option } = Select;
 import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import PatientModal from "./PatientModal";
+import ServiceModal from "./ServiceModal";
 import CustomSelect from "../../commons/Select";
-import PatientAutocomplete from "../../commons/PatientAutocomplete";
+import SelectAutocomplete from "../../commons/SelectAutocomplete";
+import ServiceForm from "../services/Service";
 
 interface AppointmentModalProps {
   isOpen?: boolean;
@@ -30,53 +32,24 @@ interface Patient {
   govermentId: string;
 }
 
+interface Services {
+  _id: string;
+  name: string;
+  lastName: string;
+  govermentId: string;
+}
+
 const AppointmentModal: React.FC<AppointmentModalProps> = ({
   isOpen,
   onClose,
 }) => {
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
-  const [patients, setPatients] = useState([]);
-  const [filteredPatients, setFilteredPatients] = useState<Patient[]>([]);
   const [selectedPatient, setSelectedPatient] = useState(null);
+  const [selectedService, setSelectedService] = useState(null);
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isCreatingService, setIsCreatingService] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // Filtrar pacientes por nombre y apellido concatenados
-    const filtered = patients
-      .map((patient) => ({
-        _id: patient._id,
-        name: patient.name,
-        lastName: patient.lastName,
-        governmentId: patient.govermentId,
-      }))
-      .filter(
-        (patient) =>
-          patient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          patient.lastName.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    console.log(filtered, "Filtrados");
-    setFilteredPatients(filtered);
-  }, [searchQuery]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    const fetchPatients = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/api/users/patients/${doctorId}`
-        );
-        console.log(response.data.data, "Patients");
-        setPatients(response.data.data); // Update state with response.data
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPatients(); // Call the fetch function
-    setIsLoading(false);
-  }, [doctorId]);
 
   const {
     register,
@@ -97,9 +70,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   });
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
-    console.log(doctorId, "Doctor ID");
-    console.log(data, "Datos enviados");
     try {
+      setIsLoading(true);
       customMessage("success", "Abrir la Consola");
       await axios.post(`http://localhost:3001/api/appointments/new`, data);
     } catch (error) {
@@ -108,6 +80,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     }
     onClose();
     reset();
+    setIsLoading(false);
   };
 
   return (
@@ -127,7 +100,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             control={control}
             name="date"
           />
-          <PatientAutocomplete
+          <SelectAutocomplete
             control={control}
             doctorId={doctorId}
             onSelect={(value) => {
@@ -135,8 +108,25 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
                 return setIsCreatingPatient(true);
               }
               setSelectedPatient(value);
-              console.log(value, "Selected Patient");
             }}
+            label="Paciente"
+            createText="Crear paciente"
+            typeOfSearch="patients"
+            name="patient"            
+          />
+          <SelectAutocomplete
+            control={control}
+            doctorId={doctorId}
+            onSelect={(value) => {
+              if (value === "create") {
+                return setIsCreatingService(true);
+              }
+              setSelectedService(value);
+            }}
+            label="Servicio"
+            createText="Crear servicio"
+            typeOfSearch="services"
+            name="service"
           />
         </div>
         <CustomSelect
@@ -171,6 +161,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         <PatientModal
           isOpen={true}
           onClose={() => setIsCreatingPatient(false)}
+        />
+      )}
+      {isCreatingService && (
+        <ServiceModal
+          isOpen={true}
+          onClose={() => setIsCreatingService(false)}
         />
       )}
     </Modal>
