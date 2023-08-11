@@ -42,7 +42,6 @@ const ModalTest: React.FC = () => {
         <Button onClick={() => setIsOpenAppointmentsModal(true)}>
           Nuevo turno
         </Button>
-
         <Button
           style={{ margin: "8px" }}
           onClick={() => handleButtonClick("New Direction")}
