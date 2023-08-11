@@ -11,32 +11,15 @@ import Modal from "../../commons/Modal";
 import RHFDatePicker from "../../commons/DatePicker";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { Button, Select } from "antd";
-const { Option } = Select;
-import { UserOutlined, SearchOutlined, PlusOutlined } from "@ant-design/icons";
 import PatientModal from "./PatientModal";
 import ServiceModal from "./ServiceModal";
 import CustomSelect from "../../commons/Select";
 import SelectAutocomplete from "../../commons/SelectAutocomplete";
-import ServiceForm from "../services/Service";
+import Input from "../../commons/Input";
 
 interface AppointmentModalProps {
   isOpen?: boolean;
   onClose: () => void;
-}
-
-interface Patient {
-  _id: string;
-  name: string;
-  lastName: string;
-  govermentId: string;
-}
-
-interface Services {
-  _id: string;
-  name: string;
-  lastName: string;
-  govermentId: string;
 }
 
 const AppointmentModal: React.FC<AppointmentModalProps> = ({
@@ -47,6 +30,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const doctorId = user.id;
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+  const [serviceData, setServiceData] = useState({});
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
   const [isCreatingService, setIsCreatingService] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +41,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     handleSubmit,
     formState: { errors },
     reset,
+    watch,
   } = useForm<FieldValues>({
     defaultValues: {
       date: "",
@@ -66,14 +51,19 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       address: "",
       service: "",
       paymentMethod: "",
+      price: serviceData ? serviceData.price : "",
+      currency: "",
     },
   });
 
+  const service = watch("service");
+
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     try {
+      console.log(data, "data");
       setIsLoading(true);
-      customMessage("success", "Abrir la Consola");
       await axios.post(`http://localhost:3001/api/appointments/new`, data);
+      customMessage("success", "Se creo una nueva cita.");
     } catch (error) {
       customMessage("error", "Algo salió mal.");
       console.error(error);
@@ -82,6 +72,28 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     reset();
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    reset();
+  }, [onClose]);
+
+  useEffect(() => {
+    if (selectedService) {
+      const fetchData = async () => {
+        try {
+          const serviceData = await axios.get(
+            `http://localhost:3001/api/services/${service}`
+          );
+          console.log(serviceData.data.data, "serviceData");
+          setServiceData(serviceData.data.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }
+    return;
+  }, [selectedService]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -112,7 +124,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             label="Paciente"
             createText="Crear paciente"
             typeOfSearch="patients"
-            name="patient"            
+            name="patient"
           />
           <SelectAutocomplete
             control={control}
@@ -140,6 +152,15 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             { value: "creditCard", label: "Tarjeta de crédito" },
             { value: "MercadoPago", label: "Mercado pago" },
           ]}
+        />
+        <Input
+          id="price"
+          label="precio"
+          value={serviceData?.price || ""}
+          placeholder=""
+          type="text"
+          register={register}
+          errors={errors}
         />
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button

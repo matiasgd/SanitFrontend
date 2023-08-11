@@ -152,7 +152,6 @@ const ServiceModal: React.FC<ServiceModalProps> = ({ isOpen, onClose }) => {
               ]}
             />
           </div>
-
           <div className="flex justify-center items-center m-3 ">
             <button
               type="button"

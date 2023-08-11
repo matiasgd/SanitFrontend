@@ -66,7 +66,7 @@ const ModalTest: React.FC = () => {
         style={{ margin: "8px" }}
         onClick={() => setIsOpenServiceModal(true)}
       >
-        Nueva consulta
+        Nuevo servicio
       </Button>
     </div>
   );
