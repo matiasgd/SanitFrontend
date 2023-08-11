@@ -9,7 +9,6 @@ import Calendar from "./pages/Calendar/Calendar";
 import AddressForm from "./pages/create/AddressForm";
 import Modal from "./pages/create/ModalTest";
 import Origin from "./pages/Me/Origin";
-import Prueba from "./pages/Me/prueba/prueba";
 
 export default function App() {
   return (
@@ -26,7 +25,6 @@ export default function App() {
       <Route path="/adress" element={<AddressForm />} />
       <Route path="/modal" element={<Modal />} />
       <Route path="/origin" element={<Origin />} />
-      <Route path="/prueba" element={<Prueba />} />
     </Routes>
   );
 }
