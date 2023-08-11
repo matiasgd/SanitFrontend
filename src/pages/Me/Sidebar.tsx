@@ -1,22 +1,25 @@
 import axios from "axios";
+import clsx from "clsx";
+import { useLocation, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "../../store/user";
 import customMessage from "../../commons/customMessage";
 import { useState, useEffect } from "react";
-import { LeftOutlined, RightOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import {
   MdSpaceDashboard,
   MdAccountBalanceWallet,
   MdCalendarToday,
 } from "react-icons/md";
-import { BsPersonFill } from "react-icons/bs";
-import { BiPlusMedical } from "react-icons/bi";
-import { BsReverseLayoutTextWindowReverse } from "react-icons/bs";
-import { useLocation, Link } from "react-router-dom";
-import clsx from "clsx";
+import { BsReverseLayoutTextWindowReverse, BsPersonFill } from "react-icons/bs";
+import {
+  BiSolidRightArrow,
+  BiSolidLeftArrow,
+  BiPlusMedical,
+} from "react-icons/bi";
 
 const sections = [
   { name: "Panel", icon: <MdSpaceDashboard />, route: "/dashboard" },
@@ -88,9 +91,9 @@ const Sidebar: React.FC = () => {
               <Link to={section.route} key={i}>
                 <li
                   className={clsx(
-                    `flex gap-4 p-4 text-gray-500 hover:text-blue-300 hover:bg-blue-50 rounded-xl`,
+                    `flex gap-4 p-4 text-gray-500 hover:text-blue-400 hover:bg-blue-50 rounded-xl`,
                     selectedItem === section.route &&
-                      "text-blue-400 bg-blue-100"
+                      "text-blue-600 bg-blue-100"
                   )}
                 >
                   <div className="text-xl">{section.icon}</div>
@@ -106,7 +109,7 @@ const Sidebar: React.FC = () => {
           <Avatar
             size="large"
             icon={<UserOutlined />}
-            className="bg-gray-400 hover:bg-blue-300"
+            className="bg-gray-400 hover:bg-blue-400"
             onClick={() => handleLogOut()}
           />
           {isExpanded && (
@@ -120,11 +123,13 @@ const Sidebar: React.FC = () => {
 
       <div className="flex justify-center items-center bg-transparent">
         <div
-          className="items-center py-4 px-2 rounded-e-full"
+          className="items-center py-4 px-1 rounded-e-full"
           style={{ boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)" }}
         >
           <button onClick={() => setIsExpanded(!isExpanded)}>
-            {isExpanded ? <LeftOutlined /> : <RightOutlined />}
+            <div className="text-lg text-gray-500 hover:text-blue-400">
+              {isExpanded ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
+            </div>
           </button>
         </div>
       </div>
