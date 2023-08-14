@@ -6,7 +6,8 @@ interface SelectProps {
   label?: string;
   placeholder?: string;
   rules?: RegisterOptions;
-  options: { value: string | number; label: string }[];
+  options: { value: string | number ; label: string }[];
+  onClick?: () => void;
 }
 
 const CustomSelect: React.FC<SelectProps> = ({
@@ -16,6 +17,7 @@ const CustomSelect: React.FC<SelectProps> = ({
   placeholder,
   rules,
   options,
+  onClick,
 }) => {
   return (
     <Controller
@@ -29,6 +31,7 @@ const CustomSelect: React.FC<SelectProps> = ({
               {label}
             </label>
             <select
+              onClick={onClick}
               {...field}
               onChange={field.onChange}
               className={`block w-full rounded-[20px] border-0 p-2 shadow-sm ring-1 ring-inset ring-gray-300 ${

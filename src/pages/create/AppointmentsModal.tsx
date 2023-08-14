@@ -26,6 +26,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
   const [serviceData, setServiceData] = useState("");
+  const [addressData, setAddressData] = useState([]);
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
   const [isCreatingService, setIsCreatingService] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,11 +55,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   });
 
   const service = watch("service");
+  const price = watch("price");
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     console.log(data, "DATAAAAAAAAA");
+    console.log(price, "PRICEEEEEE");
     // try {
-
     //   setIsLoading(true);
     //   await axios.post(`http://localhost:3001/api/appointments/new`, data);
     //   customMessage("success", "Se creo una nueva cita.");
@@ -76,6 +78,20 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       .get(`http://localhost:3001/api/services/${service}`)
       .then((res) => {
         setServiceData(res.data.data.price[0].price);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const fetchAddressData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/address/doctor/${doctorId}`)
+      .then((res) => {
+        const addresses = res.data.data;
+        const options = addresses.map((address) => ({
+          value: address._id,
+          label: `${address.addressName} - ${address.street} ${address.number}`,
+        }));
+        setAddressData(options);
       })
       .catch((err) => console.log(err));
   };
@@ -108,6 +124,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             control={control}
             name="date"
           />
+          <CustomSelect
+            label="Consultorio"
+            placeholder="Seleccione su consultorio"
+            control={control}
+            name="address"
+            onClick={() => fetchAddressData()}
+            options={addressData}
+          />
           <SelectAutocomplete
             control={control}
             doctorId={doctorId}
@@ -139,6 +163,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           <Input
             id="price"
             label="Importe"
+            type="text"
             disabled
             value={serviceData}
             register={register}
