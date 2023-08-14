@@ -5,7 +5,7 @@ interface InputProps {
   label: string;
   id: string;
   placeholder?: string;
-  value?: number;
+  value?: string;
   type?: string;
   required?: boolean;
   register: UseFormRegister<FieldValues>;
@@ -42,7 +42,7 @@ const Input: React.FC<InputProps> = ({
           autoComplete={id}
           disabled={disabled}
           onInput={onInput}
-          defaultValue={value}
+          value={value}
           {...register(id, { required })}
           className={clsx(
             `h-[100%] form-input block w-full rounded-[20px] border-0 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6`,

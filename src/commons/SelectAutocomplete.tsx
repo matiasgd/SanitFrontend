@@ -58,7 +58,7 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
       const filtered = services
         .map((service) => ({
           _id: service._id,
-          name: service.name,
+          name: service.serviceName,
         }))
         .filter((service) =>
           service.name.toLowerCase().includes(searchQuery.toLowerCase())

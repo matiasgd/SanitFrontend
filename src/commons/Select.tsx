@@ -6,7 +6,7 @@ interface SelectProps {
   label?: string;
   placeholder?: string;
   rules?: RegisterOptions;
-  options: { value: string; label: string }[];
+  options: { value: string | number; label: string }[];
 }
 
 const CustomSelect: React.FC<SelectProps> = ({

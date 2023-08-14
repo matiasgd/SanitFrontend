@@ -43,6 +43,7 @@ const ModalTest: React.FC = () => {
       <ServiceModal
         isOpen={isOpenServiceModal}
         onClose={() => setIsOpenServiceModal(false)}
+        type="CREATE"
       />
       <Button
         style={{ margin: "8px" }}

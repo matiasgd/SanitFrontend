@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, DatePicker, Input, Select } from "antd";
+import { Form, DatePicker, Input, Select, Tooltip } from "antd";
 
 const { Option } = Select;
 
@@ -20,9 +20,9 @@ const fullfieldStyle = {
 const labelStyle = { fontSize: "13px", color: "#888888" };
 
 const PricesForm: React.FC = () => {
-  const [duration, setDuration] = useState<string>("30Dias"); 
-  const [fromDate, setFromDate] = useState<Date | null>(null); 
-  const [toDate, setToDate] = useState<Date | null>(null); 
+  const [duration, setDuration] = useState<string>("30Dias");
+  const [fromDate, setFromDate] = useState<Date | null>(null);
+  const [toDate, setToDate] = useState<Date | null>(null);
 
   const handleDurationChange = (value: string) => {
     setDuration(value);
@@ -56,7 +56,6 @@ const PricesForm: React.FC = () => {
     }
   };
 
-
   return (
     <Form
       layout="inline"
@@ -82,10 +81,12 @@ const PricesForm: React.FC = () => {
         <div style={{ display: "flex", width: "100%", gap: "15px" }}>
           <div style={fieldStyle}>
             <h3 style={labelStyle}>Desde</h3>
-            <DatePicker
-              value={fromDate}
-              onChange={(date) => setFromDate(date)}
-            />
+            <Tooltip placement="right" title={`Importe vigente hasta `}>
+              <DatePicker
+                value={fromDate}
+                onChange={(date) => setFromDate(date)}
+              />
+            </Tooltip>
           </div>
           <div style={fieldStyle}>
             <h3 style={labelStyle}>Hasta</h3>

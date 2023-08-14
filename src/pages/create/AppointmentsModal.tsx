@@ -1,11 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {
-  Controller,
-  FieldValues,
-  SubmitHandler,
-  useForm,
-} from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import customMessage from "../../commons/customMessage";
 import Modal from "../../commons/Modal";
 import RHFDatePicker from "../../commons/DatePicker";
@@ -30,7 +25,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const doctorId = user.id;
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
-  const [serviceData, setServiceData] = useState({});
+  const [serviceData, setServiceData] = useState("");
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
   const [isCreatingService, setIsCreatingService] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,26 +46,38 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       address: "",
       service: "",
       paymentMethod: "",
-      price: serviceData ? serviceData.price : "",
-      currency: "",
+      price: "",
+      currency: "ARS",
+      category: "",
+      type: "",
     },
   });
 
   const service = watch("service");
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
-    try {
-      console.log(data, "data");
-      setIsLoading(true);
-      await axios.post(`http://localhost:3001/api/appointments/new`, data);
-      customMessage("success", "Se creo una nueva cita.");
-    } catch (error) {
-      customMessage("error", "Algo salió mal.");
-      console.error(error);
-    }
-    onClose();
+    console.log(data, "DATAAAAAAAAA");
+    // try {
+
+    //   setIsLoading(true);
+    //   await axios.post(`http://localhost:3001/api/appointments/new`, data);
+    //   customMessage("success", "Se creo una nueva cita.");
+    // } catch (error) {
+    //   customMessage("error", "Algo salió mal.");
+    //   console.error(error);
+    // }
+    // onClose();
     reset();
     setIsLoading(false);
+  };
+
+  const fetchData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/services/${service}`)
+      .then((res) => {
+        setServiceData(res.data.data.price[0].price);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -79,21 +86,10 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   useEffect(() => {
     if (selectedService) {
-      const fetchData = async () => {
-        try {
-          const serviceData = await axios.get(
-            `http://localhost:3001/api/services/${service}`
-          );
-          console.log(serviceData.data.data, "serviceData");
-          setServiceData(serviceData.data.data);
-        } catch (error) {
-          console.error(error);
-        }
-      };
       fetchData();
     }
     return;
-  }, [selectedService]);
+  }, [selectedService, serviceData]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -140,6 +136,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             typeOfSearch="services"
             name="service"
           />
+          <Input
+            id="price"
+            label="Importe"
+            disabled
+            value={serviceData}
+            register={register}
+            errors={errors}
+          />
         </div>
         <CustomSelect
           label="Metodo de pago"
@@ -153,14 +157,27 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             { value: "MercadoPago", label: "Mercado pago" },
           ]}
         />
-        <Input
-          id="price"
-          label="precio"
-          value={serviceData?.price || ""}
-          placeholder=""
-          type="text"
-          register={register}
-          errors={errors}
+        <CustomSelect
+          label="Categoria"
+          placeholder="Seleccione una opción..."
+          control={control}
+          name="category"
+          options={[
+            { value: "Without insurance", label: "Particular" },
+            { value: "union insurance", label: "Obra social" },
+            { value: "private insurance", label: "Prepaga" },
+          ]}
+        />
+        <CustomSelect
+          label="Modalidad"
+          placeholder="Selecctione una opción..."
+          control={control}
+          name="type"
+          options={[
+            { value: "doctor", label: "Consultorio" },
+            { value: "patient", label: "A Domicilio" },
+            { value: "online", label: "Virtual" },
+          ]}
         />
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <button
