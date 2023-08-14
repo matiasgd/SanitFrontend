@@ -3,7 +3,6 @@ import axios from "axios";
 import { Select } from "antd";
 import { UserOutlined, PlusOutlined, HeartOutlined } from "@ant-design/icons";
 import { Controller, Control } from "react-hook-form";
-import Input from "./Input";
 
 const { Option } = Select;
 
@@ -15,8 +14,6 @@ interface SelectAutocompleteProps {
   createText: string;
   typeOfSearch?: "patients" | "services";
   name: string;
-  register?: any;
-  errors?: any;
 }
 
 const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
@@ -27,8 +24,6 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
   createText,
   typeOfSearch,
   name,
-  register,
-  errors,
 }) => {
   const [patients, setPatients] = useState([]);
   const [services, setServices] = useState([]);

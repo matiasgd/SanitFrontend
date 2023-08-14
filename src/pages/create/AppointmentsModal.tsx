@@ -55,11 +55,12 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   });
 
   const service = watch("service");
-  const price = watch("price");
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
+    if (selectedService) {
+      data.price = serviceData; // Update the price field with the serviceData
+    }
     console.log(data, "DATAAAAAAAAA");
-    console.log(price, "PRICEEEEEE");
     // try {
     //   setIsLoading(true);
     //   await axios.post(`http://localhost:3001/api/appointments/new`, data);
@@ -163,7 +164,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           <Input
             id="price"
             label="Importe"
-            type="text"
+            type="number"
             disabled
             value={serviceData}
             register={register}
@@ -230,6 +231,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         <ServiceModal
           isOpen={true}
           onClose={() => setIsCreatingService(false)}
+          type="CREATE"
         />
       )}
     </Modal>
