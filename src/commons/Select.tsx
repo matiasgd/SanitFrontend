@@ -17,12 +17,12 @@ const CustomSelect: React.FC<SelectProps> = ({
   placeholder,
   rules,
   options,
-  onClick,
+  onClick
 }) => {
   return (
     <Controller
       control={control}
-      name={name}
+      name={name}      
       rules={rules}
       render={({ field }) => {
         return (
