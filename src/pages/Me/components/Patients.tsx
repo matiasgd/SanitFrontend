@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
 import { Button, Input, Space, Table, Tag } from "antd";
@@ -6,6 +7,9 @@ import type { FilterConfirmProps } from "antd/es/table/interface";
 import React, { useRef, useState } from "react";
 // import Highlighter from 'react-highlight-words';
 import Sidebar from "../Sidebar";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import axios from "axios";
 
 interface DataType {
   key: string;
@@ -16,63 +20,45 @@ interface DataType {
   tags: string[];
 }
 
-type DataIndex = keyof DataType;
-
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    lastName: "Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    lastName: "Blue",
-    age: 42,
-    address: "London No. 1 Lake Park",
-    tags: ["cool"],
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    lastName: "Yellow",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-    tags: ["developer"],
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    lastName: "Gray",
-    age: 32,
-    address: "London No. 2 Lake Park",
-    tags: ["loser", "developer"],
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    lastName: "Dill",
-    age: 32,
-    address: "London No. 2 Lake Park",
-    tags: ["loser", "developer"],
-  },
-  {
-    key: "4",
-    name: "Lousie Red",
-    lastName: "Love",
-    age: 32,
-    address: "London No. 2 Lake Park",
-    tags: ["loser", "developer"],
-  },
-];
-
 const Patients: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const [patients, setPatients] = useState([]);
   const searchInput = useRef<InputRef>(null);
+  let user = useSelector((state: RootState) => state.user);
+  const doctorId = user.id;
+
+  type DataIndex = keyof DataType;
+
+  // Transformar la respuesta de la API en el formato necesario
+  const transformedData: DataType[] = patients.map((patient) => ({
+    key: patient._id,
+    name: patient.name,
+    lastName: patient.lastName,
+    govermentId: patient.govermentId,
+    gender: patient.gender,
+    email: patient.email,
+    age: patient.age,
+    cellphone: patient.cellphone,
+    nationality: patient.nationality,
+    healthInsurance: patient.healthInsurance,
+    healthInsuranceNumber: patient.healthInsuranceNumber,
+    privateHealthInsurance: patient.privateHealthInsurance,
+    privateHealthInsuranceNumber: patient.privateHealthInsuranceNumber,
+  }));
+
+  const fetchPatientsData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/users/${doctorId}/patients`)
+      .then((res) => {
+        setPatients(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchPatientsData();
+  }, [doctorId]);
 
   const handleSearch = (
     selectedKeys: string[],
@@ -182,60 +168,95 @@ const Patients: React.FC = () => {
 
   const columns: ColumnsType<DataType> = [
     {
-      title: "Name",
+      title: "Nombre",
       dataIndex: "name",
       key: "name",
       width: "30%",
       ...getColumnSearchProps("name"),
     },
     {
-      title: "Lastname",
+      title: "Apellido",
       dataIndex: "lastName",
       key: "lastName",
       width: "30%",
       ...getColumnSearchProps("name"),
     },
     {
-      title: "Age",
+      title: "DNI",
+      dataIndex: "govermentId",
+      key: "govermentId",
+      width: "30%",
+      ...getColumnSearchProps("govermentId"),
+    },
+    {
+      title: "Genero",
+      dataIndex: "gender",
+      key: "gender",
+      width: "30%",
+      ...getColumnSearchProps("gender"),
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+      width: "30%",
+      ...getColumnSearchProps("email"),
+    },
+    {
+      title: "Edad",
       dataIndex: "age",
       key: "age",
       width: "20%",
       ...getColumnSearchProps("age"),
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      ...getColumnSearchProps("address"),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ["descend", "ascend"],
+      title: "Nacionalidad",
+      dataIndex: "nationality",
+      key: "nationality",
+      width: "20%",
+      ...getColumnSearchProps("nationality"),
     },
     {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
+      title: "Celular",
+      dataIndex: "cellphone",
+      key: "cellphone",
+      width: "20%",
+      ...getColumnSearchProps("cellphone"),
+    },
+    {
+      title: "Obra social",
+      dataIndex: "healthInsurance",
+      key: "healthInsurance",
+      width: "30%",
+      ...getColumnSearchProps("healthInsurance"),
+    },
+    {
+      title: "# Numero",
+      dataIndex: "healthInsuranceNumber",
+      key: "healthInsuranceNumber",
+      width: "30%",
+      ...getColumnSearchProps("healthInsuranceNumber"),
+    },
+    {
+      title: "Prepaga",
+      dataIndex: "privateHealthInsurance",
+      key: "privateHealthInsurance",
+      width: "30%",
+      ...getColumnSearchProps("privateHealthInsurance"),
+    },
+    {
+      title: "# Numero",
+      dataIndex: "privateHealthInsuranceNumber",
+      key: "privateHealthInsuranceNumber",
+      width: "30%",
+      ...getColumnSearchProps("privateHealthInsuranceNumber"),
     },
   ];
 
   return (
     <div className="flex w-full">
       <Sidebar />
-      <Table columns={columns} dataSource={data} />;
+      <Table columns={columns} dataSource={transformedData} />
     </div>
   );
 };
