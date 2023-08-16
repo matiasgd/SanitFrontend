@@ -10,6 +10,8 @@ import Sidebar from "../Sidebar";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import axios from "axios";
+import { set } from "react-hook-form";
+import { Link } from "react-router-dom";
 
 interface DataType {
   key: string;
@@ -173,6 +175,11 @@ const Patients: React.FC = () => {
       key: "name",
       width: "30%",
       ...getColumnSearchProps("name"),
+      render: (text, record) => (
+        <Link to={`/patient/${record.key}`}>
+          <span>{text}</span>
+        </Link>
+      ),
     },
     {
       title: "Apellido",
@@ -180,6 +187,11 @@ const Patients: React.FC = () => {
       key: "lastName",
       width: "30%",
       ...getColumnSearchProps("name"),
+      render: (text, record) => (
+        <Link to={`/patient/${record.key}`}>
+          <span>{text}</span>
+        </Link>
+      ),
     },
     {
       title: "DNI",

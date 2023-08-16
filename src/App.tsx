@@ -17,7 +17,7 @@ export default function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<AuthForm />} />
       <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/patient" element={<Patient />} />
+      <Route path="/patient/:id" element={<Patient />} />
       <Route path="/patients" element={<Patients />} />
       <Route path="/home" element={<Home />} />
       <Route path="/wallet" element={<Wallet />} />
