@@ -11,6 +11,7 @@ import ServiceModal from "./ServiceModal";
 import CustomSelect from "../../commons/Select";
 import SelectAutocomplete from "../../commons/SelectAutocomplete";
 import Input from "../../commons/Input";
+import RHFTimePicker from "../../commons/TimePicker";
 
 interface AppointmentModalProps {
   isOpen?: boolean;
@@ -25,6 +26,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
   const doctorId = user.id;
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [selectedService, setSelectedService] = useState(null);
+  const [addressId, setAddressId] = useState("");
   const [serviceData, setServiceData] = useState("");
   const [addressData, setAddressData] = useState([]);
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
@@ -40,43 +42,46 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     watch,
   } = useForm<FieldValues>({
     defaultValues: {
-      date: "",
+      dateOfAppointment: "",
       timeOfAppointment: "",
-      patient: "",
-      doctor: doctorId,
+      duration: "",
+      patientId: "",
+      doctorId: doctorId,
       address: "",
-      service: "",
+      serviceId: "",
       paymentMethod: "",
-      price: "",
+      servicePrice: "",
+      appointmentPrice: "",
       currency: "ARS",
       category: "",
       type: "",
     },
   });
 
-  const service = watch("service");
+  const serviceId = watch("serviceId");
+  const address = watch("address");
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     if (selectedService) {
-      data.price = serviceData; // Update the price field with the serviceData
+      data.servicePrice = serviceData; // Update the price field with the serviceData
     }
-    console.log(data, "DATAAAAAAAAA");
-    // try {
-    //   setIsLoading(true);
-    //   await axios.post(`http://localhost:3001/api/appointments/new`, data);
-    //   customMessage("success", "Se creo una nueva cita.");
-    // } catch (error) {
-    //   customMessage("error", "Algo salió mal.");
-    //   console.error(error);
-    // }
-    // onClose();
+    console.log(data, "Data!");
+    try {
+      setIsLoading(true);
+      await axios.post(`http://localhost:3001/api/appointments/new`, data);
+      customMessage("success", "Se creo una nueva cita.");
+    } catch (error) {
+      customMessage("error", "Algo salió mal.");
+      console.error(error);
+    }
+    onClose();
     reset();
     setIsLoading(false);
   };
 
   const fetchData = async () => {
     await axios
-      .get(`http://localhost:3001/api/services/${service}`)
+      .get(`http://localhost:3001/api/services/${serviceId}`)
       .then((res) => {
         setServiceData(res.data.data.price[0].price);
       })
@@ -97,16 +102,34 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       .catch((err) => console.log(err));
   };
 
+  const fetchAppointmentsData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/address/${address}/allschedule`)
+      .then((res) => {
+        console.log(res.data.data, "Appointments");
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     reset();
   }, [onClose]);
 
   useEffect(() => {
     if (selectedService) {
+      console.log("activo address");
       fetchData();
     }
     return;
   }, [selectedService, serviceData]);
+
+  useEffect(() => {
+    if (address) {
+      console.log("activo appointments");
+      fetchAppointmentsData();
+    }
+    return;
+  }, [address]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -123,7 +146,19 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             label="Fecha del turno"
             placeholder="Seleccione una fecha"
             control={control}
-            name="date"
+            name="dateOfAppointment"
+          />
+          <RHFTimePicker
+            label="Hora del turno"
+            placeholder="Seleccione una hora"
+            control={control}
+            name="timeOfAppointment"
+          />
+          <RHFTimePicker
+            label="Duracion del turno"
+            placeholder="Seleccione una hora"
+            control={control}
+            name="duration"
           />
           <CustomSelect
             label="Consultorio"
@@ -145,7 +180,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             label="Paciente"
             createText="Crear paciente"
             typeOfSearch="patients"
-            name="patient"
+            name="patientId"
           />
           <SelectAutocomplete
             control={control}
@@ -159,14 +194,21 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             label="Servicio"
             createText="Crear servicio"
             typeOfSearch="services"
-            name="service"
+            name="serviceId"
           />
           <Input
-            id="price"
-            label="Importe"
+            id="servicePrice"
+            label="Importe del servicio"
             type="number"
             disabled
             value={serviceData}
+            register={register}
+            errors={errors}
+          />
+          <Input
+            id="appointmentPrice"
+            label="Importe final"
+            type="number"
             register={register}
             errors={errors}
           />
@@ -177,9 +219,9 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           control={control}
           name="paymentMethod"
           options={[
-            { value: "cash", label: "Efectivo" },
-            { value: "debitCard", label: "Tarjeta de débito" },
-            { value: "creditCard", label: "Tarjeta de crédito" },
+            { value: "Cash", label: "Efectivo" },
+            { value: "DebitCard", label: "Tarjeta de débito" },
+            { value: "CreditCard", label: "Tarjeta de crédito" },
             { value: "MercadoPago", label: "Mercado pago" },
           ]}
         />
@@ -190,8 +232,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           name="category"
           options={[
             { value: "Without insurance", label: "Particular" },
-            { value: "union insurance", label: "Obra social" },
-            { value: "private insurance", label: "Prepaga" },
+            { value: "Union insurance", label: "Obra social" },
+            { value: "Private insurance", label: "Prepaga" },
           ]}
         />
         <CustomSelect
@@ -200,9 +242,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           control={control}
           name="type"
           options={[
-            { value: "doctor", label: "Consultorio" },
-            { value: "patient", label: "A Domicilio" },
-            { value: "online", label: "Virtual" },
+            { value: "In office", label: "Consultorio" },
+            { value: "Online", label: "Virtual" },
           ]}
         />
         <div className="mt-6 flex items-center justify-end gap-x-6">
