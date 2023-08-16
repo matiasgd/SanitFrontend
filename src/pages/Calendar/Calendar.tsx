@@ -2,54 +2,13 @@ import React, { useState } from "react";
 import AppointmentCard from "./components/AppointmentCard";
 import AppointmentDetails from "./components/AppointmentDetails";
 import { Button } from "antd";
+import moment from "moment";
 
-interface Appointment {
-  startTime: string;
-  endTime: string;
-  title: string;
-  subtitle: string;
+interface AppointmentProps {
+  appointments?: any[];
 }
 
-const Calendar: React.FC = () => {
-  const appointments: Appointment[] = [
-    {
-      startTime: "08:00",
-      endTime: "09:00",
-      title: "Today's appointments",
-      subtitle: "North Office, floor 3, room 301",
-    },
-    {
-      startTime: "09:30",
-      endTime: "10:30",
-      title: "Meeting with Client",
-      subtitle: "South Office, floor 2, room 201",
-    },
-    {
-      startTime: "11:00",
-      endTime: "12:00",
-      title: "Team Standup",
-      subtitle: "Conference Room A",
-    },
-    {
-      startTime: "14:00",
-      endTime: "15:30",
-      title: "Project Presentation",
-      subtitle: "West Office, floor 1, room 101",
-    },
-    {
-      startTime: "14:00",
-      endTime: "15:30",
-      title: "Project Presentation",
-      subtitle: "West Office, floor 1, room 101",
-    },
-    {
-      startTime: "14:00",
-      endTime: "15:30",
-      title: "Project Presentation",
-      subtitle: "West Office, floor 1, room 101",
-    },
-  ];
-
+const Calendar: React.FC<AppointmentProps> = ({ appointments }) => {
   const container = { display: "flex", gap: "20px", margin: "20px" };
 
   const boxStyle = {
@@ -73,7 +32,7 @@ const Calendar: React.FC = () => {
     justifyContent: "space-between",
   };
 
-  const title = {
+  const titleStyle = {
     color: "#222323",
     fontWeight: "bold",
     fontSize: "20px",
@@ -144,29 +103,37 @@ const Calendar: React.FC = () => {
     <div style={container}>
       <div style={boxStyle}>
         <div style={header}>
-          <div style={title}>Today's timeline</div>
-          <Button type="default"> (+) Add consult</Button>
+          <div style={titleStyle}>Tus consultas diarias</div>
         </div>
         <div style={appointmentsBox}>
           {appointments.map((appointment, index) => (
             <AppointmentCard
               key={index}
-              startTime={appointment.startTime}
-              endTime={appointment.endTime}
-              title={appointment.title}
-              subtitle={appointment.subtitle}
+              startTime={moment(appointment.startTime).format("HH:mm")}
+              endTime={moment(appointment.endTime).format("HH:mm")}
+              title={
+                appointment.service.serviceName +
+                " - " +
+                appointment.patient.lastName +
+                ", " +
+                appointment.patient.name
+              }
+              subtitle={appointment.address.addressName}
               circleColor={colorScale[index]}
               onClick={() => handleCardClick(index)}
             />
           ))}
         </div>
       </div>
-      {selectedCard !== null && (
+      {/* {selectedCard !== null && (
         <AppointmentDetails
-          appointment={appointments[selectedCard]}
+          startTime={appointments[selectedCard].appointment.startTime}
+          endTime={appointments[selectedCard].appointment.endTime}
+          title={appointments[selectedCard].address.addressName}
+          subtitle={appointments[selectedCard].appointment.address.addressName}
           onClose={() => setSelectedCard(null)}
         />
-      )}
+      )} */}
     </div>
   );
 };

@@ -1,7 +1,12 @@
 import React from "react";
 import { defaultPatients } from "../../../constans/defaultPatients";
+import axios from "axios";
 
 const Patient: React.FC = () => {
+
+  
+
+
   return (
     <div
       style={{

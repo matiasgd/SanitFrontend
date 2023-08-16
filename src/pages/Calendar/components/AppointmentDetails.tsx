@@ -8,6 +8,7 @@ import {
   //FileTextOutlined,
 } from "@ant-design/icons";
 import { Space, Tag, Divider, Button } from "antd";
+import moment from "moment";
 
 const conteiner = {
   display: "flex",
@@ -60,27 +61,29 @@ const fieldContentStyle = {
 };
 
 interface AppointmentDetailsProps {
-  appointment: {
-    startTime: string;
-    endTime: string;
-    title: string;
-    subtitle: string;
-  };
+  startTime: string;
+  title: string;
+  endTime: string;
+  subtitle: string;
   onClose: () => void;
 }
 
 const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
-  appointment,
+  startTime,
+  endTime,
+  title,
+  subtitle,
   onClose,
 }) => {
   return (
     <div style={conteiner}>
       <div>
         <div style={header}>
-          <p style={titleStyle}>{appointment.title}</p>
+          {/* <p style={titleStyle}>{appointment.address.addressName}</p> */}
           <div style={{ display: "flex", gap: "20px" }}>
             <p style={titleStyle}>
-              {appointment.startTime} - {appointment.endTime}
+              {moment(startTime).format("HH:mm")} -{" "}
+              {moment(endTime).format("HH:mm")}
             </p>
             <button onClick={onClose}>
               <CloseOutlined className="flex justify-center items-center" />
@@ -89,7 +92,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
         </div>
         <div style={content}>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Type </p>
+            <p style={fieldTitleStyle}>Type</p>
             <Space size={[0, 8]} wrap>
               <Tag
                 icon={<LaptopOutlined />}
@@ -98,20 +101,6 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
               >
                 Digital
               </Tag>
-              {/* <Tag
-                icon={<HomeOutlined />}
-                className="flex justify-center items-center"
-                color="#55acee"
-              >
-                Domicilo
-              </Tag>
-              <Tag
-                icon={<IdcardOutlined />}
-                className="flex justify-center items-center"
-                color="#55acee"
-              >
-                Presencial
-              </Tag> */}
             </Space>
           </div>
           <div style={fieldStyle}>
@@ -150,32 +139,6 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
               la pelota con el hijo no reconocido de la pareja
             </p>
           </div>
-
-          {/* 
-          Style for files   ---------------------------------------------------------------
-
-          <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Files </p>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  backgroundColor: "white",
-                  padding: "4px 10px 5px 5px",
-                  fontSize: "13px",
-                  borderRadius: "5px",
-                  textAlign: "center",
-                  width: "auto",
-                  cursor: "pointer",
-                }}
-              >
-                <FileTextOutlined className="flex justify-center items-center ml-1 mr-2" />
-                <p>Estudio de sangre</p>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
       <div

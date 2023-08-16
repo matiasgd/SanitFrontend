@@ -79,18 +79,18 @@ const SearchBar: React.FC = () => {
         }}
       >
         {renderButton(
-          "Patients",
-          selectedButton === "Patients" ? "#F2F7FD" : "white",
+          "Pacientes",
+          selectedButton === "Pacientes" ? "#F2F7FD" : "white",
           "#5F8DCA"
         )}
         {renderButton(
-          "Servicies",
-          selectedButton === "Servicies" ? "F2F7FD" : "white",
+          "Consultas",
+          selectedButton === "Consultas" ? "F2F7FD" : "white",
           "#5F8DCA"
         )}
         {renderButton(
-          "Amounts",
-          selectedButton === "Amounts" ? "F2F7FD" : "white",
+          "Ingresos",
+          selectedButton === "Ingresos" ? "F2F7FD" : "white",
           "#5F8DCA"
         )}
       </div>
