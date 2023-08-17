@@ -33,6 +33,7 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
+    console.log("entre al useeffect");
     if (typeOfSearch === "patients") {
       // Filtrar pacientes por nombre y apellido concatenados
       const filtered = patients
@@ -68,7 +69,7 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
       if (typeOfSearch === "patients") {
         try {
           const patientsResponse = await axios.get(
-            `http://localhost:3001/api/users/${typeOfSearch}/${doctorId}`
+            `http://localhost:3001/api/users/${doctorId}/${typeOfSearch}`
           );
           setPatients(patientsResponse.data.data);
         } catch (error) {
