@@ -39,25 +39,25 @@ const ClinicalHistory = () => {
           style={selectedButton === "general" ? ButtonHoverStyle : ButtonStyle}
           onClick={() => handleClick("general")}
         >
-          General Info
+          General
         </div>
         <div
           style={selectedButton === "clinical" ? ButtonHoverStyle : ButtonStyle}
           onClick={() => handleClick("clinical")}
         >
-          Clinical History
+          Historia
         </div>
         <div
           style={selectedButton === "recipes" ? ButtonHoverStyle : ButtonStyle}
           onClick={() => handleClick("recipes")}
         >
-          Recipes
+          Recetas
         </div>
         <div
           style={selectedButton === "studies" ? ButtonHoverStyle : ButtonStyle}
           onClick={() => handleClick("studies")}
         >
-          Studies
+          Pagos
         </div>
       </div>
       <div
@@ -74,7 +74,7 @@ const ClinicalHistory = () => {
             <Finance />
           </div>
         )}
-        {selectedButton === "clinical" && <div>holis </div>}
+        {selectedButton === "clinical" && <div>Informacion clinica</div>}
         {selectedButton === "recipes" && <p>Recipes content</p>}
         {selectedButton === "studies" && <p>Studies content</p>}
       </div>

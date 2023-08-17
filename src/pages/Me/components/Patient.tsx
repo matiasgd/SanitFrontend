@@ -1,11 +1,26 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import { defaultPatients } from "../../../constans/defaultPatients";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const Patient: React.FC = () => {
+  const { id } = useParams();
+  const [patient, setPatient] = useState({} as Patient);
 
-  
+  const fetchPatientsData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/patients/${id}`)
+      .then((res) => {
+        console.log(res.data.data);
+        setPatient(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
+  useEffect(() => {
+    fetchPatientsData();
+  }, [id]);
 
   return (
     <div
@@ -14,7 +29,6 @@ const Patient: React.FC = () => {
         borderRadius: "15px",
         boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
         flexDirection: "column",
-        flexGrow: 1,
       }}
     >
       <div
@@ -29,7 +43,9 @@ const Patient: React.FC = () => {
         }}
       >
         <div style={{ display: "flex", gap: "20px", alignItems: "end" }}>
-          <strong style={{ color: "Black" }}>Javier Lema</strong>
+          <strong style={{ color: "Black" }}>
+            {patient.name + " " + patient.lastName}
+          </strong>
           <p style={{ color: "blue", fontSize: "12px" }}>
             Próximo turno - Vie, 16 de julio del 2023 (1 mes y 14 días)
           </p>
@@ -54,30 +70,26 @@ const Patient: React.FC = () => {
       >
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div>
-            <p style={{ fontSize: "12px", color: "#888888" }}>cellphone</p>
-            <p>{defaultPatients[1].cellphone}</p>
+            <p style={{ fontSize: "12px", color: "#888888" }}>Celular</p>
+            <p>{patient.cellphone}</p>
           </div>
           <div>
             <p style={{ fontSize: "12px", color: "#888888" }}>Email</p>
-            <p>{defaultPatients[1].email}</p>
+            <p>{patient.email}</p>
           </div>
           <div>
-            <p style={{ fontSize: "12px", color: "#888888" }}>Address</p>
+            <p style={{ fontSize: "12px", color: "#888888" }}>Dirección</p>
             <p>
-              {defaultPatients[1].address}, {defaultPatients[1].province}
+              {patient.street + " " + patient.streetNumber}, {patient.city}
             </p>
           </div>
           <div>
-            <p style={{ fontSize: "12px", color: "#888888" }}>Type</p>
-            <p>Prepaga</p>
-          </div>
-          <div>
-            <p style={{ fontSize: "12px", color: "#888888" }}>Insurance</p>
-            <p>{defaultPatients[1].healthInsurance}</p>
+            <p style={{ fontSize: "12px", color: "#888888" }}>Prestador</p>
+            <p>{patient.privateHealthInsurance}</p>
           </div>
           <div>
             <p style={{ fontSize: "12px", color: "#888888" }}>Number</p>
-            <p>{defaultPatients[1].insuranceNumber}</p>
+            <p>{patient.privateHealthInsuranceNumber}</p>
           </div>
         </div>
       </div>

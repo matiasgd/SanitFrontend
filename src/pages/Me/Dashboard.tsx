@@ -18,10 +18,20 @@ const Dashboard = () => {
   // estados de informacion
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
-  const [filter, setFilter] = useState(""); // weekly, monthly, yearly
+  const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   // modales
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
+
+  const ActiveButtonStyle = {
+    backgroundColor: "#F2F7FD",
+    color: "#475C80",
+  };
+
+  const HoverButtonStyle = {
+    backgroundColor: "#F2F7FD",
+    color: "#5F8DCA",
+  };
 
   const fetchData = async () => {
     // Pacientes
@@ -52,7 +62,7 @@ const Dashboard = () => {
       {!user.profileCompleted ? (
         <Stepper />
       ) : (
-        <div className="flex w-full">
+        <div className="flex w-full p-4">
           <PatientModal
             isOpen={isOpenPatientsModal}
             onClose={() => setOpenPatientsModal(false)}
@@ -62,17 +72,36 @@ const Dashboard = () => {
             onClose={() => setIsOpenAppointmentsModal(false)}
           />
           <Sidebar />
-          <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col gap-4 w-full px-4">
             <div className="flex w-full gap-4">
               <SearchBar />
             </div>
-            <div className="flex flex-col w-full gap-4  bg-blue-200 p-5">
-              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
-                <button className="" onClick={() => setFilter("weekly")}>
+            <div className="flex flex-col w-full gap-4 p-5 shadow-lg rounded-lg">
+              <div className="flex gap-4">
+                <p className="font-bold text-lg  mt-1">Tu actividad</p>
+                <button
+                  onClick={() => {
+                    setFilter("weekly");
+                  }}
+                >
                   Semanal
                 </button>
-                <button onClick={() => setFilter("monthly")}>Mensual</button>
-                <button onClick={() => setFilter("yearly")}>Anual</button>
+
+                <button
+                  onClick={() => {
+                    setFilter("monthly");
+                  }}
+                >
+                  Mensual
+                </button>
+
+                <button
+                  onClick={() => {
+                    setFilter("yearly");
+                  }}
+                >
+                  Anual
+                </button>
               </div>
               <div className="flex flex-row w-full gap-4">
                 <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
@@ -107,7 +136,7 @@ const Dashboard = () => {
                     </Button>
                   </div>
                 </div>
-                <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
+                <div className="flex gap-4 bg-gray-200 rounded-xl p-3 w-1/3">
                   <Avatar className="bg-yellow-100">
                     <TbMedicalCross className="text-3xl text-yellow-600" />
                   </Avatar>

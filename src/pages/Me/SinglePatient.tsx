@@ -5,35 +5,15 @@ import PatientApointments from "./components/PatientAppointments";
 
 const SinglePatient = () => {
   return (
-    <div className="flex w-full">
+    <div className="flex py-4">
       <Sidebar />
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <div style={{ display: "flex", width: "100%" }}>
-          <div style={{ flexGrow: 1 }}>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                marginLeft: "20px",
-              }}
-            >
-              <Patient />
-              <div style={{ display: "flex" }}>
-                <div style={{ flex: "2" }}>
-                  <ClinicalHistory />
-                </div>
-                <div style={{ flex: "1", marginLeft: "20px" }}>
-                  <div>
-                    <PatientApointments />
-                  </div>
-                  <div style={{ marginTop: "20px" }}>
-                    <PatientApointments />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="flex w-full gap-4 px-4">
+        <div className="flex flex-col gap-4 w-[70%]">
+          <Patient />
+          <ClinicalHistory />
+        </div>
+        <div className="flex flex-col w-[30%]">
+          <PatientApointments />
         </div>
       </div>
     </div>

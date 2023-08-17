@@ -1,7 +1,12 @@
 import React from "react";
+import { useState } from "react";
 import { Button, Tag } from "antd";
+import AppointmentsModal from "../../create/AppointmentsModal";
 
 const Patient: React.FC = () => {
+  // modales
+  const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
+
   const buttonStyle = {
     backgroundColor: "#F9F9F9",
     color: "#000000",
@@ -50,9 +55,12 @@ const Patient: React.FC = () => {
         borderRadius: "15px",
         boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)",
         flexDirection: "column",
-        flexGrow: 1,
       }}
     >
+      <AppointmentsModal
+        isOpen={isOpenAppointmentsModal}
+        onClose={() => setIsOpenAppointmentsModal(false)}
+      />
       <div
         style={{
           display: "flex",
@@ -67,7 +75,12 @@ const Patient: React.FC = () => {
         <div style={{ display: "flex", gap: "20px", alignItems: "end" }}>
           <strong style={{ color: "Black" }}>Consultas</strong>
         </div>
-        <Button style={buttonStyle}>+ new</Button>
+        <Button
+          onClick={() => setIsOpenAppointmentsModal(true)}
+          style={buttonStyle}
+        >
+          + Nueva Consultas
+        </Button>
       </div>
       <div
         style={{
@@ -78,19 +91,22 @@ const Patient: React.FC = () => {
         }}
       >
         {appointments.map((appointment) => (
-          <div key={appointment.id} style={{padding: "10px", borderBottom: "1px solid #EEEFF4",}}> 
-            <div style={{display:"flex", justifyContent: "space-between"}}>
-            {appointment.date} - {appointment.type}
-            <Tag color={appointment.status === "pending" ? "red" : "blue"}>
-              {appointment.status}
-            </Tag>
+          <div
+            key={appointment.id}
+            style={{ padding: "10px", borderBottom: "1px solid #EEEFF4" }}
+          >
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              {appointment.date} - {appointment.type}
+              <Tag color={appointment.status === "pending" ? "red" : "blue"}>
+                {appointment.status}
+              </Tag>
             </div>
             <div style={appointmentContentStyle}>
               <div>
-                notes: {appointment.medicalNotes}<br></br>
+                notes: {appointment.medicalNotes}
+                <br></br>
                 plan: {appointment.medicalPlan} <br></br>
               </div>
-              
             </div>
           </div>
         ))}
@@ -100,4 +116,3 @@ const Patient: React.FC = () => {
 };
 
 export default Patient;
-
