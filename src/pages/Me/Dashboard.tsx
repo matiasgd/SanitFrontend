@@ -11,7 +11,6 @@ import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
 
 const Dashboard = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -29,16 +28,6 @@ const Dashboard = () => {
   const [currency, setCurrency] = useState("ARS");
   const fakeIncome = ["1,000,000", "1350"];
 
-  const ActiveButtonStyle = {
-    backgroundColor: "#F2F7FD",
-    color: "#475C80",
-  };
-
-  const HoverButtonStyle = {
-    backgroundColor: "#F2F7FD",
-    color: "#5F8DCA",
-  };
-
   const fetchData = async () => {
     // Pacientes
     await axios
@@ -52,7 +41,7 @@ const Dashboard = () => {
     axios
       .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
       .then((res) => {
-        console.log(res.data.data);       
+        console.log(res.data.data);
         setAppointments(res.data.data);
       })
       .catch((err) => console.log(err));
