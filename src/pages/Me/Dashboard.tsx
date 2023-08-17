@@ -147,7 +147,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "ARS" && "bg-blue-300"
+                        currency === "ARS" && "bg-yellow-200"
                       )}
                     >
                       ARS
@@ -157,7 +157,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "USD" && "bg-blue-300"
+                        currency === "USD" && "bg-yellow-200"
                       )}
                     >
                       USD
