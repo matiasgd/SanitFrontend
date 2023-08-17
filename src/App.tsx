@@ -22,7 +22,7 @@ export default function App() {
       <Route path="/home" element={<Home />} />
       <Route path="/wallet" element={<Wallet />} />
       <Route path="/404">ERROR 404</Route>
-      <Route path="/calendar" element={<Calendar />} />
+      {/* <Route path="/calendar" element={<Calendar />} /> */}
       <Route path="/address" element={<AddressForm />} />
       <Route path="/service" element={<Service />} />
       <Route path="/modal" element={<Modal />} />
