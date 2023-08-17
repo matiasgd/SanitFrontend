@@ -266,9 +266,13 @@ const Patients: React.FC = () => {
   ];
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full p-4">
+      <div>
       <Sidebar />
+      </div>
+      <div className="w-full px-4">
       <Table columns={columns} dataSource={transformedData} />
+      </div>
     </div>
   );
 };
