@@ -1,37 +1,39 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { useState } from "react";
 import AppointmentCard from "./components/AppointmentCard";
 import AppointmentDetails from "./components/AppointmentDetails";
 import moment from "moment";
-import axios from "axios";
 
-const Calendar = () => {
+interface CalendarProps {
+  appointments: any[];
+}
+
+const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
   const [selectedCard, setSelectedCard] = useState<number>(0);
   const container = { display: "flex", gap: "20px", margin: "20px" };
-  const doctorId = useSelector((state: RootState) => state.user.id);
-  const [appointments, setAppointments] = useState<any[]>([]);
 
-  const fetchData = async () => {
-    // Citas
-    axios
-      .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
-      .then((res) => {
-        console.log(res.data.data);
-        const allAppointments = res.data.data;
-        const today = moment().startOf("day");
-        const todayAppointments = allAppointments.filter((appointment) => {
-          const appointmentStartTime = moment(appointment.startTime);
-          return appointmentStartTime.isSame(today, "day");
-        });
-        console.log(todayAppointments, "todayAppointments");
-        setAppointments(todayAppointments);
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => {
-    fetchData();
-  }, [doctorId]);
+  const today = moment().startOf("day");
+  const todayAppointments = appointments.filter((appointment) => {
+    const appointmentStartTime = moment(appointment.startTime);
+    return appointmentStartTime.isSame(today, "day");
+  });
+
+  // const fetchData = async () => {
+  //   // Citas
+  //   axios
+  //     .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       const allAppointments = res.data.data;
+  //       const today = moment().startOf("day");
+  //       const todayAppointments = allAppointments.filter((appointment) => {
+  //         const appointmentStartTime = moment(appointment.startTime);
+  //         return appointmentStartTime.isSame(today, "day");
+  //       });
+  //       console.log(todayAppointments, "todayAppointments");
+  //       console.log(todayAppointments);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   const boxStyle = {
     display: "flex",
@@ -52,12 +54,6 @@ const Calendar = () => {
     alignItems: "center",
     width: "100%",
     justifyContent: "space-between",
-  };
-
-  const titleStyle = {
-    color: "#222323",
-    fontWeight: "bold",
-    fontSize: "20px",
   };
 
   const appointmentsBox = {
@@ -123,10 +119,13 @@ const Calendar = () => {
     <div style={container}>
       <div style={boxStyle}>
         <div style={header}>
-          <div style={titleStyle}>Tus consultas diarias</div>
+          <div className="text-xl font-bold justify-center items-center">
+            Consultas de Hoy:{" "}
+            <span className="text-red-600">{todayAppointments.length}</span>
+          </div>
         </div>
         <div style={appointmentsBox}>
-          {appointments.map((appointment, index) => (
+          {todayAppointments.map((appointment, index) => (
             <AppointmentCard
               key={index}
               startTime={moment(appointment.startTime).format("HH:mm")}
@@ -146,9 +145,7 @@ const Calendar = () => {
         </div>
       </div>
       {appointments && (
-        <AppointmentDetails
-          onClose={() => setSelectedCard(null)}
-        />
+        <AppointmentDetails onClose={() => setSelectedCard(null)} />
       )}
     </div>
   );

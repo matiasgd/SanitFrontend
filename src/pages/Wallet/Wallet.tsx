@@ -8,7 +8,7 @@ import Sidebar from "../Me/Sidebar";
 
 const Wallet: React.FC = () => {
   return (
-    <div className="flex w-full">
+    <div className="flex w-full p-4">
       <Sidebar />
       <div className="flex p-4 w-full">
         <div
@@ -23,9 +23,7 @@ const Wallet: React.FC = () => {
             <div style={{ width: "70%" }}>
               <Keypad />
             </div>
-            <div
-            className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl"         
-            >              
+            <div className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl">
               <DateRangePicker />
               <Button>(+) New Income</Button>
             </div>
