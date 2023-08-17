@@ -14,6 +14,7 @@ const styleBar = {
   padding: "0px 20px",
   borderRadius: "7.5px",
   alignItems: "center",
+  justifyContent: "space-between",
 };
 
 const stylePicker = {

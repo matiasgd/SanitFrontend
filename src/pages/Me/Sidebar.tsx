@@ -25,8 +25,8 @@ const sections = [
   { name: "Panel", icon: <MdSpaceDashboard />, route: "/dashboard" },
   { name: "Ingresos", icon: <MdAccountBalanceWallet />, route: "/wallet" },
   { name: "Pacientes", icon: <BsPersonFill />, route: "/patients" },
-  { name: "Turnos", icon: <MdCalendarToday />, route: "/patient" },
-  { name: "Consultas", icon: <BiPlusMedical />, route: "/calendar" },
+  { name: "Servicios", icon: <MdCalendarToday />, route: "/patient" },
+  // { name: "Consultas", icon: <BiPlusMedical />, route: "/calendar" },
   {
     name: "Modales",
     icon: <BsReverseLayoutTextWindowReverse />,
@@ -40,8 +40,8 @@ const Sidebar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const user = useSelector((state: RootState) => state.user);
+  const [userData, setUserData] = useState<any>([]);
 
   const matchedSection = sections.find(
     (section) => location.pathname === section.route
@@ -66,12 +66,25 @@ const Sidebar: React.FC = () => {
       customMessage("success", "Sesión finalizada, hasta la próxima!");
       document.cookie =
         "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error(error);
       customMessage("error", "Intente otra vez.");
     }
   };
+
+  const FetchUserData = async () => {
+    await axios
+      .get(`http://localhost:3001/api/users/${user.id}`)
+      .then((res) => {
+        setUserData(res.data.user);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    FetchUserData();
+  }, []);
 
   return (
     <div className="flex h-[95vh]">
@@ -114,8 +127,12 @@ const Sidebar: React.FC = () => {
           />
           {isExpanded && (
             <div className="flex flex-col justify-around ">
-              <p className="text-sm font-semibold">nombre y apellido</p>
-              <p className="text-xs text-gray-400 font-bold">especialidad</p>
+              <p className="text-sm font-semibold">
+                {userData.name + " " + userData.lastName}
+              </p>
+              <p className="text-xs text-gray-400 font-bold">
+                {userData.email}
+              </p>
             </div>
           )}
         </div>

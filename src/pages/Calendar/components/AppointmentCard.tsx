@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { EllipsisOutlined } from "@ant-design/icons";
-import { Dropdown, Menu } from "antd";
 
 const container = {
   display: "flex",
@@ -76,13 +75,6 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
     }
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      <Menu.Item key="edit">Editar</Menu.Item>
-      <Menu.Item key="delete" style={{ color: "red" }}>Eliminar</Menu.Item>
-    </Menu>
-  );
-
   return (
     <div
       style={cardStyle}
@@ -108,14 +100,17 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between", width: "70%" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "70%",
+        }}
+      >
         <div style={boxStyle}>
           <div style={titleStyle}>{title}</div>
           <div style={subTitleStyle}>{subtitle}</div>
         </div>
-        <Dropdown overlay={menu} trigger={["click"]}>
-          <EllipsisOutlined className="flex justify-center items-center pr-5" />
-        </Dropdown>
       </div>
     </div>
   );

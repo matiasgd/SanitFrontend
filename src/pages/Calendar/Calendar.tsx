@@ -1,15 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 import AppointmentCard from "./components/AppointmentCard";
 import AppointmentDetails from "./components/AppointmentDetails";
-import { Button } from "antd";
 import moment from "moment";
+import axios from "axios";
 
-interface AppointmentProps {
-  appointments?: any[];
-}
-
-const Calendar: React.FC<AppointmentProps> = ({ appointments }) => {
+const Calendar = () => {
+  const [selectedCard, setSelectedCard] = useState<number>(0);
   const container = { display: "flex", gap: "20px", margin: "20px" };
+  const doctorId = useSelector((state: RootState) => state.user.id);
+  const [appointments, setAppointments] = useState<any[]>([]);
+
+  const fetchData = async () => {
+    // Citas
+    axios
+      .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
+      .then((res) => {
+        console.log(res.data.data);
+        const allAppointments = res.data.data;
+        const today = moment().startOf("day");
+        const todayAppointments = allAppointments.filter((appointment) => {
+          const appointmentStartTime = moment(appointment.startTime);
+          return appointmentStartTime.isSame(today, "day");
+        });
+        console.log(todayAppointments, "todayAppointments");
+        setAppointments(todayAppointments);
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    fetchData();
+  }, [doctorId]);
 
   const boxStyle = {
     display: "flex",
@@ -93,8 +115,6 @@ const Calendar: React.FC<AppointmentProps> = ({ appointments }) => {
     appointments.length
   );
 
-  const [selectedCard, setSelectedCard] = useState<number | null>(0);
-
   const handleCardClick = (index: number) => {
     setSelectedCard(index);
   };
@@ -125,15 +145,11 @@ const Calendar: React.FC<AppointmentProps> = ({ appointments }) => {
           ))}
         </div>
       </div>
-      {/* {selectedCard !== null && (
+      {appointments && (
         <AppointmentDetails
-          startTime={appointments[selectedCard].appointment.startTime}
-          endTime={appointments[selectedCard].appointment.endTime}
-          title={appointments[selectedCard].address.addressName}
-          subtitle={appointments[selectedCard].appointment.address.addressName}
           onClose={() => setSelectedCard(null)}
         />
-      )} */}
+      )}
     </div>
   );
 };
