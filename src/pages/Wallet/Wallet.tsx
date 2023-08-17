@@ -10,7 +10,7 @@ const Wallet: React.FC = () => {
   return (
     <div className="flex w-full">
       <Sidebar />
-      <div style={{ display: "flex", margin: "20px", gap: "20px" }}>
+      <div className="flex p-4 w-full">
         <div
           style={{
             display: "flex",
@@ -24,18 +24,13 @@ const Wallet: React.FC = () => {
               <Keypad />
             </div>
             <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                margin: "20px",
-              }}
-            >
+            className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl"         
+            >              
               <DateRangePicker />
               <Button>(+) New Income</Button>
             </div>
           </div>
-          <div>
+          <div className="p-4">
             <IncomeTable incomes={payments} />
           </div>
         </div>

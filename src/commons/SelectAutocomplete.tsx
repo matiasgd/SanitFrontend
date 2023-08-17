@@ -33,7 +33,6 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
-    console.log("entre al useeffect");
     if (typeOfSearch === "patients") {
       // Filtrar pacientes por nombre y apellido concatenados
       const filtered = patients

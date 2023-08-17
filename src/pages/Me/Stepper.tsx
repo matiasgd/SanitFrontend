@@ -13,6 +13,7 @@ import axios from "axios";
 const Stepper: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const { token } = theme.useToken();
+  const [userData, setUserData] = useState<any>([]);
 
   let user = useSelector((state: RootState) => state.user);
 
@@ -20,7 +21,7 @@ const Stepper: React.FC = () => {
     await axios
       .get(`http://localhost:3001/api/users/${user.id}`)
       .then((user) => {
-        console.log(user);
+        setUserData(user.data.user);
       })
       .catch((err) => console.log(err));
   };
@@ -38,18 +39,20 @@ const Stepper: React.FC = () => {
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      // user
       name: "",
       lastName: "",
       identityType: "",
       identityNumber: "",
       birthdate: "",
+      cellphone: "",
       gender: "",
       country: "",
       province: "",
+      city: "",
       field: "",
       specialty: "",
       medicalRegistration: "",
+      profileCompleted: true,
     },
   });
 
@@ -109,6 +112,14 @@ const Stepper: React.FC = () => {
             register={register}
             errors={errors}
           />
+          <Input
+            id="cellphone"
+            label="Celular"
+            placeholder="+54 911 12345678"
+            type="number"
+            register={register}
+            errors={errors}
+          />
           <CustomSelect
             label="Género"
             placeholder="Seleccione una opción"
@@ -133,6 +144,14 @@ const Stepper: React.FC = () => {
             id="province"
             label="Provincia de Residencia"
             placeholder="Provincia de Residencia"
+            type="text"
+            register={register}
+            errors={errors}
+          />
+          <Input
+            id="city"
+            label="Ciudad"
+            placeholder="Buenos Aires"
             type="text"
             register={register}
             errors={errors}

@@ -1,6 +1,6 @@
 import { Avatar, Button } from "antd";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { RootState } from "../../store/store";
 import Stepper from "./Stepper";
 import { TbStethoscope, TbUserPlus, TbMedicalCross } from "react-icons/tb";
 import AppointmentsModal from "../create/AppointmentsModal";
@@ -11,6 +11,7 @@ import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 
 const Dashboard = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -18,10 +19,15 @@ const Dashboard = () => {
   // estados de informacion
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [filteredAppointments, setFilteredAppointments] = useState([]); // [
   const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   // modales
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
+
+  //fake data
+  const [currency, setCurrency] = useState("ARS");
+  const fakeIncome = ["1,000,000", "1350"];
 
   const ActiveButtonStyle = {
     backgroundColor: "#F2F7FD",
@@ -38,16 +44,15 @@ const Dashboard = () => {
     await axios
       .get(`http://localhost:3001/api/users/${doctorId}/patients`)
       .then((res) => {
-        console.log(res.data.data, "patients");
         setPatients(res.data.data);
       })
       .catch((err) => console.log(err));
 
     // Citas
-    await axios
+    axios
       .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
       .then((res) => {
-        console.log(res.data.data, "Consultas");
+        console.log(res.data.data);       
         setAppointments(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -59,7 +64,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {!user.profileCompleted ? (
+      {user.profileCompleted ? (
         <Stepper />
       ) : (
         <div className="flex w-full p-4">
@@ -79,7 +84,7 @@ const Dashboard = () => {
             <div className="flex flex-col w-full gap-4 p-5 shadow-lg rounded-lg">
               <div className="flex gap-4">
                 <p className="font-bold text-lg  mt-1">Tu actividad</p>
-                <button
+                {/* <button
                   onClick={() => {
                     setFilter("weekly");
                   }}
@@ -101,7 +106,7 @@ const Dashboard = () => {
                   }}
                 >
                   Anual
-                </button>
+                </button> */}
               </div>
               <div className="flex flex-row w-full gap-4">
                 <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
@@ -142,14 +147,18 @@ const Dashboard = () => {
                   </Avatar>
                   <div className="flex-col">
                     <p className="font-bold text-lg  mt-1">Ingresos</p>
-                    <h2 className="text-[60px]">100,000</h2>
+                    <h2 className="text-[60px]">
+                      {currency === "ARS" ? fakeIncome[0] : fakeIncome[1]}
+                    </h2>
                     <Button
+                      onClick={() => setCurrency("ARS")}
                       type="ghost"
                       className="bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
                     >
                       ARS
                     </Button>
                     <Button
+                      onClick={() => setCurrency("USD")}
                       type="ghost"
                       className="bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
                     >
@@ -159,7 +168,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <Calendar appointments={appointments} />
+            <Calendar />
           </div>
         </div>
       )}

@@ -1,11 +1,8 @@
 import React from "react";
 import {
   LaptopOutlined,
-  HomeOutlined,
   CloseOutlined,
-  IdcardOutlined,
   ArrowRightOutlined,
-  //FileTextOutlined,
 } from "@ant-design/icons";
 import { Space, Tag, Divider, Button } from "antd";
 import moment from "moment";
@@ -61,29 +58,19 @@ const fieldContentStyle = {
 };
 
 interface AppointmentDetailsProps {
-  startTime: string;
-  title: string;
-  endTime: string;
-  subtitle: string;
   onClose: () => void;
 }
 
-const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
-  startTime,
-  endTime,
-  title,
-  subtitle,
-  onClose,
-}) => {
+const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
   return (
     <div style={conteiner}>
       <div>
         <div style={header}>
-          {/* <p style={titleStyle}>{appointment.address.addressName}</p> */}
+          <p style={titleStyle}>Consulta dermatologica -  Alberti, Ethan</p>
           <div style={{ display: "flex", gap: "20px" }}>
             <p style={titleStyle}>
-              {moment(startTime).format("HH:mm")} -{" "}
-              {moment(endTime).format("HH:mm")}
+              {/* {moment(appointment.startTime).format("HH:mm")} -{" "}
+              {moment(appointment.endTime).format("HH:mm")} */}
             </p>
             <button onClick={onClose}>
               <CloseOutlined className="flex justify-center items-center" />
@@ -92,7 +79,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
         </div>
         <div style={content}>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}>Type</p>
+            <p style={fieldTitleStyle}>Tipo de consulta:</p>
             <Space size={[0, 8]} wrap>
               <Tag
                 icon={<LaptopOutlined />}
@@ -104,36 +91,36 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
             </Space>
           </div>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Location </p>
-            <p style={fieldContentStyle}> South Office, floor 2, room 201 </p>
+            <p style={fieldTitleStyle}>Lugar:</p>
+            <p style={fieldContentStyle}>Consultorio Beruti</p>
           </div>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Insurance </p>
-            <p style={fieldContentStyle}> Particular </p>
+            <p style={fieldTitleStyle}>Tipo de seguro:</p>
+            <p style={fieldContentStyle}>Particular</p>
           </div>
           <Divider style={{ margin: "5px", backgroundColor: "#3B6FB6" }} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={fieldStyle}>
-              <p style={fieldTitleStyle}> Last Consult </p>
-              <p style={{ width: "30%", fontSize: "14px" }}> 15/08/2023 </p>
+              <p style={fieldTitleStyle}> Ultima consulta:</p>
+              <p style={{ width: "30%", fontSize: "14px" }}> 17/07/2023 </p>
             </div>
             <Button type="link">
               <Space>
-                <span>Consult Card</span>
+                <span>Mas informacion</span>
                 <ArrowRightOutlined className="flex justify-center items-center" />
               </Space>
             </Button>
           </div>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Payment </p>
-            <Tag> pending </Tag>
+            <p style={fieldTitleStyle}> Estado de pago: </p>
+            <Tag>Pendiente</Tag>
           </div>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Attendance </p>
-            <p style={fieldContentStyle}> Asiste</p>
+            <p style={fieldTitleStyle}> Asistencia: </p>
+            <p style={fieldContentStyle}>Confirmada</p>
           </div>
           <div style={fieldStyle}>
-            <p style={fieldTitleStyle}> Notes </p>
+            <p style={fieldTitleStyle}> Notas: </p>
             <p style={fieldContentStyle}>
               Vimos la relacion familiar con la madre y como le resulta jugar a
               la pelota con el hijo no reconocido de la pareja
