@@ -83,7 +83,7 @@ const Wallet: React.FC = () => {
   }, [doctorId]);
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full p-4">
       <Sidebar />
       <div className="flex p-4 w-full">
         <div

@@ -85,7 +85,7 @@ const Stepper: React.FC = () => {
             errors={errors}
           />
           <Input
-            id="lastname"
+            id="lastName"
             label="Apellido"
             placeholder="Ingrese su apellido"
             type="text"

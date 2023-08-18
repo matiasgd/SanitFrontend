@@ -15,18 +15,13 @@ import {
   MdCalendarToday,
 } from "react-icons/md";
 import { BsReverseLayoutTextWindowReverse, BsPersonFill } from "react-icons/bs";
-import {
-  BiSolidRightArrow,
-  BiSolidLeftArrow,
-  BiPlusMedical,
-} from "react-icons/bi";
+import { BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
 
 const sections = [
   { name: "Panel", icon: <MdSpaceDashboard />, route: "/dashboard" },
   { name: "Ingresos", icon: <MdAccountBalanceWallet />, route: "/wallet" },
   { name: "Pacientes", icon: <BsPersonFill />, route: "/patients" },
   { name: "Servicios", icon: <MdCalendarToday />, route: "/patient" },
-  // { name: "Consultas", icon: <BiPlusMedical />, route: "/calendar" },
   {
     name: "Modales",
     icon: <BsReverseLayoutTextWindowReverse />,
@@ -127,9 +122,7 @@ const Sidebar: React.FC = () => {
           />
           {isExpanded && (
             <div className="flex flex-col justify-around ">
-              <p className="text-sm font-semibold">
-                {userData.name + " " + userData.lastName}
-              </p>
+              <p className="text-sm font-semibold">Homer Simpson</p>
               <p className="text-xs text-gray-400 font-bold">
                 {userData.email}
               </p>

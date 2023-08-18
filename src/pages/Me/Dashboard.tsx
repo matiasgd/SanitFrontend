@@ -11,7 +11,7 @@ import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
+import clsx from "clsx";
 
 const Dashboard = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -19,8 +19,7 @@ const Dashboard = () => {
   // estados de informacion
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
-  const [filteredAppointments, setFilteredAppointments] = useState([]); // [
-  const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
+  // const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   // modales
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
@@ -32,17 +31,7 @@ const Dashboard = () => {
 
   //fake data
   const [currency, setCurrency] = useState("ARS");
-  const fakeIncome = ["1,000,000", "1350"];
-
-  const ActiveButtonStyle = {
-    backgroundColor: "#F2F7FD",
-    color: "#475C80",
-  };
-
-  const HoverButtonStyle = {
-    backgroundColor: "#F2F7FD",
-    color: "#5F8DCA",
-  };
+  const fakeIncome = ["140.000", "200"];
 
   const fetchData = async () => {
     // Pacientes
@@ -78,16 +67,19 @@ const Dashboard = () => {
           />
           <AppointmentsModal
             isOpen={isOpenAppointmentsModal}
-            onClose={() => setIsOpenAppointmentsModal(false)}
+            onClose={() => {
+              setIsOpenAppointmentsModal(false);
+              fetchData();
+            }}
           />
           <Sidebar />
           <div className="flex flex-col gap-4 w-full px-4">
-            <div className="flex w-full gap-4">
-              <SearchBar />
-            </div>
             <div className="flex flex-col w-full gap-4 p-5 shadow-lg rounded-lg">
               <div className="flex gap-4">
-                <p className="font-bold text-lg  mt-1">Tu actividad</p>
+                <p className="font-bold text-lg w-[20%] mt-1">
+                  Tu Actividad General
+                </p>
+                <SearchBar />
                 {/* <button
                   onClick={() => {
                     setFilter("weekly");
@@ -163,14 +155,20 @@ const Dashboard = () => {
                     <Button
                       onClick={() => setCurrency("ARS")}
                       type="ghost"
-                      className="bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+                      className={clsx(
+                        `bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
+                        currency === "ARS" && "bg-yellow-200"
+                      )}
                     >
                       ARS
                     </Button>
                     <Button
                       onClick={() => setCurrency("USD")}
                       type="ghost"
-                      className="bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+                      className={clsx(
+                        `bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
+                        currency === "USD" && "bg-yellow-200"
+                      )}
                     >
                       USD
                     </Button>
@@ -178,7 +176,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <Calendar />
+            <Calendar appointments={appointments} />
           </div>
         </div>
       )}

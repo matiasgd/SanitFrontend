@@ -105,7 +105,7 @@ const AuthForm = () => {
       <div className="absolute top-0 right-0 w-[20vh] h-[10vh] sm:w-[25vh] sm:h-[15vh] md:w-[35vh] md:h-[25vh] lg:w-[45vh] lg:h-[35vh] bg-[#EB6350] rounded-bl-[75vh] z-20" />
       <div className="absolute w-full h-[5vh] sm:h-[10vh] md:h-[20vh] lg:h-[30vh] bg-[#2AAAE1] z-10" />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 md:px-7 lg:px-8 bg-[#154E64]">
-        <div className="sm:mx-auto sm:w-full sm:max-w-md z-30">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md z-30 hover:scale-110">
           <img
             src={logo}
             alt="logo"

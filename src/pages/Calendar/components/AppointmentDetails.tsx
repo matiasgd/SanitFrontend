@@ -66,7 +66,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
     <div style={conteiner}>
       <div>
         <div style={header}>
-          <p style={titleStyle}>Consulta dermatologica -  Alberti, Ethan</p>
+          <p style={titleStyle}>Implante - Doherty, Augusta</p>
           <div style={{ display: "flex", gap: "20px" }}>
             <p style={titleStyle}>
               {/* {moment(appointment.startTime).format("HH:mm")} -{" "}
@@ -122,8 +122,10 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Notas: </p>
             <p style={fieldContentStyle}>
-              Vimos la relacion familiar con la madre y como le resulta jugar a
-              la pelota con el hijo no reconocido de la pareja
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odit
+              animi, dolorum quod commodi iure possimus eligendi aperiam
+              aspernatur eius in at nemo tempora iste ipsum fugiat eveniet
+              exercitationem quos sapiente.
             </p>
           </div>
         </div>
