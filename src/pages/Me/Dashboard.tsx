@@ -1,50 +1,50 @@
-import { Avatar, Button } from "antd";
+import axios from "axios";
+import clsx from "clsx";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import Stepper from "./Stepper";
+import { Avatar, Button } from "antd";
 import { TbStethoscope, TbUserPlus, TbMedicalCross } from "react-icons/tb";
 import AppointmentsModal from "../create/AppointmentsModal";
 import PatientModal from "../create/PatientModal";
-import { useState } from "react";
 import SearchBar from "./components/SearchBar";
 import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
-import { useEffect } from "react";
-import axios from "axios";
-import clsx from "clsx";
+import Stepper from "./Stepper";
 
 const Dashboard = () => {
+  // Redux
   const user = useSelector((state: RootState) => state.user);
-  const doctorId = useSelector((state: RootState) => state.user.id);
-  // estados de informacion
+  // States
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [currency, setCurrency] = useState("ARS");
   // const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
-  // modales
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
-
-  // Transformar la respuesta de la API en el formato necesario
-  function formatNumberWithCommas(number) {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  // Utils
+  function formatNumberWithCommas() {
+    const totalAppointmentPrice = appointments.reduce(
+      (total, entry) => total + (entry.appointmentPrice || 0),
+      0
+    );
+    return totalAppointmentPrice
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
-
-  //fake data
-  const [currency, setCurrency] = useState("ARS");
-  const fakeIncome = ["140.000", "200"];
 
   const fetchData = async () => {
     // Pacientes
     await axios
-      .get(`http://localhost:3001/api/users/${doctorId}/patients`)
+      .get(`http://localhost:3001/api/users/${user.id}/patients`)
       .then((res) => {
         setPatients(res.data.data);
       })
       .catch((err) => console.log(err));
 
     // Citas
-    axios
-      .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
+    await axios
+      .get(`http://localhost:3001/api/appointments/doctor/${user.id}`)
       .then((res) => {
         setAppointments(res.data.data);
       })
@@ -53,7 +53,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchData();
-  }, [doctorId]);
+  }, [user.id]);
 
   return (
     <>
@@ -114,7 +114,7 @@ const Dashboard = () => {
                     <h2 className="text-[60px]">{appointments.length}</h2>
                     <Button
                       type="ghost"
-                      className="bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+                      className="bg-white text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
                       onClick={() => setIsOpenAppointmentsModal(true)}
                     >
                       (+) Nueva
@@ -130,7 +130,7 @@ const Dashboard = () => {
                     <h2 className="text-[60px]">{patients.length}</h2>
                     <Button
                       type="ghost"
-                      className="bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+                      className="bg-white text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
                       onClick={() => setOpenPatientsModal(true)}
                     >
                       (+) Crear
@@ -143,20 +143,12 @@ const Dashboard = () => {
                   </Avatar>
                   <div className="flex-col">
                     <p className="font-bold text-lg  mt-1">Ingresos</p>
-                    <h2 className="text-[60px]">
-                      {formatNumberWithCommas(
-                        appointments.reduce(
-                          (total, entry) => total + entry.appointmentPrice,
-                          0
-                        )
-                      )}
-                      {/* {currency === "ARS" ? fakeIncome[0] : fakeIncome[1]} */}
-                    </h2>
+                    <h2 className="text-[60px]">{formatNumberWithCommas()}</h2>
                     <Button
                       onClick={() => setCurrency("ARS")}
                       type="ghost"
                       className={clsx(
-                        `bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
+                        `bg-white text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
                         currency === "ARS" && "bg-yellow-200"
                       )}
                     >
@@ -166,7 +158,7 @@ const Dashboard = () => {
                       onClick={() => setCurrency("USD")}
                       type="ghost"
                       className={clsx(
-                        `bg-transparent text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
+                        `bg-white text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none`,
                         currency === "USD" && "bg-yellow-200"
                       )}
                     >

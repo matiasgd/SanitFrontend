@@ -8,39 +8,19 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
-  const [selectedCard, setSelectedCard] = useState<number>(0);
-  const container = { display: "flex", gap: "20px", margin: "20px" };
-
   const today = moment().startOf("day");
   const todayAppointments = appointments.filter((appointment) => {
     const appointmentStartTime = moment(appointment.startTime);
     return appointmentStartTime.isSame(today, "day");
   });
-
-  // const fetchData = async () => {
-  //   // Citas
-  //   axios
-  //     .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
-  //     .then((res) => {
-  //       console.log(res.data.data);
-  //       const allAppointments = res.data.data;
-  //       const today = moment().startOf("day");
-  //       const todayAppointments = allAppointments.filter((appointment) => {
-  //         const appointmentStartTime = moment(appointment.startTime);
-  //         return appointmentStartTime.isSame(today, "day");
-  //       });
-  //       console.log(todayAppointments, "todayAppointments");
-  //       console.log(todayAppointments);
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
+  // States
+  const [selectedCard, setSelectedCard] = useState(null);
 
   const boxStyle = {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    width: "60%",
-    maxWidth: "700px",
+    width: "50%",
     minWidth: "350px",
     height: "500px",
     borderRadius: "10px",
@@ -111,12 +91,8 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
     appointments.length
   );
 
-  const handleCardClick = (index: number) => {
-    setSelectedCard(index);
-  };
-
   return (
-    <div style={container}>
+    <div className="flex gap-5 rounded-xl">
       <div style={boxStyle}>
         <div style={header}>
           <div className="text-xl font-bold justify-center items-center">
@@ -139,13 +115,16 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
               }
               subtitle={appointment.address.addressName}
               circleColor={colorScale[index]}
-              onClick={() => handleCardClick(index)}
+              onClick={() => setSelectedCard(appointment)}
             />
           ))}
         </div>
       </div>
-      {appointments && (
-        <AppointmentDetails onClose={() => setSelectedCard(null)} />
+      {selectedCard && (
+        <AppointmentDetails
+          selected={selectedCard}
+          onClose={() => setSelectedCard(null)}
+        />
       )}
     </div>
   );

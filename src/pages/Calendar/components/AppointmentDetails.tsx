@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LaptopOutlined,
   CloseOutlined,
@@ -58,19 +57,29 @@ const fieldContentStyle = {
 };
 
 interface AppointmentDetailsProps {
+  selected: any;
   onClose: () => void;
 }
 
-const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
+const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
+  onClose,
+  selected,
+}) => {
   return (
     <div style={conteiner}>
       <div>
         <div style={header}>
-          <p style={titleStyle}>Implante - Doherty, Augusta</p>
+          <p style={titleStyle}>
+            {selected?.service?.serviceName +
+              " - " +
+              selected?.patient?.name +
+              " " +
+              selected?.patient?.lastName}
+          </p>
           <div style={{ display: "flex", gap: "20px" }}>
             <p style={titleStyle}>
-              {/* {moment(appointment.startTime).format("HH:mm")} -{" "}
-              {moment(appointment.endTime).format("HH:mm")} */}
+              {moment(selected.startTime).format("HH:mm")} -{" "}
+              {moment(selected.endTime).format("HH:mm")}
             </p>
             <button onClick={onClose}>
               <CloseOutlined className="flex justify-center items-center" />
@@ -86,23 +95,26 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
                 className="flex justify-center items-center"
                 color="#55acee"
               >
-                Digital
+                {selected.type}
               </Tag>
             </Space>
           </div>
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}>Lugar:</p>
-            <p style={fieldContentStyle}>Consultorio Beruti</p>
+            <p style={fieldContentStyle}>{selected?.address?.addressName}</p>
           </div>
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}>Tipo de seguro:</p>
-            <p style={fieldContentStyle}>Particular</p>
+            <p style={fieldContentStyle}>{selected.category}</p>
           </div>
           <Divider style={{ margin: "5px", backgroundColor: "#3B6FB6" }} />
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <div style={fieldStyle}>
               <p style={fieldTitleStyle}> Ultima consulta:</p>
-              <p style={{ width: "30%", fontSize: "14px" }}> 17/07/2023 </p>
+              <p style={{ width: "30%", fontSize: "14px" }}>
+                {" "}
+                17/07/2023 HARDCODE{" "}
+              </p>
             </div>
             <Button type="link">
               <Space>
@@ -113,11 +125,11 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
           </div>
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Estado de pago: </p>
-            <Tag>Pendiente</Tag>
+            <Tag>{selected.paymentStatus}</Tag>
           </div>
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Asistencia: </p>
-            <p style={fieldContentStyle}>Confirmada</p>
+            <p style={fieldContentStyle}>{selected.status}</p>
           </div>
           <div style={fieldStyle}>
             <p style={fieldTitleStyle}> Notas: </p>
@@ -139,8 +151,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ onClose }) => {
         }}
       >
         <Button type="primary" style={{ backgroundColor: "#55acee" }}>
-          {" "}
-          Ingresar a la consulta{" "}
+          Ingresar a la consulta
         </Button>
       </div>
     </div>
