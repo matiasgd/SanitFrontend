@@ -1,7 +1,46 @@
 import React from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import MetricBox from "./MetricBox";
+import axios from "axios";
 
-const Keypad: React.FC = () => {
+interface Income {
+  date: string;
+  patient: string;
+  services: Array<string>;
+  method: string;
+  amount: number;
+  usd: number;
+}
+
+interface KeypadTableProps {
+  incomes: Income[];
+}
+
+const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
+  const doctorId = useSelector((state: RootState) => state.user.id);
+  const [exchangeRate, setExchangeRate] = useState(0); // [ARS, USD]
+  const totalAmount = incomes.reduce((total, entry) => total + entry.amount, 0);
+
+  function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  const fetchData = async () => {
+    // Tipo de cambio actual
+    await axios
+      .get(`http://localhost:3001/api/fx/USDARS`)
+      .then((res) => {
+        const average = (res.data.data.buyer + res.data.data.seller) / 2;
+        setExchangeRate(average);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [doctorId]);
+
   return (
     <div
       style={{
@@ -11,8 +50,8 @@ const Keypad: React.FC = () => {
       }}
     >
       <MetricBox
-        title="Ingresos"
-        metric="252.000"
+        title="Cobros totales"
+        metric={formatNumberWithCommas(totalAmount.toFixed(0))}
         color="#F2F7FD"
         currency="$"
       />
@@ -24,13 +63,13 @@ const Keypad: React.FC = () => {
       />
       <MetricBox
         title="Tipo de cambio"
-        metric="490"
+        metric={exchangeRate.toFixed(0)}
         color="#EEEFF4"
         currency="USD"
       />
       <MetricBox
         title="Pagos recibidos"
-        metric="21"
+        metric={incomes.length}
         color="#F2F7FD"
         currency=""
       />

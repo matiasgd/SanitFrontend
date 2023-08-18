@@ -1,50 +1,49 @@
-import React from 'react';
-import { Table } from 'antd';
+import React from "react";
+import { Table } from "antd";
 
 interface Income {
   date: string;
   patient: string;
   services: Array<string>;
-  payMethod: string;
+  method: string;
   amount: number;
-  usd: number; 
+  usd: number;
 }
 
 interface IncomeTableProps {
   incomes: Income[];
 }
 
-
 const columns = [
   {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
+    title: "Fecha de pago",
+    dataIndex: "paymentDate",
+    key: "paymentDate",
   },
   {
-    title: 'Patient',
-    dataIndex: 'patient',
-    key: 'patient',
+    title: "Paciente",
+    dataIndex: "patientName",
+    key: "patientName",
   },
   {
-    title: 'Services',
-    dataIndex: 'services',
-    key: 'services',
+    title: "Servicio",
+    dataIndex: "serviceName",
+    key: "services",
   },
   {
-    title: 'Pay Method',
-    dataIndex: 'payMethod',
-    key: 'payMethod',
+    title: "Metodo de pago",
+    dataIndex: "method",
+    key: "method",
   },
   {
-    title: 'ARS Amount',
-    dataIndex: 'amount',
-    key: 'amount',
+    title: "Ingreso ARS",
+    dataIndex: "amount",
+    key: "amount",
   },
   {
-    title: 'USD Conversion',
-    dataIndex: 'usd',
-    key: 'usd',
+    title: "Conversion USD",
+    dataIndex: "amountUSD",
+    key: "usd",
   },
 ];
 

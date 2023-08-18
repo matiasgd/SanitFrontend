@@ -25,6 +25,11 @@ const Dashboard = () => {
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
 
+  // Transformar la respuesta de la API en el formato necesario
+  function formatNumberWithCommas(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   //fake data
   const [currency, setCurrency] = useState("ARS");
   const fakeIncome = ["1,000,000", "1350"];
@@ -52,7 +57,6 @@ const Dashboard = () => {
     axios
       .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
       .then((res) => {
-        console.log(res.data.data);       
         setAppointments(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -148,7 +152,13 @@ const Dashboard = () => {
                   <div className="flex-col">
                     <p className="font-bold text-lg  mt-1">Ingresos</p>
                     <h2 className="text-[60px]">
-                      {currency === "ARS" ? fakeIncome[0] : fakeIncome[1]}
+                      {formatNumberWithCommas(
+                        appointments.reduce(
+                          (total, entry) => total + entry.appointmentPrice,
+                          0
+                        )
+                      )}
+                      {/* {currency === "ARS" ? fakeIncome[0] : fakeIncome[1]} */}
                     </h2>
                     <Button
                       onClick={() => setCurrency("ARS")}
