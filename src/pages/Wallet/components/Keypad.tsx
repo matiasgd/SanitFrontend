@@ -10,7 +10,7 @@ interface Income {
   services: Array<string>;
   method: string;
   amount: number;
-  usd: number;
+  amountUSD: number;
 }
 
 interface KeypadTableProps {
@@ -20,7 +20,12 @@ interface KeypadTableProps {
 const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [exchangeRate, setExchangeRate] = useState(0); // [ARS, USD]
+  console.log(incomes, "incomes");
   const totalAmount = incomes.reduce((total, entry) => total + entry.amount, 0);
+  const totalAmountUSD = incomes.reduce(
+    (total, entry) => total + (entry.amountUSD ? entry.amountUSD : 0),
+    0
+  );
 
   function formatNumberWithCommas(number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -57,7 +62,7 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
       />
       <MetricBox
         title="Estimado en USD"
-        metric="490"
+        metric={formatNumberWithCommas(totalAmountUSD.toFixed(0))}
         color="#EEEFF4"
         currency="USD"
       />
