@@ -1,8 +1,6 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { defaultPatients } from "../../../constans/defaultPatients";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 const Patient: React.FC = () => {
   const { id } = useParams();

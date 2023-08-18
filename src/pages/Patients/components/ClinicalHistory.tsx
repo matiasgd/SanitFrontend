@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Finance from "../generalInfo/Finance";
+import Finance from "./Finance";
 
 const ClinicalHistory = () => {
   const [selectedButton, setSelectedButton] = useState("general");

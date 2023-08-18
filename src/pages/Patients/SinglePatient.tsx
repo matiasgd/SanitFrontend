@@ -1,4 +1,4 @@
-import Sidebar from "./Sidebar";
+import Sidebar from "../Me/Sidebar";
 import Patient from "./components/Patient";
 import ClinicalHistory from "./components/ClinicalHistory";
 import PatientApointments from "./components/PatientAppointments";

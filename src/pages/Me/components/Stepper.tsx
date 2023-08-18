@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Steps, theme } from "antd";
 import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import Input from "../../commons/Input";
-import Button from "../../commons/Button";
-import RHFDatePicker from "../../commons/DatePicker";
-import CustomSelect from "../../commons/Select";
-import CustomSegmented from "../../commons/Segmented";
+import { RootState } from "../../../store/store";
+import Input from "../../../commons/Input";
+import Button from "../../../commons/Button";
+import RHFDatePicker from "../../../commons/DatePicker";
+import CustomSelect from "../../../commons/Select";
+import CustomSegmented from "../../../commons/Segmented";
 import axios from "axios";
 
 const Stepper: React.FC = () => {

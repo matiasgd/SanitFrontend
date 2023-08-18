@@ -10,7 +10,7 @@ import PatientModal from "../create/PatientModal";
 import SearchBar from "./components/SearchBar";
 import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
-import Stepper from "./Stepper";
+import Stepper from "./components/Stepper";
 
 const Dashboard = () => {
   // Redux

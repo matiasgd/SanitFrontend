@@ -1,16 +1,14 @@
-import { useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import type { InputRef } from "antd";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Space, Table } from "antd";
 import type { ColumnType, ColumnsType } from "antd/es/table";
 import type { FilterConfirmProps } from "antd/es/table/interface";
-import React, { useRef, useState } from "react";
 // import Highlighter from 'react-highlight-words';
-import Sidebar from "../Sidebar";
+import Sidebar from "../Me/Sidebar";
 import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
+import { RootState } from "../../store/store";
 import axios from "axios";
-import { set } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 interface DataType {
@@ -268,10 +266,10 @@ const Patients: React.FC = () => {
   return (
     <div className="flex w-full p-4">
       <div>
-      <Sidebar />
+        <Sidebar />
       </div>
       <div className="w-full px-4">
-      <Table columns={columns} dataSource={transformedData} />
+        <Table columns={columns} dataSource={transformedData} />
       </div>
     </div>
   );
