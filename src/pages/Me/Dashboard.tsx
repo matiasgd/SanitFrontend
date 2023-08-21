@@ -22,15 +22,15 @@ const Dashboard = () => {
   // const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
+
+  // const totalAppointmentPrice = appointments.reduce(
+  //   (total, entry) => total + (entry.appointmentPrice || 0),
+  //   0
+  // );
+
   // Utils
-  function formatNumberWithCommas() {
-    const totalAppointmentPrice = appointments.reduce(
-      (total, entry) => total + (entry.appointmentPrice || 0),
-      0
-    );
-    return totalAppointmentPrice
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  function formatNumberWithCommas(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
   const fetchData = async () => {
@@ -50,6 +50,12 @@ const Dashboard = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  // facturacion
+  const sales = appointments
+    .filter((appointment) => appointment.status === "Completed")
+    .map((appointment) => appointment.appointmentPrice)
+    .reduce((total, price) => total + price, 0);
 
   useEffect(() => {
     fetchData();
@@ -142,9 +148,11 @@ const Dashboard = () => {
                     <TbMedicalCross className="text-3xl text-yellow-600" />
                   </Avatar>
                   <div className="flex-col">
-                    <p className="font-bold text-lg  mt-1">Ingresos</p>
-                    <h2 className="text-[60px]">{formatNumberWithCommas()}</h2>
-                    <Button
+                    <p className="font-bold text-lg  mt-1">Facturación</p>
+                    <h2 className="text-[60px]">
+                      {formatNumberWithCommas(sales)}
+                    </h2>
+                    {/* <Button
                       onClick={() => setCurrency("ARS")}
                       type="ghost"
                       className={clsx(
@@ -163,7 +171,7 @@ const Dashboard = () => {
                       )}
                     >
                       USD
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>
