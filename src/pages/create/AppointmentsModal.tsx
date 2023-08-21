@@ -49,7 +49,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       doctorId: doctorId,
       address: "",
       serviceId: "",
-      paymentMethod: "",
       servicePrice: "",
       appointmentPrice: "",
       currency: "ARS",
@@ -213,18 +212,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
             errors={errors}
           />
         </div>
-        <CustomSelect
-          label="Metodo de pago"
-          placeholder="Seleccione una opción de pago"
-          control={control}
-          name="paymentMethod"
-          options={[
-            { value: "Cash", label: "Efectivo" },
-            { value: "DebitCard", label: "Tarjeta de débito" },
-            { value: "CreditCard", label: "Tarjeta de crédito" },
-            { value: "MercadoPago", label: "Mercado pago" },
-          ]}
-        />
         <CustomSelect
           label="Categoria"
           placeholder="Seleccione una opción..."

@@ -114,6 +114,7 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
                 appointment.patient.name
               }
               subtitle={appointment.address.addressName}
+              appointment={appointment}
               circleColor={colorScale[index]}
               onClick={() => setSelectedCard(appointment)}
             />
