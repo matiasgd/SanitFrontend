@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
-import Sidebar from "../Me/Sidebar";
-import AddressForm from "./AddressForm";
-import ServiceForm from "../services/Service";
+import { Button } from "antd";
 import PatientModal from "./PatientModal";
 import AppointmentsModal from "./AppointmentsModal";
 import AddressModal from "./AddressModal";
 import ServiceModal from "./ServiceModal";
+import PaymentModal from "./PaymentModal";
 
 const ModalTest: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -16,6 +14,7 @@ const ModalTest: React.FC = () => {
   const [isOpenAddressModal, setIsOpenAddressModal] = useState(false);
   const [isOpenAddressForm, setIsOpenAddressForm] = useState(false);
   const [isOpenServiceModal, setIsOpenServiceModal] = useState(false);
+  const [isOpenPaymentModal, setIsOpenPaymentModal] = useState(false);
 
   const handleButtonClick = (title: string) => {
     setModalTitle(title);
@@ -45,6 +44,11 @@ const ModalTest: React.FC = () => {
         onClose={() => setIsOpenServiceModal(false)}
         type="CREATE"
       />
+      <PaymentModal
+        isOpen={isOpenPaymentModal}
+        onClose={() => setIsOpenPaymentModal(false)}
+      />
+
       <Button
         style={{ margin: "8px" }}
         onClick={() => setOpenPatientsModal(true)}
@@ -68,6 +72,12 @@ const ModalTest: React.FC = () => {
         onClick={() => setIsOpenServiceModal(true)}
       >
         Nuevo servicio
+      </Button>
+      <Button
+        style={{ margin: "8px" }}
+        onClick={() => setIsOpenPaymentModal(true)}
+      >
+        Nuevo pago
       </Button>
     </div>
   );
