@@ -10,7 +10,6 @@ const Patient: React.FC = () => {
     await axios
       .get(`http://localhost:3001/api/patients/${id}`)
       .then((res) => {
-        console.log(res.data.data);
         setPatient(res.data.data);
       })
       .catch((err) => console.log(err));

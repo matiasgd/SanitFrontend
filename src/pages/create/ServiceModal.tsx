@@ -50,7 +50,6 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    console.log("DATAAAAAAA", data);
 
     await axios
       .post(`http://localhost:3001/api/services/new/${doctorId}`, data)

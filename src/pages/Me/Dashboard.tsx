@@ -57,6 +57,7 @@ const Dashboard = () => {
     .map((appointment) => appointment.appointmentPrice)
     .reduce((total, price) => total + price, 0);
 
+
   useEffect(() => {
     fetchData();
   }, [user.id]);
@@ -85,7 +86,7 @@ const Dashboard = () => {
                 <p className="font-bold text-lg w-[20%] mt-1">
                   Tu Actividad General
                 </p>
-                <SearchBar />
+                <SearchBar patients={patients} appointments={appointments} />
                 {/* <button
                   onClick={() => {
                     setFilter("weekly");
