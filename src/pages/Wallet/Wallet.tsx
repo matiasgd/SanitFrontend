@@ -6,7 +6,6 @@ import IncomeTable from "./components/IncomeTable";
 import Keypad from "./components/Keypad";
 import DateRangePicker from "./components/DataRangePicker";
 import { Button } from "antd";
-import { payments } from "../../constans/defaultPayments";
 import Sidebar from "../Me/Sidebar";
 import axios from "axios";
 import moment from "moment";
@@ -15,6 +14,7 @@ const Wallet: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [payments, setPayments] = useState([]);
   const [exchangeRate, setExchangeRate] = useState(0); // [ARS, USD]
+  const [appointments, setAppointments] = useState([]);
 
   const transformPaymentData = (data) => {
     const transformedData = data.map((payment) => {
@@ -61,9 +61,7 @@ const Wallet: React.FC = () => {
       .get(`http://localhost:3001/api/payments/doctor/${doctorId}`)
       .then((res) => {
         const originalData = res.data.data;
-        console.log(originalData, "originalData");
         const transformedData = transformPaymentData(originalData);
-        console.log(transformedData, "transformedData");
         setPayments(transformedData);
       })
       .catch((err) => console.log(err));

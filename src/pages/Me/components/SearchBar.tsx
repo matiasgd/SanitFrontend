@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Input } from "antd";
+import { AutoComplete, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const SearchBarStyle = {
   display: "flex",
@@ -27,10 +29,15 @@ const HoverButtonStyle = {
   color: "#5F8DCA",
 };
 
-const SearchBar: React.FC = () => {
-  const [selectedButton, setSelectedButton] = useState<string | null>(
-    "Patients"
-  );
+interface SearchBarProps {
+  patients: any[];
+  appointments: any[];
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedButton, setSelectedButton] = useState<string>("Pacientes");
+  const navigate = useNavigate();
 
   const handleButtonSelect = (buttonName: string) => {
     setSelectedButton(buttonName === selectedButton ? null : buttonName);
@@ -63,10 +70,71 @@ const SearchBar: React.FC = () => {
     </div>
   );
 
+  const searchOptions = () => {
+    if (selectedButton === "Pacientes") {
+      // Filtra pacientes y crea un arreglo de objetos con las propiedades 'text' y 'value'
+      return patients
+        .filter((patient) =>
+          patient.name.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((patient) => ({
+          text: patient._id,
+          value: patient.name + " " + patient.lastName,
+        }));
+    } else if (selectedButton === "Consultas") {
+      console.log("entre...");
+      // Filtra consultas (appointments) y crea un arreglo de objetos con las propiedades 'text' y 'value'
+      return appointments
+        .filter((appointment) =>
+          appointment.patient.lastName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase())
+        )
+        .map((appointment) => ({
+          text:
+            `[${moment(appointment.startTime).format(
+              "YYYY-MM-DD"
+            )}] Prestación: ${appointment.service.serviceName}` +
+            " - Paciente: " +
+            appointment.patient.lastName +
+            ", " +
+            appointment.patient.name,
+          value:
+            `[${moment(appointment.startTime).format(
+              "YYYY-MM-DD"
+            )}] Prestación: ${appointment.service.serviceName}` +
+            " - Paciente: " +
+            appointment.patient.lastName +
+            ", " +
+            appointment.patient.name,
+        }));
+    }
+    // Si no se ha seleccionado ningún filtro, devuelve un arreglo vacío
+    return [];
+  };
+
+  function handleSelect(selectedValue) {
+    const route = `/patient/${selectedValue}`;
+    navigate(route);
+  }
+
   return (
     <div style={SearchBarStyle}>
       <SearchOutlined style={{ marginLeft: "15px" }} />
-      <Input placeholder="Search" bordered={false} />
+      <AutoComplete
+        style={{ width: "100%" }}
+        options={searchOptions()
+          .slice(0, 5)
+          .map((option, index) => ({
+            value: option.text,
+            label: option.value,
+            key: index.toString(),
+          }))}
+        placeholder="Encuentra la información que necesitas"
+        value={searchTerm}
+        onChange={(value) => setSearchTerm(value)}
+        onSelect={(selectedValue) => handleSelect(selectedValue)}
+      />
       <div>in:</div>
       <div
         style={{
@@ -89,8 +157,8 @@ const SearchBar: React.FC = () => {
           "#5F8DCA"
         )}
         {renderButton(
-          "Ingresos",
-          selectedButton === "Ingresos" ? "F2F7FD" : "white",
+          "Pagos",
+          selectedButton === "Pagos" ? "F2F7FD" : "white",
           "#5F8DCA"
         )}
       </div>

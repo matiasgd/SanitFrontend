@@ -20,7 +20,7 @@ interface KeypadTableProps {
 const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [exchangeRate, setExchangeRate] = useState(0); // [ARS, USD]
-  console.log(incomes, "incomes");
+  const [pendingPayments, setPendingPayments] = useState([]);
   const totalAmount = incomes.reduce((total, entry) => total + entry.amount, 0);
   const totalAmountUSD = incomes.reduce(
     (total, entry) => total + (entry.amountUSD ? entry.amountUSD : 0),
@@ -38,6 +38,14 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
       .then((res) => {
         const average = (res.data.data.buyer + res.data.data.seller) / 2;
         setExchangeRate(average);
+      })
+      .catch((err) => console.log(err));
+
+    // Pagos pendientes de recibir
+    await axios
+      .get(`http://localhost:3001/api/appointments/debts/${doctorId}`)
+      .then((res) => {
+        setPendingPayments(res.data.data);
       })
       .catch((err) => console.log(err));
   };
@@ -80,7 +88,7 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
       />
       <MetricBox
         title="Pagos pendientes"
-        metric="17.000"
+        metric={formatNumberWithCommas(pendingPayments)}
         color="#FFFFC5"
         currency="$"
       />

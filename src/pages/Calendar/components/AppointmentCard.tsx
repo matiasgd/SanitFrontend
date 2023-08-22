@@ -1,7 +1,8 @@
+import axios from "axios";
 import React, { useState } from "react";
 import PaymentModal from "../../create/PaymentModal";
-import { EllipsisOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import customMessage from "../../../commons/customMessage";
 
 const container = {
   display: "flex",
@@ -67,19 +68,20 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
     cursor: "pointer",
   };
 
-  const handleMenuClick = (e) => {
-    switch (e.key) {
-      case "edit":
-        // Lógica para editar
-        break;
-      case "delete":
-        // Lógica para eliminar
-        break;
-      default:
-        break;
-    }
+  const confirmAppointment = (status) => {
+    axios
+      .put(`http://localhost:3001/api/appointments/status/${appointment._id}`, {
+        status: status,
+      })
+      .then((res) => {
+        const message = res.data.message;
+        customMessage("success", message);
+      })
+      .catch((err) => {
+        console.log(err);
+        customMessage("error", "Algo salió mal.");
+      });
   };
-
 
   return (
     <>
@@ -124,6 +126,55 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             <div style={subTitleStyle}>{subtitle}</div>
           </div>
         </div>
+        {appointment.status !== "Pending" ? (
+          <div
+            style={{
+              display: "inline-block",
+              padding: "0 15px",
+              fontSize: "14px",
+              height: "32px",
+              lineHeight: "30px",
+              whiteSpace: "nowrap",
+              backgroundColor: "#1890ff",
+              color: "#fff",
+              border: "1px solid #1890ff",
+              borderRadius: "4px",
+              margin: "15px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease, border-color 0.3s ease",
+            }}
+          >
+            {appointment.status === "Completed"
+              ? "Atendido"
+              : appointment.status === "Canceled"
+              ? "Cancelada"
+              : "Falto"}
+          </div>
+        ) : (
+          <select
+            style={{
+              display: "inline-block",
+              padding: "0 15px",
+              fontSize: "14px",
+              height: "32px",
+              lineHeight: "30px",
+              whiteSpace: "nowrap",
+
+              border: "1px solid #1890ff",
+              borderRadius: "4px",
+              margin: "15px",
+              cursor: "pointer",
+              transition: "background-color 0.3s ease, border-color 0.3s ease",
+            }}
+            id="asistencia"
+            name="asistencia"
+            onChange={(e) => confirmAppointment(e.target.value)}
+          >
+            <option value="Completed">Asistió</option>
+            <option value="Canceled">Cancelada</option>
+            <option value="Skipped">Falto</option>
+          </select>
+        )}
         {appointment.paymentStatus === "Completed" ? (
           <div
             style={{
@@ -137,7 +188,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
               color: "#fff",
               border: "1px solid #1890ff",
               borderRadius: "4px",
-              margin: "15px",            
+              margin: "15px",
               cursor: "pointer",
               transition: "background-color 0.3s ease, border-color 0.3s ease",
             }}

@@ -44,11 +44,6 @@ const ModalTest: React.FC = () => {
         onClose={() => setIsOpenServiceModal(false)}
         type="CREATE"
       />
-      <PaymentModal
-        isOpen={isOpenPaymentModal}
-        onClose={() => setIsOpenPaymentModal(false)}
-      />
-
       <Button
         style={{ margin: "8px" }}
         onClick={() => setOpenPatientsModal(true)}
