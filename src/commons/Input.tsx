@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { useState } from "react";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface InputProps {
@@ -26,18 +28,24 @@ const Input: React.FC<InputProps> = ({
   disabled,
   onInput,
 }) => {
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   return (
     <div>
       <label
         htmlFor={id}
-        className="pl-4 pb-1 flex justify-start text-[13.5px]  text-gray-500 "
+        className="pl-4 pb-1 flex justify-start text-[13.5px] text-gray-500"
       >
         {label}
       </label>
-      <div>
+      <div className="relative">
         <input
           id={id}
-          type={type}
+          type={passwordVisible ? "text" : type}
           placeholder={placeholder}
           autoComplete={id}
           disabled={disabled}
@@ -50,6 +58,18 @@ const Input: React.FC<InputProps> = ({
             disabled && "opacity-50 cursor-default"
           )}
         />
+        {type === "password" && (
+          <div
+            className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
+            onClick={togglePasswordVisibility}
+          >
+            {passwordVisible ? (
+              <EyeTwoTone className="text-gray-600 mr-1" />
+            ) : (
+              <EyeInvisibleOutlined className="text-gray-600 mr-1" />
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
