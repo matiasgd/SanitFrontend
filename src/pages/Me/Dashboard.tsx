@@ -18,15 +18,9 @@ const Dashboard = () => {
   // States
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
-  const [currency, setCurrency] = useState("ARS");
-  // const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
+  const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
-
-  // const totalAppointmentPrice = appointments.reduce(
-  //   (total, entry) => total + (entry.appointmentPrice || 0),
-  //   0
-  // );
 
   // Utils
   function formatNumberWithCommas(value) {
@@ -57,7 +51,6 @@ const Dashboard = () => {
     .map((appointment) => appointment.appointmentPrice)
     .reduce((total, price) => total + price, 0);
 
-
   useEffect(() => {
     fetchData();
   }, [user.id]);
@@ -86,8 +79,7 @@ const Dashboard = () => {
                 <p className="font-bold text-lg w-[20%] mt-1">
                   Tu Actividad General
                 </p>
-                <SearchBar patients={patients} appointments={appointments} />
-                {/* <button
+                <button
                   onClick={() => {
                     setFilter("weekly");
                   }}
@@ -109,7 +101,8 @@ const Dashboard = () => {
                   }}
                 >
                   Anual
-                </button> */}
+                </button>
+                <SearchBar patients={patients} appointments={appointments} />
               </div>
               <div className="flex flex-row w-full gap-4">
                 <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">

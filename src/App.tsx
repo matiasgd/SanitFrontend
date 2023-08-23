@@ -11,7 +11,7 @@ import Modal from "./pages/create/ModalTest";
 export default function App() {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<AuthForm />} />
       <Route path="/login" element={<AuthForm />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/patient/:id" element={<Patient />} />

@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 import MetricBox from "./MetricBox";
 import axios from "axios";
 
@@ -19,7 +20,6 @@ interface KeypadTableProps {
 
 const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
   const doctorId = useSelector((state: RootState) => state.user.id);
-  const [exchangeRate, setExchangeRate] = useState(0); // [ARS, USD]
   const [pendingPayments, setPendingPayments] = useState([]);
   const totalAmount = incomes.reduce((total, entry) => total + entry.amount, 0);
   const totalAmountUSD = incomes.reduce(
@@ -32,15 +32,6 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
   }
 
   const fetchData = async () => {
-    // Tipo de cambio actual
-    await axios
-      .get(`http://localhost:3001/api/fx/USDARS`)
-      .then((res) => {
-        const average = (res.data.data.buyer + res.data.data.seller) / 2;
-        setExchangeRate(average);
-      })
-      .catch((err) => console.log(err));
-
     // Pagos pendientes de recibir
     await axios
       .get(`http://localhost:3001/api/appointments/debts/${doctorId}`)
@@ -71,12 +62,6 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
       <MetricBox
         title="Estimado en USD"
         metric={formatNumberWithCommas(totalAmountUSD.toFixed(0))}
-        color="#EEEFF4"
-        currency="USD"
-      />
-      <MetricBox
-        title="Tipo de cambio"
-        metric={exchangeRate.toFixed(0)}
         color="#EEEFF4"
         currency="USD"
       />

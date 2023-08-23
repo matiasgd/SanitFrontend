@@ -13,8 +13,6 @@ import moment from "moment";
 const Wallet: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [payments, setPayments] = useState([]);
-  const [exchangeRate, setExchangeRate] = useState(0); // [ARS, USD]
-  const [appointments, setAppointments] = useState([]);
 
   const transformPaymentData = (data) => {
     const transformedData = data.map((payment) => {
@@ -65,15 +63,6 @@ const Wallet: React.FC = () => {
         setPayments(transformedData);
       })
       .catch((err) => console.log(err));
-
-    // Tipo de cambio actual
-    await axios
-      .get(`http://localhost:3001/api/fx/USDARS`)
-      .then((res) => {
-        const average = (res.data.data.buyer + res.data.data.seller) / 2;
-        setExchangeRate(average);
-      })
-      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -98,7 +87,7 @@ const Wallet: React.FC = () => {
             </div>
             <div className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl">
               <DateRangePicker />
-              <Button>(+) New Income</Button>
+              <Button>(+) Nuevo Pago</Button>
             </div>
           </div>
           <div className="p-4">

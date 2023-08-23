@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { logOut } from "../../store/user";
 import customMessage from "../../commons/customMessage";
 import { useState, useEffect } from "react";
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 import { Avatar } from "antd";
 import {
   MdSpaceDashboard,
@@ -113,21 +113,34 @@ const Sidebar: React.FC = () => {
             ))}
           </ul>
         </div>
-        <div className="flex gap-2 w-full px-2 py-4 border-t-2 border-gray-300 cursor-pointer">
-          <Avatar
-            size="large"
-            icon={<UserOutlined />}
-            className="bg-gray-400 hover:bg-blue-400"
+        <div className="flex-col w-full py-4 border-t-2 border-gray-300">
+          <div className="flex justify-start items-center gap-2 ml-3">
+            <Avatar
+              icon={<UserOutlined />}
+              className="bg-gray-400 hover:bg-blue-400"
+              onClick={() => setIsExpanded(!isExpanded)}
+            />
+            {isExpanded && (
+              <div className="flex-col">
+                <p className="text-sm font-semibold">Name + Lastname</p>
+                <p className="text-xs text-gray-400 font-bold">
+                  {userData.email}
+                </p>
+              </div>
+            )}
+          </div>
+          <div
+            className="flex justify-start items-center gap-2 mt-2 ml-3 cursor-pointer"
             onClick={() => handleLogOut()}
-          />
-          {isExpanded && (
-            <div className="flex flex-col justify-around ">
-              <p className="text-sm font-semibold">Homer Simpson</p>
-              <p className="text-xs text-gray-400 font-bold">
-                {userData.email}
-              </p>
-            </div>
-          )}
+          >
+            <Avatar
+              icon={<LogoutOutlined />}
+              className="bg-gray-400 hover:bg-red-400"
+            />
+            {isExpanded && (
+              <p className="text-sm font-semibold">Cerrar Sesión</p>
+            )}
+          </div>
         </div>
       </div>
 
