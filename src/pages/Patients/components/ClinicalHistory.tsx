@@ -1,7 +1,15 @@
 import { useState } from "react";
 import Finance from "./Finance";
 
-const ClinicalHistory = () => {
+interface clinicalHistoryProps {
+  appointments: any;
+  payments: any;
+}
+
+const ClinicalHistory: React.FC<clinicalHistoryProps> = ({
+  appointments,
+  payments,
+}) => {
   const [selectedButton, setSelectedButton] = useState("general");
 
   const ButtonStyle = {
@@ -41,7 +49,7 @@ const ClinicalHistory = () => {
         >
           General
         </div>
-        <div
+        {/* <div
           style={selectedButton === "clinical" ? ButtonHoverStyle : ButtonStyle}
           onClick={() => handleClick("clinical")}
         >
@@ -52,10 +60,10 @@ const ClinicalHistory = () => {
           onClick={() => handleClick("recipes")}
         >
           Recetas
-        </div>
+        </div> */}
         <div
-          style={selectedButton === "studies" ? ButtonHoverStyle : ButtonStyle}
-          onClick={() => handleClick("studies")}
+          style={selectedButton === "payments" ? ButtonHoverStyle : ButtonStyle}
+          onClick={() => handleClick("payments")}
         >
           Pagos
         </div>
@@ -71,12 +79,16 @@ const ClinicalHistory = () => {
       >
         {selectedButton === "general" && (
           <div>
-            <Finance />
+            <Finance appointments={appointments} />
           </div>
         )}
         {selectedButton === "clinical" && <div>Informacion clinica</div>}
-        {selectedButton === "recipes" && <p>Recipes content</p>}
-        {selectedButton === "studies" && <p>Studies content</p>}
+        {selectedButton === "recipes" && <p>Recipes content</p>} 
+           {selectedButton === "payments" && (
+          <div>
+            <Finance appointments={payments} />
+          </div>
+        )}
       </div>
     </div>
   );

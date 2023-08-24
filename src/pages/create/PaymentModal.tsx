@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { RootState } from "../../store/store";
@@ -25,9 +25,13 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
   const appointmentId = appointment._id;
+  const patientId = appointment.patient._id;
   const currency = appointment.currency;
   const serviceName = appointment.service.serviceName;
   const price = appointment.appointmentPrice;
+  const partialPayment = appointment.partialPayment
+    ? appointment.partialPayment
+    : 0;
 
   const {
     control,
@@ -40,10 +44,11 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     defaultValues: {
       appointmentId: appointmentId,
       doctorId: doctorId,
+      patientId: patientId,
       amount: "",
       currency: currency,
       method: "",
-      status: "full",
+      status: "",
       date: "",
     },
   });
@@ -54,9 +59,12 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     setIsLoading(true);
 
     if (data.status === "Full") {
-      data.amount = price; // Set the amount to the price when status is Full
+      data.amount = price - partialPayment;
     }
+
     delete data.serviceName;
+
+    console.log(data, "data");
 
     await axios
       .post(`http://localhost:3001/api/payments/new`, data)
@@ -78,8 +86,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
       <form onSubmit={handleSubmit(submitModal)}>
         <div className="w-full mt-5 gap-3 grid grid-cols-2">
           <CustomSelect
-            label="Modalidad"
-            placeholder="Seleccione una modalidad"
+            label="Abono"
+            placeholder="Pago total o parcial"
             control={control}
             name="status"
             options={[
@@ -122,8 +130,8 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               disabled
               id="amount"
               label={`Precio en (${appointment.currency})`}
-              placeholder={price} // Set the specific value when "status" is "Full"
-              type="string"
+              placeholder={price - partialPayment}
+              type="number"
               errors={errors}
             />
           ) : (
