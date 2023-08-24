@@ -24,29 +24,37 @@ const Dashboard = () => {
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
   const [currency, setCurrency] = useState("ARS"); // ARS, USD
+  const [payments, setPayments] = useState([]);
   const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
 
   // Utils
-  function formatNumberWithCommas(value) {
+  function formatNumberWithCommas(value: Number) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
   const fetchData = async () => {
-    // Pacientes
+    // Patients
     await axios
       .get(`http://localhost:3001/api/users/${user.id}/patients`)
       .then((res) => {
         setPatients(res.data.data);
       })
       .catch((err) => console.log(err));
-
-    // Citas
+    // Appointments
     await axios
       .get(`http://localhost:3001/api/appointments/doctor/${user.id}`)
       .then((res) => {
         setAppointments(res.data.data);
+      })
+      .catch((err) => console.log(err));
+    // Payments
+    await axios
+      .get(`http://localhost:3001/api/payments/doctor/${user.id}`)
+      .then((res) => {
+        console.log(res.data.data, "payments");
+        setPayments(res.data.data);
       })
       .catch((err) => console.log(err));
   };
@@ -56,6 +64,16 @@ const Dashboard = () => {
     .filter((appointment) => appointment.status === "Completed")
     .map((appointment) => appointment.appointmentPrice)
     .reduce((total, price) => total + price, 0);
+
+  const paymentsARS = payments.reduce(
+    (total, payments) => total + payments.amount,
+    0
+  );
+
+  const paymentsUSD = payments.reduce(
+    (total, payments) => total + payments.amountUSD,
+    0
+  );
 
   useEffect(() => {
     fetchData();
@@ -140,7 +158,7 @@ const Dashboard = () => {
                     <h2 className="text-[60px]">{patients.length}</h2>
                     <Button
                       type="ghost"
-                      className="bg-white text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+                      className="bg-white text-black font-bold justify-center text-center mr-4 border-2 border-black shadow-sm shadow-black outline-none"
                       onClick={() => setOpenPatientsModal(true)}
                     >
                       (+) Crear
@@ -163,16 +181,19 @@ const Dashboard = () => {
                     <TbCoin className="text-3xl text-green-600" />
                   </Avatar>
                   <div className="flex-col">
-                    <p className="font-bold text-lg  mt-1">Cobros</p>
+                    <p className="font-bold text-lg mt-1">Cobros</p>
                     <h2 className="text-[40px]">
-                      {formatNumberWithCommas(sales)}
+                      {currency === "ARS" &&
+                        formatNumberWithCommas(paymentsARS)}
+                      {currency === "USD" &&
+                        formatNumberWithCommas(paymentsUSD)}
                     </h2>
                     <Button
                       onClick={() => setCurrency("ARS")}
                       type="ghost"
                       className={clsx(
                         `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "ARS" && "bg-green-200"
+                        currency === "ARS" && "bg-green-300"
                       )}
                     >
                       ARS
@@ -182,7 +203,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "USD" && "bg-green-200"
+                        currency === "USD" && "bg-green-300"
                       )}
                     >
                       USD
