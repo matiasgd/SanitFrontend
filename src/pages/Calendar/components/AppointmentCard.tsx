@@ -69,6 +69,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
   };
 
   const confirmAppointment = (status) => {
+    console.log(status, "status");
     axios
       .put(`http://localhost:3001/api/appointments/status/${appointment._id}`, {
         status: status,
@@ -170,9 +171,10 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             name="asistencia"
             onChange={(e) => confirmAppointment(e.target.value)}
           >
-            <option value="Completed">Asistió</option>
+            <option value="">Seleccione una opción</option>
+            <option value="Completed">Atendido/a</option>
             <option value="Canceled">Cancelada</option>
-            <option value="Skipped">Falto</option>
+            <option value="Skipped">No vino</option>
           </select>
         )}
         {appointment.paymentStatus === "Completed" ? (
@@ -200,7 +202,7 @@ const AppointmentCard: React.FC<AppointmentCardProps> = ({
             style={{ margin: "8px" }}
             onClick={() => setIsOpenPaymentModal(true)}
           >
-            Cargar pago
+            {appointment.paymentStatus === "Partial" ? "Pago parcial" : "Cargar pago"}
           </Button>
         )}
       </div>

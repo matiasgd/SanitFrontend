@@ -3,8 +3,13 @@ import { useState } from "react";
 import { Button, Tag } from "antd";
 import AppointmentsModal from "../../create/AppointmentsModal";
 
-const Patient: React.FC = () => {
-  // modales
+interface patientAppointmentsProps {
+  appointments: any[];
+}
+
+const PatientAppointments: React.FC<patientAppointmentsProps> = ({
+  appointments,
+}) => {
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
 
   const buttonStyle = {
@@ -17,36 +22,6 @@ const Patient: React.FC = () => {
   const appointmentContentStyle = {
     fontSize: "12px",
   };
-
-  const appointments = [
-    {
-      id: 1,
-      date: "23/8/2020",
-      hour: "18:30",
-      type: "virtual",
-      status: "pending",
-      medicalNotes: "fue una muy bella sesión",
-      medicalPlan: "le haré ver la niñera",
-    },
-    {
-      id: 2,
-      date: "27/8/2020",
-      hour: "12:30",
-      type: "presencial",
-      status: "payed",
-      medicalNotes: "viene medio mal con la vieja",
-      medicalPlan: "recomendé tatuarse la nalga",
-    },
-    {
-      id: 3,
-      date: "27/10/2020",
-      hour: "4:30",
-      type: "a domicilio",
-      status: "payed",
-      medicalNotes: "llamada de emergencia",
-      medicalPlan: "le dije que se tome un vino y se relaje",
-    },
-  ];
 
   return (
     <div
@@ -79,7 +54,7 @@ const Patient: React.FC = () => {
           onClick={() => setIsOpenAppointmentsModal(true)}
           style={buttonStyle}
         >
-          + Nueva Consultas
+          + Nueva consulta
         </Button>
       </div>
       <div
@@ -92,20 +67,42 @@ const Patient: React.FC = () => {
       >
         {appointments.map((appointment) => (
           <div
-            key={appointment.id}
+            key={appointment._id} // Usamos _id como clave en lugar de id
             style={{ padding: "10px", borderBottom: "1px solid #EEEFF4" }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              {appointment.date} - {appointment.type}
-              <Tag color={appointment.status === "pending" ? "red" : "blue"}>
-                {appointment.status}
+              {new Date(appointment.startTime).toLocaleDateString()} -{" "}
+              {appointment.type === "In office" ? "Presencial" : "Virtual"}
+              <Tag
+                color={appointment.status === "Completed" ? "blue" : "red"} // Cambiamos los colores
+              >
+                {appointment.status === "Completed"
+                  ? "Atendido"
+                  : "No atendido"}
+              </Tag>
+              <Tag
+                color={
+                  appointment.paymentStatus === "Completed" ? "blue" : "red"
+                } // Cambiamos los colores
+              >
+                {appointment.paymentStatus === "Completed"
+                  ? "Pagado"
+                  : "Pendiente"}
               </Tag>
             </div>
             <div style={appointmentContentStyle}>
               <div>
-                notes: {appointment.medicalNotes}
+                {/* Tipo de servicio: {` ${appointment.service.serviceName}`} */}
                 <br></br>
-                plan: {appointment.medicalPlan} <br></br>
+                Seguro:{" "}
+                {appointment.category === "Without insurance"
+                  ? "Particular"
+                  : appointment.category === "Private Insurance"
+                  ? "Prepaga"
+                  : appointment.category === "Union Insurance"
+                  ? "Obra social"
+                  : appointment.category}{" "}
+                <br></br>
               </div>
             </div>
           </div>
@@ -115,4 +112,4 @@ const Patient: React.FC = () => {
   );
 };
 
-export default Patient;
+export default PatientAppointments;

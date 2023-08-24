@@ -1,21 +1,50 @@
 import React, { useState } from "react";
 import Field from "../../../commons/Field";
 
-interface FinanceComponentProps {
-  //   sessionCount: number;
-  //   subscribedThisMonth: number;
-  //   attendancePercentage: number;
-  //   patientDebt: number;
-  //   paymentCycle: number;
-  //   consultationPrice: number;
+interface financeComponentProps {
+  appointments: any;
 }
 
-const FinanceComponent: React.FC<FinanceComponentProps> = () => {
+const FinanceComponent: React.FC<financeComponentProps> = ({
+  appointments,
+}) => {
   const [expanded, setExpanded] = useState(true);
 
   const toggleContent = () => {
     setExpanded(!expanded);
   };
+
+  function formatNumberWithCommas(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  function getSales() {
+    let sales = 0;
+    appointments.forEach((appointment: any) => {
+      if (appointment.status === "Completed") {
+        sales += appointment.appointmentPrice;
+      }
+    });
+    return sales;
+  }
+
+  function getPayments() {
+    let payments = 0;
+    appointments.forEach((appointment: any) => {
+      if (
+        appointment.status === "Completed" &&
+        appointment.paymentStatus === "Completed"
+      ) {
+        payments += appointment.appointmentPrice;
+      } else if (
+        appointment.status === "Completed" &&
+        appointment.paymentStatus === "Partial"
+      ) {
+        payments += appointment.partialPayment;
+      }
+    });
+    return payments;
+  }
 
   return (
     <div style={{ padding: "20px" }}>
@@ -31,25 +60,56 @@ const FinanceComponent: React.FC<FinanceComponentProps> = () => {
         }}
         onClick={toggleContent}
       >
-        Finance {expanded ? "▼" : "▲"}
+        Estado del paciente {expanded ? "▼" : "▲"}
       </h2>
       {expanded && (
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div style={{ width: "50%", padding: "10px" }}>
-            <Field title={"Cantidad de sesiones"} value={8} edit={true} />
-            <Field title={"Valor de consulta"} value={4500} edit={true} />
-            <Field title={"% de inasistencias"} value={15} />
+            <Field
+              title={"Cantidad de sesiones"}
+              value={appointments.length}
+              edit={true}
+            />
+            <Field
+              title={"% de inasistencias"}
+              value={
+                appointments.filter(
+                  (appointment: any) => appointment.status === "Skipped"
+                ).length === 0
+                  ? "0%"
+                  : appointments.filter(
+                      (appointment: any) => appointment.status === "Skipped"
+                    ).length / appointments.length
+              }
+            />
+            <Field
+              title={"Facturación total"}
+              value={`ARS ${formatNumberWithCommas(getSales())}`}
+              edit={true}
+            />
           </div>
           <div style={{ width: "50%", padding: "10px" }}>
             <Field
               title={"Inasistencias"}
-              value={1}
+              value={
+                appointments.filter(
+                  (appointment: any) => appointment.status === "Skipped"
+                ).length
+              }
               edit={true}
-              aclaration="(12% debajo)"
               aclarationColor="green"
             />
-            <Field title={"Deuda del paciente"} value={3000} edit={true} />
-            <Field title={"% de inasistencias"} value={4} />
+            <Field
+              title={"Pagos del paciente"}
+              value={`ARS ${formatNumberWithCommas(getPayments())}`}
+              edit={true}
+            />
+            <Field
+              title={"Pagos pendientes"}
+              value={`ARS ${formatNumberWithCommas(
+                getSales() - getPayments()
+              )}`}
+            />
           </div>
         </div>
       )}

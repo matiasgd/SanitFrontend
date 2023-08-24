@@ -1,24 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 
-const Patient: React.FC = () => {
-  const { id } = useParams();
-  const [patient, setPatient] = useState({} as Patient);
+interface patientProps {
+  patient: any;
+}
 
-  const fetchPatientsData = async () => {
-    await axios
-      .get(`http://localhost:3001/api/patients/${id}`)
-      .then((res) => {
-        setPatient(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchPatientsData();
-  }, [id]);
-
+const Patient: React.FC<patientProps> = ({ patient }) => {
   return (
     <div
       style={{
@@ -85,7 +71,7 @@ const Patient: React.FC = () => {
             <p>{patient.privateHealthInsurance}</p>
           </div>
           <div>
-            <p style={{ fontSize: "12px", color: "#888888" }}>Number</p>
+            <p style={{ fontSize: "12px", color: "#888888" }}>Numbero</p>
             <p>{patient.privateHealthInsuranceNumber}</p>
           </div>
         </div>
