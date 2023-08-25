@@ -42,8 +42,6 @@ const Searchbar: React.FC = () => {
         const response = await axios.get(
           `http://localhost:3001/api/users/patients/${doctorId}`
         );
-        console.log(`http://localhost:3001/api/users/patients/${doctorId}`);
-        console.log(response.data.data, "Patients");
         setPatients(response.data.data); // Update state with response.data
       } catch (error) {
         console.error(error);

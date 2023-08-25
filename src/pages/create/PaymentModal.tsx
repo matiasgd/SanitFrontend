@@ -64,8 +64,6 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
 
     delete data.serviceName;
 
-    console.log(data, "data");
-
     await axios
       .post(`http://localhost:3001/api/payments/new`, data)
       .then((res) => {

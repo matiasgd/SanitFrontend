@@ -14,6 +14,7 @@ import { formatNumberWithCommas } from "../../utils/formatNumbers";
 const Appointments: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [appointments, setAppointments] = useState([]);
+  const [paidStatus, setPaidStatus] = useState("Pending");
 
   const transformPaymentData = (data) => {
     const transformedData = data.map((appointment) => {
@@ -28,10 +29,7 @@ const Appointments: React.FC = () => {
       } = appointment;
 
       // Convierte la fecha de ISO 8601 a una fecha legible
-      console.log(startTime, "startTime");
-
       const formattedPaymentDate = moment(startTime).format("YYYY-MM-DD");
-      console.log(formattedPaymentDate);
       // Asegúrate de usar la clave correcta para el nombre del servicio
       const serviceName = service.serviceName;
       // Asegúrate de usar las claves correctas para el nombre y el apellido del paciente
@@ -50,7 +48,7 @@ const Appointments: React.FC = () => {
       } else if (paymentStatus === "Pending") {
         paymentStatus = "Pendiente";
       } else if (paymentStatus === "Partial") {
-        paymentStatus = "Partial";
+        paymentStatus = "Parcial";
       }
 
       if (category === "Union insurance") {
@@ -60,7 +58,6 @@ const Appointments: React.FC = () => {
       } else if (category === "Without insurance") {
         category = "Particular";
       }
-      console.log();
 
       return {
         appointmentDate: formattedPaymentDate,
@@ -72,7 +69,6 @@ const Appointments: React.FC = () => {
         paymentStatus,
       };
     });
-
     return transformedData;
   };
 
@@ -111,15 +107,29 @@ const Appointments: React.FC = () => {
               <Keypad appointments={appointments} />
             </div>
             <div className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl">
-              <DateRangePicker />
+              {/* <DateRangePicker /> */}
               <div className="flex justify-center gap-4">
-                <Button>Pago: Todas las consultas</Button>
-                <Button>Pago: pendiente o parcial</Button>
+                <Button onClick={() => setPaidStatus("Completada")}>
+                  Pago completo
+                </Button>
+                <Button onClick={() => setPaidStatus("Parcial")}>
+                  Pago parcial
+                </Button>
+                <Button
+                  onClick={() => {
+                    setPaidStatus("Pendiente");
+                  }}
+                >
+                  Pago Pendiente
+                </Button>
               </div>
             </div>
           </div>
           <div className="p-4">
-            <AppointmentTable incomes={appointments} />
+            <AppointmentTable
+              appointments={appointments}
+              filterPayment={paidStatus}
+            />
           </div>
         </div>
       </div>

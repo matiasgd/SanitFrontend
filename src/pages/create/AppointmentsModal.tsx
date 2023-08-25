@@ -64,7 +64,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     if (selectedService) {
       data.servicePrice = serviceData; // Update the price field with the serviceData
     }
-    console.log(data, "Data!");
     try {
       setIsLoading(true);
       await axios.post(`http://localhost:3001/api/appointments/new`, data);
