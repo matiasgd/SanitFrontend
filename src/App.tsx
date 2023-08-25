@@ -4,6 +4,7 @@ import Dashboard from "./pages/Me/Dashboard";
 import ProfilePage from "./pages/Me/ProfilePage";
 import Patient from "./pages/Patients/SinglePatient";
 import Patients from "./pages/Patients/Patients";
+import Appointments from "./pages/Appointments/Appointments";
 import Home from "./pages/Home/Home";
 import Wallet from "./pages/Wallet/Wallet";
 import AddressForm from "./pages/create/AddressForm";
@@ -18,6 +19,7 @@ export default function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/patient/:id" element={<Patient />} />
       <Route path="/patients" element={<Patients />} />
+      <Route path="/appointments" element={<Appointments />} />
       <Route path="/home" element={<Home />} />
       <Route path="/me" element={<ProfilePage />} />
       <Route path="/stepper" element={<Stepper />} />
