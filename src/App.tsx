@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router";
 import AuthForm from "./pages/Login/AuthForm";
 import Dashboard from "./pages/Me/Dashboard";
-import ProfilePage from "./pages/Me/ProfilePage";
+import ProfilePage from "./pages/Profile/ProfilePage";
 import Patient from "./pages/Patients/SinglePatient";
 import Patients from "./pages/Patients/Patients";
 import Home from "./pages/Home/Home";

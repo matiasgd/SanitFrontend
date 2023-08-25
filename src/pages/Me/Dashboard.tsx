@@ -53,7 +53,6 @@ const Dashboard = () => {
     await axios
       .get(`http://localhost:3001/api/payments/doctor/${user.id}`)
       .then((res) => {
-        console.log(res.data.data, "payments");
         setPayments(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -193,7 +192,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "ARS" && "bg-green-400"
+                        currency === "ARS" && "bg-green-200"
                       )}
                     >
                       ARS
@@ -203,7 +202,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "USD" && "bg-green-400"
+                        currency === "USD" && "bg-green-200"
                       )}
                     >
                       USD

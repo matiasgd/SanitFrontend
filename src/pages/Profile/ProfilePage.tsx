@@ -3,13 +3,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import Sidebar from "./Sidebar";
+import Sidebar from "../Me/Sidebar";
 import { Button } from "antd";
 import AddressModal from "../create/AddressModal";
 import ServiceModal from "../create/ServiceModal";
 import { Link } from "react-router-dom";
 import ServicesBreakdown from "./ServicesBreakdown";
 import logo from "/profile.avif";
+import Modal from "../../commons/Modal";
+import Stepper from "../Me/components/Stepper";
 
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -19,6 +21,7 @@ const ProfilePage: React.FC = () => {
   const [selectedAddress, setSelectedAddress] = useState("");
   const [isOpenAddressModal, setIsOpenAddressModal] = useState(false);
   const [isOpenServiceModal, setIsOpenServiceModal] = useState(false);
+  const [userModal, setUserModal] = useState(false);
 
   const getUser = async () => {
     // Get user Info
@@ -59,7 +62,10 @@ const ProfilePage: React.FC = () => {
   }, [user]);
 
   return (
-    <div className="flex w-[95%] p-4">
+    <div className="flex p-4">
+      <Modal isOpen={userModal} onClose={() => setUserModal(false)}>
+        <Stepper />
+      </Modal>
       <AddressModal
         isOpen={isOpenAddressModal}
         onClose={() => setIsOpenAddressModal(false)}
@@ -80,11 +86,12 @@ const ProfilePage: React.FC = () => {
             <img src={logo} />
           </div>
           <div className="flex flex-row items-start justify-center gap-3">
-            <Link to="/stepper">
-              <Button className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded flex justify-center items-center">
-                Modificar datos
-              </Button>
-            </Link>
+            <Button
+              onClick={() => setUserModal(true)}
+              className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded flex justify-center items-center"
+            >
+              Modificar datos
+            </Button>
             <Button
               onClick={() => setIsOpenAddressModal(true)}
               className="mt-4 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded flex justify-center items-center"
