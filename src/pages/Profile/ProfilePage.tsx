@@ -7,7 +7,6 @@ import Sidebar from "../Me/Sidebar";
 import { Button } from "antd";
 import AddressModal from "../create/AddressModal";
 import ServiceModal from "../create/ServiceModal";
-import { Link } from "react-router-dom";
 import ServicesBreakdown from "./ServicesBreakdown";
 import logo from "/profile.avif";
 import Modal from "../../commons/Modal";
@@ -38,7 +37,6 @@ const ProfilePage: React.FC = () => {
     await axios
       .get(`http://localhost:3001/api/services/user/${user.id}`)
       .then((res) => {
-        console.log(res.data.data, "services");
         setServices(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -47,7 +45,6 @@ const ProfilePage: React.FC = () => {
     await axios
       .get(`http://localhost:3001/api/addresses/doctor/${user.id}`)
       .then((res) => {
-        console.log(res.data.data, "addresses");
         setAddresses(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -58,25 +55,40 @@ const ProfilePage: React.FC = () => {
       getUser();
       fetchData();
     }
-    console.log(userData);
   }, [user]);
 
   return (
     <div className="flex p-4">
-      <Modal isOpen={userModal} onClose={() => setUserModal(false)}>
+      <Modal
+        isOpen={userModal}
+        onClose={() => {
+          setUserModal(false);
+          fetchData();
+        }}
+      >
         <Stepper />
       </Modal>
+
       <AddressModal
         isOpen={isOpenAddressModal}
-        onClose={() => setIsOpenAddressModal(false)}
+        onClose={() => {
+          setIsOpenAddressModal(false);
+          fetchData();
+        }}
       />
+
       <ServiceModal
         addressData={addresses}
         isOpen={isOpenServiceModal}
-        onClose={() => setIsOpenServiceModal(false)}
+        onClose={() => {
+          setIsOpenServiceModal(false);
+          fetchData();
+        }}
         type="CREATE"
       />
+
       <Sidebar />
+
       <div className="flex w-full rounded-md p-4 flex-row items-start ml-2 shadow-lg">
         <div className="flex flex-col w-full rounded-md p-4 items-center m-5">
           <p className="font-bold text-lg text-center mb-4">

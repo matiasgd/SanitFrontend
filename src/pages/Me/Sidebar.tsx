@@ -15,7 +15,7 @@ import {
   MdCalendarToday,
   MdFace,
 } from "react-icons/md";
-import { BsReverseLayoutTextWindowReverse, BsPersonFill } from "react-icons/bs";
+import { BsPersonFill } from "react-icons/bs";
 import { BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
 
 const sections = [
@@ -45,11 +45,11 @@ const Sidebar: React.FC = () => {
     }
   }, [location.pathname, matchedSection]);
 
-  // useEffect(() => {
-  //   if (!user?.id) {
-  //     navigate("/");
-  //   }
-  // }, [navigate, user]);
+  useEffect(() => {
+    if (!user?.id) {
+      navigate("/");
+    }
+  }, [navigate, user]);
 
   const handleLogOut = async () => {
     try {
@@ -122,7 +122,7 @@ const Sidebar: React.FC = () => {
                 <p className="text-sm font-semibold">
                   {user.name && user.lastName ? user.name : ""}
                 </p>
-                <p className="text-xs text-gray-400 font-bold">
+                <p className="text-xs text-gray-500 font-bold">
                   {userData.email}
                 </p>
               </div>
@@ -137,7 +137,9 @@ const Sidebar: React.FC = () => {
               className="bg-gray-400 hover:bg-red-400"
             />
             {isExpanded && (
-              <p className="text-sm font-semibold">Cerrar Sesión</p>
+              <p className="text-sm font-semibold text-gray-500">
+                Cerrar Sesión
+              </p>
             )}
           </div>
         </div>
@@ -149,7 +151,7 @@ const Sidebar: React.FC = () => {
           style={{ boxShadow: "2px 2px 5px rgba(0, 0, 0, 0.2)" }}
         >
           <button onClick={() => setIsExpanded(!isExpanded)}>
-            <div className="text-lg text-gray-500 hover:text-blue-400">
+            <div className="text-lg text-gray-400 hover:text-blue-400">
               {isExpanded ? <BiSolidLeftArrow /> : <BiSolidRightArrow />}
             </div>
           </button>
