@@ -9,6 +9,7 @@ import RHFDatePicker from "../../../commons/DatePicker";
 import CustomSelect from "../../../commons/Select";
 import CustomSegmented from "../../../commons/Segmented";
 import axios from "axios";
+import customMessage from "../../../commons/customMessage";
 
 const Stepper: React.FC = () => {
   const [current, setCurrent] = useState(0);
@@ -21,6 +22,8 @@ const Stepper: React.FC = () => {
     await axios
       .get(`http://localhost:3001/api/users/${user.id}`)
       .then((user) => {
+        console.log(user);
+
         setUserData(user.data.user);
       })
       .catch((err) => console.log(err));
@@ -59,27 +62,27 @@ const Stepper: React.FC = () => {
   const submitProfile: SubmitHandler<FieldValues> = async (data) => {
     try {
       console.log(data, "Datos enviados");
-      await axios.post(
-        `http://localhost:3001/api/users/complete/${user.id}`,
-        data
-      );
+      await axios
+        .put(`http://localhost:3001/api/users/${user.id}/edit`, data)
+        .then(() => customMessage("success", "Perfil actualizado!"));
     } catch (error) {
       console.error(error);
+      customMessage("error", "Algo salió mal :(");
     }
   };
 
   const stepContents = [
     {
-      title: "Datos Personales",
+      title: "Datos",
       content: (
         <form
-          className="grid grid-cols-3 gap-6 justify-center p-2"
+          className="w-full grid grid-cols-2 gap-x-4 justify-center p-1"
           onSubmit={handleSubmit(submitProfile)}
         >
           <Input
             id="name"
             label="Nombre"
-            placeholder="Ingrese su nombre"
+            placeholder="René"
             type="text"
             register={register}
             errors={errors}
@@ -87,7 +90,7 @@ const Stepper: React.FC = () => {
           <Input
             id="lastName"
             label="Apellido"
-            placeholder="Ingrese su apellido"
+            placeholder="Favaloro"
             type="text"
             register={register}
             errors={errors}
@@ -112,13 +115,11 @@ const Stepper: React.FC = () => {
             register={register}
             errors={errors}
           />
-          <Input
-            id="cellphone"
-            label="Celular"
-            placeholder="+54 911 12345678"
-            type="number"
-            register={register}
-            errors={errors}
+          <RHFDatePicker
+            label="Fecha de Nacimiento"
+            placeholder="Seleccione una fecha"
+            control={control}
+            name="birthdate"
           />
           <CustomSelect
             label="Género"
@@ -133,9 +134,17 @@ const Stepper: React.FC = () => {
             ]}
           />
           <Input
+            id="cellphone"
+            label="Celular"
+            placeholder="+54 11 22334455"
+            type="number"
+            register={register}
+            errors={errors}
+          />
+          <Input
             id="country"
             label="País de Residencia"
-            placeholder="País de Residencia"
+            placeholder="Argentina"
             type="text"
             register={register}
             errors={errors}
@@ -143,7 +152,7 @@ const Stepper: React.FC = () => {
           <Input
             id="province"
             label="Provincia de Residencia"
-            placeholder="Provincia de Residencia"
+            placeholder="Buenos Aires"
             type="text"
             register={register}
             errors={errors}
@@ -151,28 +160,22 @@ const Stepper: React.FC = () => {
           <Input
             id="city"
             label="Ciudad"
-            placeholder="Buenos Aires"
+            placeholder="Ciudad de Buenos Aires"
             type="text"
             register={register}
             errors={errors}
-          />
-          <RHFDatePicker
-            label="Fecha de Nacimiento"
-            placeholder="Seleccione una fecha"
-            control={control}
-            name="birthdate"
           />
         </form>
       ),
     },
     {
-      title: "Estudios y Experiencia",
+      title: "Estudios",
       content: (
         <div className="grid grid-cols-2 gap-6 justify-center p-2">
           <Input
             id="field"
             label="Campo"
-            placeholder="Campo de estudio"
+            placeholder="Psicología, Dermatología, Odontología..."
             type="text"
             register={register}
             errors={errors}
@@ -180,7 +183,7 @@ const Stepper: React.FC = () => {
           <Input
             id="specialty"
             label="Especialidad"
-            placeholder="Ingrese su especialidad"
+            placeholder="Psiquiatría"
             type="text"
             register={register}
             errors={errors}
@@ -188,7 +191,7 @@ const Stepper: React.FC = () => {
           <Input
             id="medicalRegistration"
             label="Matrícula Médica"
-            placeholder="Ingrese su matrícula"
+            placeholder="99999"
             type="text"
             register={register}
             errors={errors}
