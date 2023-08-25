@@ -13,6 +13,7 @@ import {
   MdSpaceDashboard,
   MdAccountBalanceWallet,
   MdCalendarToday,
+  MdFace,
 } from "react-icons/md";
 import { BsReverseLayoutTextWindowReverse, BsPersonFill } from "react-icons/bs";
 import { BiSolidRightArrow, BiSolidLeftArrow } from "react-icons/bi";
@@ -21,12 +22,8 @@ const sections = [
   { name: "Panel", icon: <MdSpaceDashboard />, route: "/dashboard" },
   { name: "Ingresos", icon: <MdAccountBalanceWallet />, route: "/wallet" },
   { name: "Pacientes", icon: <BsPersonFill />, route: "/patients" },
-  { name: "Servicios", icon: <MdCalendarToday />, route: "/patient" },
-  {
-    name: "Modales",
-    icon: <BsReverseLayoutTextWindowReverse />,
-    route: "/modal",
-  },
+  { name: "Mi perfil", icon: <MdFace />, route: "/me" },
+  // { name: "Servicios", icon: <MdCalendarToday />, route: "/patient" },
 ];
 
 const Sidebar: React.FC = () => {
@@ -94,7 +91,7 @@ const Sidebar: React.FC = () => {
             </div>
           )}
           <ul className="justify-center items-center p-1">
-            {isExpanded && <li className="font-bold p-4">Manage</li>}
+            {isExpanded && <li className="font-bold p-4">Opciones</li>}
             {sections.map((section, i) => (
               <Link to={section.route} key={i}>
                 <li
@@ -122,7 +119,9 @@ const Sidebar: React.FC = () => {
             />
             {isExpanded && (
               <div className="flex-col">
-                <p className="text-sm font-semibold">Name + Lastname</p>
+                <p className="text-sm font-semibold">
+                  {user.name && user.lastName ? user.name : ""}
+                </p>
                 <p className="text-xs text-gray-400 font-bold">
                   {userData.email}
                 </p>

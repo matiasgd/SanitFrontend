@@ -72,11 +72,11 @@ const AddressForm = () => {
   const handleSaveNew = () => {
     // Lógica para guardar y crear nuevo
     Axios.post(
-      `http://localhost:3001/api/address/new/doctor/${doctorId}`,
+      `http://localhost:3001/api/addresses/new/doctor/${doctorId}`,
       address
     )
       .then((res) => {
-        console.log(`http://localhost:3001/api/address/new/doctor/${doctorId}`);
+        console.log(`http://localhost:3001/api/addresses/new/doctor/${doctorId}`);
         return res.data;
       })
       .catch((err) => {
@@ -87,11 +87,11 @@ const AddressForm = () => {
   const handleSave = () => {
     // Lógica para guardar y crear nuevo
     Axios.post(
-      `http://localhost:3001/api/address/new/doctor/${doctorId}`,
+      `http://localhost:3001/api/addresses/new/doctor/${doctorId}`,
       address
     )
       .then((res) => {
-        console.log(`http://localhost:3001/api/address/new/doctor/${doctorId}`);
+        console.log(`http://localhost:3001/api/addresses/new/doctor/${doctorId}`);
         return res.data;
       })
       .catch((err) => {

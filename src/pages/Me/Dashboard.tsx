@@ -106,7 +106,7 @@ const Dashboard = () => {
                     <Button
                       type="link"
                       onClick={() => {
-                        setPatients("weekly");
+                        setFilter("weekly");
                       }}
                     >
                       Semanal
@@ -193,7 +193,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "ARS" && "bg-green-300"
+                        currency === "ARS" && "bg-green-400"
                       )}
                     >
                       ARS
@@ -203,7 +203,7 @@ const Dashboard = () => {
                       type="ghost"
                       className={clsx(
                         `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                        currency === "USD" && "bg-green-300"
+                        currency === "USD" && "bg-green-400"
                       )}
                     >
                       USD
