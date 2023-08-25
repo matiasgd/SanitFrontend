@@ -13,12 +13,14 @@ import CustomSelect from "../../commons/Select";
 import RHFDatePicker from "../../commons/DatePicker";
 
 interface ServiceModalProps {
+  addressData: any;
   isOpen?: boolean;
   onClose: () => void;
   type: string;
 }
 
 const ServiceModal: React.FC<ServiceModalProps> = ({
+  addressData,
   isOpen,
   onClose,
   type,
@@ -38,6 +40,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
     defaultValues: {
       serviceName: "",
       description: "",
+      address: "",
       hours: "",
       minutes: "",
       currency: "ARS",
@@ -84,10 +87,27 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
           <Input
             id="description"
             label="Descripción"
-            placeholder="(Opcional) Ingrese descripción..."
+            placeholder="Descripcion del servicio"
             type="text"
             register={register}
             errors={errors}
+          />
+          <CustomSelect
+            label="Consultorio"
+            placeholder="Seleccione su consultorio"
+            control={control}
+            name="address"
+            options={
+              Array.isArray(addressData)
+                ? [
+                    { value: null, label: "Todos" }, // Agregar "Todos" como una opción adicional
+                    ...addressData.map((address: any) => ({
+                      value: address._id,
+                      label: address.addressName,
+                    })),
+                  ]
+                : [{ value: null, label: "Todos" }]
+            }
           />
           <Input
             id="hours"

@@ -89,7 +89,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const fetchAddressData = async () => {
     await axios
-      .get(`http://localhost:3001/api/address/doctor/${doctorId}`)
+      .get(`http://localhost:3001/api/addresses/doctor/${doctorId}`)
       .then((res) => {
         const addresses = res.data.data;
         const options = addresses.map((address) => ({
@@ -103,7 +103,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const fetchAppointmentsData = async () => {
     await axios
-      .get(`http://localhost:3001/api/address/${address}/allschedule`)
+      .get(`http://localhost:3001/api/addresses/${address}/allschedule`)
       .then((res) => {
         console.log(res.data.data, "Appointments");
       })
