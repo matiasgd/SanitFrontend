@@ -16,6 +16,30 @@ interface SelectAutocompleteProps {
   name: string;
 }
 
+interface Patient {
+  _id: string;
+  name: string;
+  lastName: string;
+  govermentId: string;
+}
+
+interface Services {
+  _id: string;
+  serviceName: string;
+}
+
+interface FilteredPatients {
+  _id: string;
+  name: string;
+  lastName: string;
+}
+
+interface FilteredServices {
+  _id: string;
+  name: string;
+  lastName: string;
+}
+
 const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
   control,
   doctorId,
@@ -25,11 +49,14 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
   typeOfSearch,
   name,
 }) => {
-  const [patients, setPatients] = useState([]);
-  const [services, setServices] = useState([]);
-  const [filteredPatients, setFilteredPatients] = useState([]);
-  const [filteredServices, setFilteredServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [services, setServices] = useState<Services[]>([]);
+  const [filteredPatients, setFilteredPatients] = useState<FilteredPatients[]>(
+    []
+  );
+  const [filteredServices, setFilteredServices] = useState<FilteredServices[]>(
+    []
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
@@ -54,11 +81,12 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
         .map((service) => ({
           _id: service._id,
           name: service.serviceName,
+          lastName: "",
         }))
         .filter((service) =>
           service.name.toLowerCase().includes(searchQuery.toLowerCase())
         );
-  
+
       setFilteredServices(filtered);
     }
   }, [searchQuery]);

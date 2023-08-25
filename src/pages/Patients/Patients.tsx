@@ -4,7 +4,7 @@ import type { InputRef } from "antd";
 import { Button, Input, Space, Table } from "antd";
 import type { ColumnType, ColumnsType } from "antd/es/table";
 import type { FilterConfirmProps } from "antd/es/table/interface";
-// import Highlighter from 'react-highlight-words';
+//import { Highlighter } from 'react-highlight-words';
 import Sidebar from "../Me/Sidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -12,18 +12,26 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 interface DataType {
+  _id: string;
   key: string;
   name: string;
   lastName: string;
+  govermentId: string;
+  gender: string;
+  email: string;
   age: number;
-  address: string;
-  tags: string[];
+  cellphone: string;
+  nationality: string;
+  healthInsurance: string;
+  healthInsuranceNumber: string;
+  privateHealthInsurance: string;
+  privateHealthInsuranceNumber: string;
 }
 
 const Patients: React.FC = () => {
-  const [searchText, setSearchText] = useState("");
+  //const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const [patients, setPatients] = useState([]);
+  const [patients, setPatients] = useState<DataType[]>([]);
   const searchInput = useRef<InputRef>(null);
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
@@ -32,6 +40,7 @@ const Patients: React.FC = () => {
 
   // Transformar la respuesta de la API en el formato necesario
   const transformedData: DataType[] = patients.map((patient) => ({
+    _id: patient._id,
     key: patient._id,
     name: patient.name,
     lastName: patient.lastName,
@@ -154,16 +163,15 @@ const Patients: React.FC = () => {
       }
     },
     render: (text) =>
-      searchedColumn === dataIndex ? (
-        <Highlighter
-          highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
-          searchWords={[searchText]}
-          autoEscape
-          textToHighlight={text ? text.toString() : ""}
-        />
-      ) : (
-        text
-      ),
+      searchedColumn === dataIndex
+        ? ""
+        : // <Highlighter
+          //   highlightStyle={{ backgroundColor: "#ffc069", padding: 0 }}
+          //   searchWords={[searchText]}
+          //   autoEscape
+          //   textToHighlight={text ? text.toString() : ""}
+          // />
+          text,
   });
 
   const columns: ColumnsType<DataType> = [

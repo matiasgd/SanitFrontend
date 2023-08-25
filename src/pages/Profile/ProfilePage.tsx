@@ -8,7 +8,7 @@ import { Button } from "antd";
 import AddressModal from "../create/AddressModal";
 import ServiceModal from "../create/ServiceModal";
 import ServicesBreakdown from "./ServicesBreakdown";
-import logo from "/profile.avif";
+import logo from "./profile.avif";
 import Modal from "../../commons/Modal";
 import Stepper from "../Me/components/Stepper";
 
