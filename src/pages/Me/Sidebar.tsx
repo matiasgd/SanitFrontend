@@ -23,7 +23,7 @@ const sections = [
   { name: "Ingresos", icon: <MdAccountBalanceWallet />, route: "/wallet" },
   { name: "Pacientes", icon: <BsPersonFill />, route: "/patients" },
   { name: "Mi perfil", icon: <MdFace />, route: "/me" },
-  // { name: "Servicios", icon: <MdCalendarToday />, route: "/patient" },
+  { name: "Consultas", icon: <MdCalendarToday />, route: "/appointments" },
 ];
 
 const Sidebar: React.FC = () => {
