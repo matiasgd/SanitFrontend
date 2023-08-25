@@ -75,7 +75,6 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
   const [notes, setNotes] = useState("");
 
   const confirmAppointment = (status: String) => {
-    console.log(status, "status");
     axios
       .put(`http://localhost:3001/api/appointments/status/${selected._id}`, {
         status: status,

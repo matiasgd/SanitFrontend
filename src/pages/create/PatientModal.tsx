@@ -59,8 +59,6 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
-    console.log(doctorId, "Doctor ID");
-    console.log(data, "Datos enviados");
     try {
       customMessage("success", "Abrir la Consola");
       await axios.post(

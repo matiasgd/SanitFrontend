@@ -11,7 +11,8 @@ interface Appointments {
 }
 
 interface ApppointmentTableProps {
-  incomes: Appointments[];
+  appointments: Appointments[];
+  filterPayment: string;
 }
 
 const columns = [
@@ -52,8 +53,18 @@ const columns = [
   },
 ];
 
-const AppointmentTable: React.FC<ApppointmentTableProps> = ({ incomes }) => {
-  return <Table dataSource={incomes} columns={columns} />;
+const AppointmentTable: React.FC<ApppointmentTableProps> = ({
+  appointments,
+  filterPayment,
+}) => {
+  return (
+    <Table
+      dataSource={appointments.filter(
+        (appointment) => appointment.paymentStatus === filterPayment
+      )}
+      columns={columns}
+    />
+  );
 };
 
 export default AppointmentTable;

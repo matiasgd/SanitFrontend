@@ -61,7 +61,6 @@ const Stepper: React.FC = () => {
 
   const submitProfile: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log(data, "Datos enviados");
       await axios
         .put(`http://localhost:3001/api/users/${user.id}/edit`, data)
         .then(() => customMessage("success", "Perfil actualizado!"));
