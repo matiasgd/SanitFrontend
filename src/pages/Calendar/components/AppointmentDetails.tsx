@@ -12,7 +12,7 @@ import moment from "moment";
 
 const { TextArea } = Input;
 
-const conteiner = {
+const container: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   justifyContent: "space-between",
@@ -25,7 +25,7 @@ const conteiner = {
   padding: "20px",
 };
 
-const header = {
+const header: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
@@ -40,21 +40,21 @@ const content = {
 
 const titleStyle = { color: "#222323", fontWeight: "bold", fontSize: "18px" };
 
-const fieldStyle = {
+const fieldStyle: React.CSSProperties = {
   display: "flex",
-  flexDirection: "row",
+  flexDirection: "row" as "row",
   justifyContent: "flex-start",
   alignItems: "center",
 };
 
-const fieldTitleStyle = {
+const fieldTitleStyle: React.CSSProperties = {
   color: "grey",
   fontSize: "15px",
   width: "100px",
   alignItems: "flex-start",
 };
 
-const fieldContentStyle = {
+const fieldContentStyle: React.CSSProperties = {
   display: "flex",
   color: "black",
   fontSize: "14px",
@@ -121,7 +121,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
   }, [selected]);
 
   return (
-    <div style={conteiner}>
+    <div style={container}>
       <PaymentModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
