@@ -1,4 +1,3 @@
-import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -140,7 +139,7 @@ const ProfilePage: React.FC = () => {
               value={selectedAddress}
             >
               <option value="">Tus consultorios</option>
-              {addresses.map((address) => (
+              {addresses.map((address:any) => (
                 <option key={address._id} value={address._id}>
                   {address.addressName}
                 </option>
@@ -152,7 +151,7 @@ const ProfilePage: React.FC = () => {
               services={
                 selectedAddress
                   ? services.filter(
-                      (service) => service.address === selectedAddress
+                      (service:any) => service.address === selectedAddress
                     )
                   : services
               }

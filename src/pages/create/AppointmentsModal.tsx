@@ -24,8 +24,8 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 }) => {
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
-  const [selectedPatient, setSelectedPatient] = useState(null);
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedPatient, setSelectedPatient] = useState("");
+  const [selectedService, setSelectedService] = useState("");
   const [addressId, setAddressId] = useState("");
   const [serviceData, setServiceData] = useState("");
   const [addressData, setAddressData] = useState([]);
@@ -64,14 +64,14 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     if (selectedService) {
       data.servicePrice = serviceData; // Update the price field with the serviceData
     }
-    try {
-      setIsLoading(true);
-      await axios.post(`http://localhost:3001/api/appointments/new`, data);
-      customMessage("success", "Se creo una nueva cita.");
-    } catch (error) {
-      customMessage("error", "Algo salió mal.");
-      console.error(error);
-    }
+
+    await axios.post(`http://localhost:3001/api/appointments/new`, data)
+    .then(() => customMessage("success", "Se creo una nueva cita."))
+    .catch((err) => {
+      customMessage("error", "Algo salió mal.")
+    console.log(err);
+    });
+
     onClose();
     reset();
     setIsLoading(false);
@@ -91,7 +91,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       .get(`http://localhost:3001/api/addresses/doctor/${doctorId}`)
       .then((res) => {
         const addresses = res.data.data;
-        const options = addresses.map((address) => ({
+        const options = addresses.map((address:any) => ({
           value: address._id,
           label: `${address.addressName} - ${address.street} ${address.number}`,
         }));
@@ -135,25 +135,25 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
         onSubmit={handleSubmit(submitModal)}
         className="flex flex-col gap-4 w-full"
       >
-        <p className="text-md font-semibold">Nuevo turno</p>
+        <p className="text-md font-semibold">Nuevo Turno</p>
         <div className="flex bg-[#EEEFF4] rounded-md h-8 justify-start items-center">
           <p className="text-md p-4">Datos requeridos</p>
         </div>
         <div className="grid grid-cols-2 gap-4 justify-center ">
           <RHFDatePicker
-            label="Fecha del turno"
+            label="Fecha"
             placeholder="Seleccione una fecha"
             control={control}
             name="dateOfAppointment"
           />
           <RHFTimePicker
-            label="Hora del turno"
+            label="Hora"
             placeholder="Seleccione una hora"
             control={control}
             name="timeOfAppointment"
           />
           <RHFTimePicker
-            label="Duracion del turno"
+            label="Duracion"
             placeholder="Seleccione una hora"
             control={control}
             name="duration"
@@ -259,8 +259,10 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           isOpen={true}
           onClose={() => setIsCreatingService(false)}
           type="CREATE"
+          addressData={addressData}
         />
       )}
+      
     </Modal>
   );
 };

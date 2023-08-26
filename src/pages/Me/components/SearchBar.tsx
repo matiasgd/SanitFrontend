@@ -1,33 +1,9 @@
-import React, { useState } from "react";
-import { AutoComplete, Select } from "antd";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { AutoComplete, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
-
-const SearchBarStyle = {
-  display: "flex",
-  alignItems: "center",
-  height: "40px",
-  width: "100%",
-  borderRadius: "100px",
-  backgroundColor: "#EEEFF4",
-};
-
-const ButtonStyle = {
-  display: "flex",
-  borderRadius: "50px",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "120px",
-  height: "30px",
-  cursor: "pointer",
-  transition: "background-color 0.3s",
-};
-
-const HoverButtonStyle = {
-  backgroundColor: "#F2F7FD",
-  color: "#5F8DCA",
-};
+import clsx from "clsx";
 
 interface SearchBarProps {
   patients: any[];
@@ -39,40 +15,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
   const [selectedButton, setSelectedButton] = useState<string>("Pacientes");
   const navigate = useNavigate();
 
-  const handleButtonSelect = (buttonName: string) => {
-    setSelectedButton(buttonName === selectedButton ? null : buttonName);
-  };
-
-  const renderButton = (
-    buttonName: string,
-    backgroundColor: string,
-    color: string
-  ) => (
-    <div
-      style={{
-        ...ButtonStyle,
-        backgroundColor,
-        color: selectedButton === buttonName ? color : "black",
-      }}
-      onClick={() => handleButtonSelect(buttonName)}
-      onMouseEnter={(e) => {
-        e.currentTarget.style.backgroundColor =
-          HoverButtonStyle.backgroundColor;
-        e.currentTarget.style.color = HoverButtonStyle.color;
-      }}
-      onMouseLeave={(e) => {
-        e.currentTarget.style.backgroundColor = backgroundColor;
-        e.currentTarget.style.color =
-          selectedButton === buttonName ? color : "black";
-      }}
-    >
-      {buttonName}
-    </div>
-  );
-
   const searchOptions = () => {
     if (selectedButton === "Pacientes") {
-      // Filtra pacientes y crea un arreglo de objetos con las propiedades 'text' y 'value'
       return patients
         .filter((patient) =>
           patient.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -82,8 +26,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
           value: patient.name + " " + patient.lastName,
         }));
     } else if (selectedButton === "Consultas") {
-      console.log("entre...");
-      // Filtra consultas (appointments) y crea un arreglo de objetos con las propiedades 'text' y 'value'
       return appointments
         .filter((appointment) =>
           appointment.patient.lastName
@@ -109,20 +51,20 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
             appointment.patient.name,
         }));
     }
-    // Si no se ha seleccionado ningún filtro, devuelve un arreglo vacío
     return [];
   };
 
-  function handleSelect(selectedValue) {
+  function handleSelect(selectedValue: any) {
     const route = `/patient/${selectedValue}`;
     navigate(route);
   }
 
   return (
-    <div style={SearchBarStyle}>
-      <SearchOutlined style={{ marginLeft: "15px" }} />
+    <div 
+    className="flex justify-center items-center h-12 w-full rounded-full bg-gray-200">
+      <SearchOutlined className="px-2 text-gray-600" />
       <AutoComplete
-        style={{ width: "100%" }}
+        className="w-full"
         options={searchOptions()
           .slice(0, 5)
           .map((option, index) => ({
@@ -130,37 +72,54 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
             label: option.value,
             key: index.toString(),
           }))}
-        placeholder="Encuentra la información que necesitas"
+        placeholder="Busca un paciente, pago o consulta..."
         value={searchTerm}
         onChange={(value) => setSearchTerm(value)}
         onSelect={(selectedValue) => handleSelect(selectedValue)}
       />
-      <div>in:</div>
+      <div className="font-semibold ml-2">en:</div>
       <div
-        style={{
-          display: "flex",
-          backgroundColor: "white",
-          width: "400px",
-          borderRadius: "50px",
-          marginLeft: "10px",
-          marginRight: "5px",
-        }}
+        className="flex bg-white rounded-full mx-2"
       >
-        {renderButton(
-          "Pacientes",
-          selectedButton === "Pacientes" ? "#F2F7FD" : "white",
-          "#5F8DCA"
-        )}
-        {renderButton(
-          "Consultas",
-          selectedButton === "Consultas" ? "F2F7FD" : "white",
-          "#5F8DCA"
-        )}
-        {renderButton(
-          "Pagos",
-          selectedButton === "Pagos" ? "F2F7FD" : "white",
-          "#5F8DCA"
-        )}
+        <Button
+          type="ghost"
+          onClick={() => {
+            setSelectedButton("Pacientes");
+          }}
+          className={clsx(
+            `flex rounded-full text-black bg-white hover:text-blue-500 hover:font-semibold`,
+            selectedButton === "Pacientes" &&
+              "bg-[#F2F7FD] text-blue-500 font-semibold"
+          )}
+        >
+          Pacientes
+        </Button>
+        <Button
+          type="link"
+          onClick={() => {
+            setSelectedButton("Consultas");
+          }}
+          className={clsx(
+            `flex rounded-full text-black bg-white hover:text-blue-500 hover:font-semibold`,
+            selectedButton === "Consultas" &&
+              "bg-red-500 text-blue-500 font-semibold"
+          )}
+        >
+          Consultas
+        </Button>
+        <Button
+          type="link"
+          onClick={() => {
+            setSelectedButton("Pagos");
+          }}
+          className={clsx(
+            `flex rounded-full text-black bg-white hover:text-blue-500 hover:font-semibold`,
+            selectedButton === "Pagos" &&
+              "bg-[#F2F7FD] text-blue-500 font-semibold"
+          )}
+        >
+          Pagos
+        </Button>
       </div>
     </div>
   );

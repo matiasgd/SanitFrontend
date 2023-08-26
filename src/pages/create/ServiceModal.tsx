@@ -7,8 +7,8 @@ import customMessage from "../../commons/customMessage";
 import Modal from "../../commons/Modal";
 import Input from "../../commons/Input";
 import Button from "../../commons/Button";
-import PricesForm from "../Me/prices/components/PricesForm";
-import clsx from "clsx";
+// import PricesForm from "../Me/prices/components/PricesForm";
+// import clsx from "clsx";
 import CustomSelect from "../../commons/Select";
 import RHFDatePicker from "../../commons/DatePicker";
 
@@ -26,7 +26,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
   type,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [openPrice, setOpenPrice] = useState(false);
+  // const [openPrice, setOpenPrice] = useState(false);
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
 
@@ -191,7 +191,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
               />
             </>
           )}
-          {type === "UPDATE" && (
+          {/* {type === "UPDATE" && (
             <div className="flex justify-center items-center m-3 ">
               <button
                 type="button"
@@ -213,7 +213,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
                 </div>
               )}
             </div>
-          )}
+          )} */}
 
           <div className="mt-4 flex gap-2 justify-end">
             <Button

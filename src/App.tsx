@@ -7,8 +7,6 @@ import Patients from "./pages/Patients/Patients";
 import Appointments from "./pages/Appointments/Appointments";
 import Home from "./pages/Home/Home";
 import Wallet from "./pages/Wallet/Wallet";
-import AddressForm from "./pages/create/AddressForm";
-import Modal from "./pages/create/ModalTest";
 import Stepper from "./pages/Me/components/Stepper";
 
 export default function App() {
@@ -25,8 +23,6 @@ export default function App() {
       <Route path="/stepper" element={<Stepper />} />
       <Route path="/wallet" element={<Wallet />} />
       <Route path="/404">ERROR 404</Route>
-      <Route path="/address" element={<AddressForm />} />
-      <Route path="/modal" element={<Modal />} />
     </Routes>
   );
 }

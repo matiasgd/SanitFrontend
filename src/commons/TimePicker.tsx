@@ -1,6 +1,8 @@
 import { TimePicker } from "antd";
 import { Control, Controller, RegisterOptions } from "react-hook-form";
-import moment, { Moment } from "moment";
+import dayjs from "dayjs";
+
+const format = 'HH:mm';
 
 interface RHFTimePickerProps {
   control: Control<any>;
@@ -31,12 +33,11 @@ const RHFTimePicker: React.FC<RHFTimePickerProps> = ({
             <TimePicker
               placeholder={placeholder}
               className="w-full block py-1.5 rounded-[20px] border-0 text-gray-800 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-sky-600 sm:text-sm sm:leading-6"
-              format="HH:mm" // Set the format to show only hours and minutes
-              value={field.value ? moment(field.value, "HH:mm") : undefined}
-              onChange={(time: Moment | null) => {
-                // Format the selected time as "HH:mm" and update the field value
-                const formattedTime = time ? time.format("HH:mm") : "";
-                field.onChange(formattedTime);
+              format={format}
+              value={field.value ? dayjs(field.value, format) : null} // Convert the value back to a dayjs object if it exists
+              onChange={(value) => {
+                const formattedValue = value ? value.format(format) : null;
+                field.onChange(formattedValue);
               }}
             />
           </div>

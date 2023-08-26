@@ -4,18 +4,23 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import AppointmentTable from "./components/AppointmentTable";
 import Keypad from "./components/Keypad";
-import DateRangePicker from "./components/DataRangePicker";
 import { Button } from "antd";
 import Sidebar from "../Me/Sidebar";
 import axios from "axios";
 import moment from "moment";
-import { formatNumberWithCommas } from "../../utils/formatNumbers";
 
 const Appointments: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [appointments, setAppointments] = useState([]);
   const [paidStatus, setPaidStatus] = useState("Pending");
 
+  const formatNumberWithCommas = (value: any) => {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  };
+
+
+
+  
   const transformPaymentData = (data) => {
     const transformedData = data.map((appointment) => {
       let {

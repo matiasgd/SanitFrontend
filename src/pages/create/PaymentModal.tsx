@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { RootState } from "../../store/store";
@@ -128,7 +128,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
               disabled
               id="amount"
               label={`Precio en (${appointment.currency})`}
-              placeholder={price - partialPayment}
+              value={price - partialPayment}
               type="number"
               errors={errors}
             />

@@ -15,16 +15,26 @@ import PatientModal from "../create/PatientModal";
 import SearchBar from "./components/SearchBar";
 import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
-import Stepper from "./components/Stepper";
+
+interface Appointment {
+  status: string;
+  appointmentPrice: number;
+}
+
+interface Payments {
+ amount: number;
+ amountUSD: number;
+}
+
 
 const Dashboard = () => {
   // Redux
   const user = useSelector((state: RootState) => state.user);
   // States
   const [patients, setPatients] = useState([]);
-  const [appointments, setAppointments] = useState([]);
+  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [currency, setCurrency] = useState("ARS"); // ARS, USD
-  const [payments, setPayments] = useState([]);
+  const [payments, setPayments] = useState<Payments[]>([]);
   const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
