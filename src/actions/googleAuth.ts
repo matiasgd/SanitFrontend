@@ -11,7 +11,7 @@ export const handleGoogleRegister = async (credentialResponse: any) => {
   const decoded = jwt_decode(credentialResponse.credential) as DecodedToken;
   // New Google User
   await axios
-    .post("http://localhost:3001/api/users/new", {
+    .post(`${import.meta.env.VITE_API_ROUTE}/api/users/new`, {
       email: decoded.email,
       password: decoded.sub,
       confirmPassword: decoded.sub,
@@ -27,7 +27,7 @@ export const handleGoogleLogin = async (credentialResponse: any) => {
   // Login Google User
   try {
     const token = await axios.post(
-      "http://localhost:3001/api/auth/login",
+      `${import.meta.env.VITE_API_ROUTE}/api/auth/login`,
       {
         email: decoded.email,
         password: decoded.sub,

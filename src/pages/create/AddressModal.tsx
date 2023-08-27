@@ -48,7 +48,7 @@ const AddressModal: React.FC<AddressModalProps> = ({ isOpen, onClose }) => {
     try {
       customMessage("success", "Consultorio guardado con éxito.");
       Axios.post(
-        `http://localhost:3001/api/addresses/new/doctor/${doctorId}`,
+        `${import.meta.env.VITE_API_ROUTE}/api/addresses/new/doctor/${doctorId}`,
         data
       );
     } catch (error) {

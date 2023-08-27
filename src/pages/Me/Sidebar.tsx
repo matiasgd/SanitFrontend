@@ -44,7 +44,7 @@ const Sidebar: React.FC = () => {
   const FetchUserData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3001/api/users/${user.id}`
+        `${import.meta.env.VITE_API_ROUTE}/api/users/${user.id}`
       );
       const userDataFromApi = response.data.user;
       setUserData(userDataFromApi);
@@ -72,7 +72,7 @@ const Sidebar: React.FC = () => {
 
   const handleLogOut = async () => {
     try {
-      await axios.post("http://localhost:3001/api/auth/logout");
+      await axios.post(`${import.meta.env.VITE_API_ROUTE}/api/auth/logout`);
       dispatch(logOut());
       customMessage("success", "Sesión finalizada, hasta la próxima!");
       document.cookie =
