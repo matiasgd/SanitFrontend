@@ -4,28 +4,65 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import IncomeTable from "./components/IncomeTable";
 import Keypad from "./components/Keypad";
-import DateRangePicker from "./components/DataRangePicker";
+//import DateRangePicker from "./components/DataRangePicker";
 import { Button } from "antd";
 import Sidebar from "../Me/Sidebar";
 import axios from "axios";
 import moment from "moment";
 
+interface Service {
+  serviceName: string;
+}
+
+interface Patient {
+  name: string;
+  lastName: string;
+  age: number;
+}
+
+interface AppointmentProps {
+  patient: Patient;
+  service: Service;
+}
+
+interface PaymentsProps {
+  amount: number;
+  amountUSD: number;
+  appointment: AppointmentProps;
+  currency: string;
+  doctor: string;
+  method: string;
+  paymentDate: string;
+  status: string;
+}
+
+interface TransformedData {
+  amount: number;
+  amountUSD: number;
+  patientName: string;
+  serviceName: string;
+  currency: string;
+  method: string;
+  paymentDate: string;
+  status: string;
+}
+
 const Wallet: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
-  const [payments, setPayments] = useState([]);
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([]);
 
-  const transformPaymentData = (data) => {
-    const transformedData = data.map((payment) => {
+  const transformPaymentData = (data: PaymentsProps[]) => {
+    const transformedData: TransformedData[] = data.map((payment) => {
       const {
         amount,
         amountUSD,
         appointment,
         currency,
-        doctor,
         method,
         paymentDate,
         status,
       } = payment;
+
       const { service, patient } = appointment;
 
       // Convierte la fecha de ISO 8601 a una fecha legible
@@ -38,19 +75,18 @@ const Wallet: React.FC = () => {
       const serviceName = service.serviceName;
 
       return {
+        paymentDate: formattedPaymentDate,
+        patientName,
+        serviceName,
+        method,
         amount,
         amountUSD,
-        serviceName,
-        patientName,
         currency,
-        doctor,
-        method,
-        paymentDate: formattedPaymentDate,
         status,
       };
     });
 
-    return transformedData;
+    setTransformedData(transformedData);
   };
 
   const fetchPaymentData = async () => {
@@ -58,9 +94,9 @@ const Wallet: React.FC = () => {
     await axios
       .get(`http://localhost:3001/api/payments/doctor/${doctorId}`)
       .then((res) => {
+        console.log(res.data.data, "data");
         const originalData = res.data.data;
-        const transformedData = transformPaymentData(originalData);
-        setPayments(transformedData);
+        transformPaymentData(originalData);
       })
       .catch((err) => console.log(err));
   };
@@ -83,15 +119,15 @@ const Wallet: React.FC = () => {
         >
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div style={{ width: "70%" }}>
-              <Keypad incomes={payments} />
+              <Keypad incomes={transformedData} />
             </div>
             <div className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl">
-              <DateRangePicker />
+              {/* <DateRangePicker  /> */}
               <Button>(+) Nuevo Pago</Button>
             </div>
           </div>
           <div className="p-4">
-            <IncomeTable incomes={payments} />
+            <IncomeTable incomes={transformedData} />
           </div>
         </div>
       </div>

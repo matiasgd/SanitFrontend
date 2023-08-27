@@ -11,17 +11,44 @@ import moment from "moment";
 
 const Appointments: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
-  const [appointments, setAppointments] = useState([]);
   const [paidStatus, setPaidStatus] = useState("Pending");
+  const [transformedData, setTransformedData] = useState<TransformedData[]>([]);
 
   const formatNumberWithCommas = (value: any) => {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   };
 
+  interface Patient {
+    name: string;
+    lastName: string;
+    age: number;
+  }
 
+  interface Service {
+    serviceName: string;
+  }
 
-  
-  const transformPaymentData = (data) => {
+  interface AppointmentsProps {
+    startTime: string;
+    appointmentPrice: number;
+    service: Service;
+    patient: Patient;
+    category: string;
+    status: string;
+    paymentStatus: string;
+  }
+
+  interface TransformedData {
+    appointmentDate: string;
+    appointmentPrice: string;
+    serviceName: string;
+    patientName: string;
+    category: string;
+    status: string;
+    paymentStatus: string;
+  }
+
+  const transformPaymentData = (data: AppointmentsProps[]) => {
     const transformedData = data.map((appointment) => {
       let {
         startTime,
@@ -74,6 +101,10 @@ const Appointments: React.FC = () => {
         paymentStatus,
       };
     });
+
+    // Actualiza el estado con los datos transformados
+    setTransformedData(transformedData);
+
     return transformedData;
   };
 
@@ -83,10 +114,7 @@ const Appointments: React.FC = () => {
       .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
       .then((res) => {
         const originalData = res.data.data;
-
-        const transformedData = transformPaymentData(originalData);
-        console.log(transformedData, "transformedData");
-        setAppointments(transformedData);
+        transformPaymentData(originalData);
       })
       .catch((err) => console.log(err));
   };
@@ -109,7 +137,7 @@ const Appointments: React.FC = () => {
         >
           <div style={{ display: "flex", flexDirection: "row" }}>
             <div style={{ width: "70%" }}>
-              <Keypad appointments={appointments} />
+              <Keypad appointments={transformedData} />
             </div>
             <div className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl">
               {/* <DateRangePicker /> */}
@@ -132,7 +160,7 @@ const Appointments: React.FC = () => {
           </div>
           <div className="p-4">
             <AppointmentTable
-              appointments={appointments}
+              appointments={transformedData}
               filterPayment={paidStatus}
             />
           </div>

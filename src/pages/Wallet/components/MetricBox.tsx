@@ -2,7 +2,7 @@ import React from "react";
 
 interface MetricBoxProps {
   title: string;
-  metric: number;
+  metric: number | string;
   color: string;
   currency?: string;
 }
@@ -13,7 +13,7 @@ const MetricBox: React.FC<MetricBoxProps> = ({
   color,
   currency,
 }) => {
-  const boxStyle = {
+  const boxStyle: React.CSSProperties = {
     backgroundColor: color,
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     padding: "10px",

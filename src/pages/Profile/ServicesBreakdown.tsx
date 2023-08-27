@@ -1,6 +1,4 @@
-import { useState } from "react";
 import ServiceCard from "./ServiceCard";
-// import AppointmentDetails from "./components/AppointmentDetails";
 import moment from "moment";
 
 interface ServicesBreakdownProps {
@@ -8,9 +6,7 @@ interface ServicesBreakdownProps {
 }
 
 const ServicesBreakdown: React.FC<ServicesBreakdownProps> = ({ services }) => {
-  const [selectedCard, setSelectedCard] = useState(null);
-
-  const boxStyle = {
+  const boxStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
@@ -21,7 +17,7 @@ const ServicesBreakdown: React.FC<ServicesBreakdownProps> = ({ services }) => {
     gap: "20px",
   };
 
-  const header = {
+  const header: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -29,7 +25,7 @@ const ServicesBreakdown: React.FC<ServicesBreakdownProps> = ({ services }) => {
     justifyContent: "space-between",
   };
 
-  const servicesBox = {
+  const servicesBox: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
@@ -96,17 +92,11 @@ const ServicesBreakdown: React.FC<ServicesBreakdownProps> = ({ services }) => {
               createdAt={moment(service.createdAt).format("DD-MM-YYYY")}
               price={service.price}
               circleColor={colorScale[index]}
-              onClick={() => setSelectedCard(service)}
+              onClick={() => {}}
             />
           ))}
         </div>
       </div>
-      {/* {selectedCard && (
-        <AppointmentDetails
-          selected={selectedCard}
-          onClose={() => setSelectedCard(null)}
-        />
-      )} */}
     </div>
   );
 };

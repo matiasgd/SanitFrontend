@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const container = {
+const container: React.CSSProperties =  {
   display: "flex",
   flexDirection: "row",
   justifyContent: "flex-start",
@@ -11,7 +11,7 @@ const container = {
   borderRadius: "20px",
 };
 
-const colorBox = {
+const colorBox : React.CSSProperties =  {
   display: "flex",
   flexDirection: "row",
   backgroundColor: "#E7EFFA",
@@ -31,9 +31,9 @@ const boxStyle = {
   paddingRight: "20px",
 };
 
-const hourStyle = { lineHeight: "1", textAlign: "center" };
+const hourStyle : React.CSSProperties =  { lineHeight: "1", textAlign: "center" };
 
-const titleStyle = { color: "#222323", fontWeight: "bold" };
+const titleStyle : React.CSSProperties =  { color: "#222323", fontWeight: "bold" };
 
 interface ServiceCardProps {
   serviceName: string;

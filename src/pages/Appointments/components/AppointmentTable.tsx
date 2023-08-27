@@ -8,6 +8,7 @@ interface Appointments {
   appointmentPrice: string;
   category: string;
   status: string;
+  paymentStatus: string;
 }
 
 interface ApppointmentTableProps {

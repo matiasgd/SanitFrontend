@@ -13,14 +13,14 @@ const MetricBox: React.FC<MetricBoxProps> = ({
   color,
   currency,
 }) => {
-  const boxStyle = {
+  const boxStyle: React.CSSProperties = {
     backgroundColor: color,
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     padding: "10px",
     display: "inline-block",
     borderRadius: "7.5px",
     minWidth: "175px",
-    textAlign: "center",
+    textAlign: "center" as const,
   };
 
   const titleStyle = {

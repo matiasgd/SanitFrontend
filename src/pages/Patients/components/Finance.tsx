@@ -14,8 +14,8 @@ const FinanceComponent: React.FC<financeComponentProps> = ({
     setExpanded(!expanded);
   };
 
-  function formatNumberWithCommas(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  function formatNumberWithCurrency(value: number) {
+    return `ARS ${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
   }
 
   function getSales() {
@@ -84,7 +84,7 @@ const FinanceComponent: React.FC<financeComponentProps> = ({
             />
             <Field
               title={"Facturación total"}
-              value={`ARS ${formatNumberWithCommas(getSales())}`}
+              value={formatNumberWithCurrency(getSales())} // Format the number with currency
               edit={true}
             />
           </div>
@@ -101,14 +101,12 @@ const FinanceComponent: React.FC<financeComponentProps> = ({
             />
             <Field
               title={"Pagos del paciente"}
-              value={`ARS ${formatNumberWithCommas(getPayments())}`}
+              value={formatNumberWithCurrency(getPayments())}
               edit={true}
             />
             <Field
               title={"Pagos pendientes"}
-              value={`ARS ${formatNumberWithCommas(
-                getSales() - getPayments()
-              )}`}
+              value={formatNumberWithCurrency(getSales() - getPayments())}
             />
           </div>
         </div>

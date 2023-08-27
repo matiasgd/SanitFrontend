@@ -1,9 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../store/store";
 import MetricBox from "./MetricBox";
-import axios from "axios";
 
 interface Appointments {
   appointmentDate: string;
@@ -19,7 +15,6 @@ interface KeypadTableProps {
 }
 
 const Keypad: React.FC<KeypadTableProps> = ({ appointments }) => {
-  const doctorId = useSelector((state: RootState) => state.user.id);
   
   return (
     <div

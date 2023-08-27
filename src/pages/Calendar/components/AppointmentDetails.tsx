@@ -9,7 +9,6 @@ import { Space, Tag, Divider, Button, Input } from "antd";
 import customMessage from "../../../commons/customMessage";
 import PaymentModal from "../../create/PaymentModal";
 import moment from "moment";
-
 const { TextArea } = Input;
 
 const container: React.CSSProperties = {
@@ -32,13 +31,17 @@ const header: React.CSSProperties = {
   marginBottom: "20px",
 };
 
-const content = {
+const content: React.CSSProperties = {
   display: "flex",
   flexDirection: "column",
   gap: "15px",
 };
 
-const titleStyle = { color: "#222323", fontWeight: "bold", fontSize: "18px" };
+const titleStyle: React.CSSProperties = {
+  color: "#222323",
+  fontWeight: "bold",
+  fontSize: "18px",
+};
 
 const fieldStyle: React.CSSProperties = {
   display: "flex",
@@ -61,9 +64,14 @@ const fieldContentStyle: React.CSSProperties = {
   width: "70%",
 };
 
+
 interface AppointmentDetailsProps {
   selected: any;
   onClose: () => void;
+}
+
+interface AppointmentsProps {
+  startTime: Date;
 }
 
 const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
@@ -71,7 +79,9 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
   selected,
 }) => {
   const [openModal, setOpenModal] = useState(false);
-  const [lastAppointment, setLastAppoitment] = useState([]);
+  const [lastAppointment, setLastAppoitment] = useState<AppointmentsProps[]>(
+    []
+  );
   const [notes, setNotes] = useState("");
 
   const confirmAppointment = (status: String) => {
@@ -183,7 +193,11 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
             {lastAppointment.length > 1 ? (
               <p style={fieldContentStyle} className="font-bold">
                 {moment(
-                  lastAppointment[lastAppointment.length - 2].startTime
+                  (
+                    lastAppointment[
+                      lastAppointment.length - 2
+                    ] as AppointmentsProps
+                  ).startTime
                 ).format("DD-MM-YYYY")}
               </p>
             ) : (
@@ -191,6 +205,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
                 Primera Consulta
               </p>
             )}
+
             <Button type="link">
               <Space>
                 <span>Mas informacion</span>

@@ -16,7 +16,7 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
   // States
   const [selectedCard, setSelectedCard] = useState(null);
 
-  const boxStyle = {
+  const boxStyle: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
@@ -28,7 +28,7 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
     gap: "20px",
   };
 
-  const header = {
+  const header: React.CSSProperties = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
@@ -36,7 +36,7 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
     justifyContent: "space-between",
   };
 
-  const appointmentsBox = {
+  const appointmentsBox: React.CSSProperties = {
     display: "flex",
     flexDirection: "column",
     gap: "10px",
