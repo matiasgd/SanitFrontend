@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Steps, theme } from "antd";
 import { SubmitHandler, useForm, FieldValues } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -14,26 +14,25 @@ import customMessage from "../../../commons/customMessage";
 const Stepper: React.FC = () => {
   const [current, setCurrent] = useState(0);
   const { token } = theme.useToken();
-  const [userData, setUserData] = useState<any>([]);
 
   let user = useSelector((state: RootState) => state.user);
 
-  const getUser = async () => {
-    await axios
-      .get(`http://localhost:3001/api/users/${user.id}`)
-      .then((user) => {
-        console.log(user);
+  // const getUser = async () => {
+  //   await axios
+  //     .get(`http://localhost:3001/api/users/${user.id}`)
+  //     .then((user) => {
+  //       console.log(user);
 
-        setUserData(user.data.user);
-      })
-      .catch((err) => console.log(err));
-  };
+  //       setUserData(user.data.user);
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
-  useEffect(() => {
-    if (user?.id) {
-      getUser();
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user?.id) {
+  //     getUser();
+  //   }
+  // }, [user]);
 
   const {
     register,

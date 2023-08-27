@@ -1,10 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import PaymentModal from "../../create/PaymentModal";
-import { Button } from "antd";
-import customMessage from "../../../commons/customMessage";
 
-const container = {
+const container: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   justifyContent: "flex-start",
@@ -15,7 +12,7 @@ const container = {
   borderRadius: "20px",
 };
 
-const colorBox = {
+const colorBox: React.CSSProperties = {
   display: "flex",
   flexDirection: "row",
   backgroundColor: "#E7EFFA",
@@ -30,15 +27,21 @@ const colorBox = {
   padding: "10px",
 };
 
-const boxStyle = {
+const boxStyle: React.CSSProperties = {
   paddingLeft: "20px",
 };
 
-const hourStyle = { lineHeight: "1", textAlign: "center" };
+const hourStyle: React.CSSProperties = { lineHeight: "1", textAlign: "center" };
 
-const titleStyle = { color: "#222323", fontWeight: "bold" };
+const titleStyle: React.CSSProperties = {
+  color: "#222323",
+  fontWeight: "bold",
+};
 
-const subTitleStyle = { color: "#707070", fontSize: "smaller" };
+const subTitleStyle: React.CSSProperties = {
+  color: "#707070",
+  fontSize: "smaller",
+};
 
 interface AppointmentCardProps {
   appointment: any;

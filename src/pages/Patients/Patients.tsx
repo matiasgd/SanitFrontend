@@ -29,7 +29,7 @@ interface DataType {
 }
 
 const Patients: React.FC = () => {
-  //const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [patients, setPatients] = useState<DataType[]>([]);
   const searchInput = useRef<InputRef>(null);
@@ -82,6 +82,7 @@ const Patients: React.FC = () => {
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
     setSearchText("");
+    console.log(searchText)  // Modificar logica
   };
 
   const getColumnSearchProps = (

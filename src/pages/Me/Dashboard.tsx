@@ -35,7 +35,7 @@ const Dashboard = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [currency, setCurrency] = useState("ARS"); // ARS, USD
   const [payments, setPayments] = useState<Payments[]>([]);
-  const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
+  // const [filter, setFilter] = useState("weekly"); // weekly, monthly, yearly
   const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const [isOpenAppointmentsModal, setIsOpenAppointmentsModal] = useState(false);
 
@@ -111,25 +111,25 @@ const Dashboard = () => {
                 <div className="flex">
                   <Button
                     type="link"
-                    onClick={() => {
-                      setFilter("weekly");
-                    }}
+                    // onClick={() => {
+                    //   setFilter("weekly");
+                    // }}
                   >
                     Semanal
                   </Button>
                   <Button
                     type="link"
-                    onClick={() => {
-                      setFilter("monthly");
-                    }}
+                    // onClick={() => {
+                    //   setFilter("monthly");
+                    // }}
                   >
                     Mensual
                   </Button>
                   <Button
                     type="link"
-                    onClick={() => {
-                      setFilter("yearly");
-                    }}
+                    // onClick={() => {
+                    //   setFilter("yearly");
+                    // }}
                   >
                     Anual
                   </Button>

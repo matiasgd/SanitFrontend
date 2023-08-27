@@ -2,12 +2,12 @@ import React from "react";
 import { Table } from "antd";
 
 interface Income {
-  date: string;
-  patient: string;
-  services: Array<string>;
+  paymentDate: string;
+  patientName: string;
+  serviceName: string;
   method: string;
   amount: number;
-  usd: number;
+  amountUSD: number;
 }
 
 interface IncomeTableProps {
@@ -28,7 +28,7 @@ const columns = [
   {
     title: "Servicio",
     dataIndex: "serviceName",
-    key: "services",
+    key: "serviceName",
   },
   {
     title: "Metodo de pago",
@@ -43,7 +43,7 @@ const columns = [
   {
     title: "Conversion USD",
     dataIndex: "amountUSD",
-    key: "usd",
+    key: "amountUSD",
   },
 ];
 

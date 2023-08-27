@@ -6,12 +6,12 @@ import MetricBox from "./MetricBox";
 import axios from "axios";
 
 interface Income {
-  date: string;
-  patient: string;
-  services: Array<string>;
+  patientName: string;
+  serviceName: string;
   method: string;
   amount: number;
   amountUSD: number;
+  status: string;
 }
 
 interface KeypadTableProps {
@@ -21,13 +21,23 @@ interface KeypadTableProps {
 const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
   const doctorId = useSelector((state: RootState) => state.user.id);
   const [pendingPayments, setPendingPayments] = useState([]);
-  const totalAmount = incomes.reduce((total, entry) => total + entry.amount, 0);
-  const totalAmountUSD = incomes.reduce(
-    (total, entry) => total + (entry.amountUSD ? entry.amountUSD : 0),
-    0
-  );
 
-  function formatNumberWithCommas(number) {
+  const totalAmount = incomes.reduce((total, entry) => {
+    if (entry.status === "Full") {
+      return total + entry.amount;
+    }
+    return total;
+  }, 0);
+  console.log(totalAmount, "totalAmount");
+
+  const totalAmountUSD = incomes.reduce((total, entry) => {
+    if (entry.status === "Full" && entry.amountUSD) {
+      return total + entry.amountUSD;
+    }
+    return total;
+  }, 0);
+
+  function formatNumberWithCommas(number: number) {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
 
@@ -36,6 +46,7 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
     await axios
       .get(`http://localhost:3001/api/appointments/debts/${doctorId}`)
       .then((res) => {
+        console.log(res.data.data, "data pendiente");
         setPendingPayments(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -55,13 +66,13 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
     >
       <MetricBox
         title="Cobros totales"
-        metric={formatNumberWithCommas(totalAmount.toFixed(0))}
+        metric={formatNumberWithCommas(Number(totalAmount.toFixed(0)))}
         color="#F2F7FD"
         currency="$"
       />
       <MetricBox
         title="Estimado en USD"
-        metric={formatNumberWithCommas(totalAmountUSD.toFixed(0))}
+        metric={formatNumberWithCommas(Number(totalAmountUSD.toFixed(0)))}
         color="#EEEFF4"
         currency="USD"
       />
@@ -73,7 +84,7 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
       />
       <MetricBox
         title="Pagos pendientes"
-        metric={formatNumberWithCommas(pendingPayments)}
+        metric={formatNumberWithCommas(Number(pendingPayments))}
         color="#FFFFC5"
         currency="$"
       />

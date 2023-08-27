@@ -24,9 +24,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 }) => {
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
-  const [selectedPatient, setSelectedPatient] = useState("");
   const [selectedService, setSelectedService] = useState("");
-  const [addressId, setAddressId] = useState("");
   const [serviceData, setServiceData] = useState("");
   const [addressData, setAddressData] = useState([]);
   const [isCreatingPatient, setIsCreatingPatient] = useState(false);
@@ -38,7 +36,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     control,
     handleSubmit,
     formState: { errors },
-    reset,
+    reset,  
     watch,
   } = useForm<FieldValues>({
     defaultValues: {
@@ -65,12 +63,13 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       data.servicePrice = serviceData; // Update the price field with the serviceData
     }
 
-    await axios.post(`http://localhost:3001/api/appointments/new`, data)
-    .then(() => customMessage("success", "Se creo una nueva cita."))
-    .catch((err) => {
-      customMessage("error", "Algo salió mal.")
-    console.log(err);
-    });
+    await axios
+      .post(`http://localhost:3001/api/appointments/new`, data)
+      .then(() => customMessage("success", "Se creo una nueva cita."))
+      .catch((err) => {
+        customMessage("error", "Algo salió mal.");
+        console.log(err);
+      });
 
     onClose();
     reset();
@@ -91,7 +90,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
       .get(`http://localhost:3001/api/addresses/doctor/${doctorId}`)
       .then((res) => {
         const addresses = res.data.data;
-        const options = addresses.map((address:any) => ({
+        const options = addresses.map((address: any) => ({
           value: address._id,
           label: `${address.addressName} - ${address.street} ${address.number}`,
         }));
@@ -173,7 +172,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
               if (value === "create") {
                 return setIsCreatingPatient(true);
               }
-              setSelectedPatient(value);
+              return value;
             }}
             label="Paciente"
             createText="Crear paciente"
@@ -262,7 +261,6 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
           addressData={addressData}
         />
       )}
-      
     </Modal>
   );
 };

@@ -1,5 +1,4 @@
-import { Input, Select } from "antd";
-import { Option } from "antd/es/mentions";
+import { Input } from "antd";
 import React, { useState } from "react";
 
 interface DateRangePickerProps {
@@ -32,18 +31,21 @@ const DateRangePicker: React.FC<DateRangePickerProps> = ({
 }) => {
   const [fromDate, setFromDate] = useState<Date | null>(null);
   const [toDate, setToDate] = useState<Date | null>(null);
-  const [dateRange, setDateRange] = useState<string>("This Week");
 
   const handleFromChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
     setFromDate(date);
-    onDateRangeChange(date, toDate);
+    if (toDate !== null) {
+      onDateRangeChange(date, toDate);
+    }
   };
 
   const handleToChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(event.target.value);
     setToDate(date);
-    onDateRangeChange(fromDate, date);
+    if (fromDate !== null) {
+      onDateRangeChange(fromDate, date);
+    }
   };
 
   return (

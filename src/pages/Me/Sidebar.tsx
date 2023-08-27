@@ -26,6 +26,12 @@ const sections = [
   { name: "Consultas", icon: <MdCalendarToday />, route: "/appointments" },
 ];
 
+interface UserDataProps {
+  name: string;
+  lastName: string;
+  email: string;
+}
+
 const Sidebar: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -33,7 +39,20 @@ const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  const [userData, setUserData] = useState<any>([]);
+  const [userData, setUserData] = useState<UserDataProps | null>(null);
+
+  const FetchUserData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3001/api/users/${user.id}`
+      );
+      const userDataFromApi = response.data.user;
+      setUserData(userDataFromApi);
+    } catch (error) {
+      console.error(error);
+      customMessage("error", "Intente otra vez.");
+    }
+  };
 
   const matchedSection = sections.find(
     (section) => location.pathname === section.route
@@ -64,15 +83,7 @@ const Sidebar: React.FC = () => {
       customMessage("error", "Intente otra vez.");
     }
   };
-
-  const FetchUserData = async () => {
-    await axios
-      .get(`http://localhost:3001/api/users/${user.id}`)
-      .then((res) => {
-        setUserData(res.data.user);
-      })
-      .catch((err) => console.log(err));
-  };
+ 
 
   useEffect(() => {
     FetchUserData();
@@ -117,10 +128,10 @@ const Sidebar: React.FC = () => {
               className="bg-gray-400 hover:bg-blue-400"
               onClick={() => setIsExpanded(!isExpanded)}
             />
-            {isExpanded && (
+            {isExpanded && userData && (
               <div className="flex-col">
                 <p className="text-sm font-semibold">
-                  {user.name && user.lastName ? user.name : ""}
+                  {userData.name && userData.lastName ? userData.name : ""}
                 </p>
                 <p className="text-xs text-gray-500 font-bold">
                   {userData.email}
