@@ -62,7 +62,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
     try {
       customMessage("success", "Abrir la Consola");
       await axios.post(
-        `http://localhost:3001/api/patients/new/${doctorId}`,
+        `${import.meta.env.VITE_API_ROUTE}/api/patients/new/${doctorId}`,
         data
       );
     } catch (error) {

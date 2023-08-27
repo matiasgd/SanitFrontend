@@ -44,7 +44,9 @@ const Keypad: React.FC<KeypadTableProps> = ({ incomes }) => {
   const fetchData = async () => {
     // Pagos pendientes de recibir
     await axios
-      .get(`http://localhost:3001/api/appointments/debts/${doctorId}`)
+      .get(
+        `${import.meta.env.VITE_API_ROUTE}/api/appointments/debts/${doctorId}`
+      )
       .then((res) => {
         console.log(res.data.data, "data pendiente");
         setPendingPayments(res.data.data);

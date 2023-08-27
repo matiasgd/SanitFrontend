@@ -111,7 +111,7 @@ const Appointments: React.FC = () => {
   const fetchAppointmentsData = async () => {
     // Citas medicas
     await axios
-      .get(`http://localhost:3001/api/appointments/doctor/${doctorId}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}/api/appointments/doctor/${doctorId}`)
       .then((res) => {
         const originalData = res.data.data;
         transformPaymentData(originalData);
