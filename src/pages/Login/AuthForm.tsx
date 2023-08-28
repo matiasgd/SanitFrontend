@@ -1,16 +1,19 @@
 import { useState, useCallback, useEffect } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Input from "../commons/Input";
-import Button from "../commons/Button";
-import customMessage from "../commons/customMessage";
+import Input from "../../commons/Input";
+import Button from "../../commons/Button";
+import customMessage from "../../commons/customMessage";
 import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import { logIn } from "../store/user";
+import { RootState } from "../../store/store";
+import { logIn } from "../../store/user";
 import logo from "/logo.png";
-import { handleFormLogin, handleFormRegister } from "../actions/formAuth";
-import { handleGoogleLogin, handleGoogleRegister } from "../actions/googleAuth";
+import { handleFormLogin, handleFormRegister } from "../../actions/formAuth";
+import {
+  handleGoogleLogin,
+  handleGoogleRegister,
+} from "../../actions/googleAuth";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -28,8 +31,8 @@ const AuthForm = () => {
   let user = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    if (user.profile) {
-      navigate("/me");
+    if (user?.id) {
+      navigate("/dashboard");
     }
   }, [navigate, user]);
 
@@ -98,7 +101,7 @@ const AuthForm = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative h-[100vh]">
       <div className="absolute top-0 right-0 w-[20vh] h-[10vh] sm:w-[25vh] sm:h-[15vh] md:w-[35vh] md:h-[25vh] lg:w-[45vh] lg:h-[35vh] bg-[#EB6350] rounded-bl-[75vh] z-20" />
       <div className="absolute w-full h-[5vh] sm:h-[10vh] md:h-[20vh] lg:h-[30vh] bg-[#2AAAE1] z-10" />
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 md:px-7 lg:px-8 bg-[#154E64]">
@@ -106,11 +109,12 @@ const AuthForm = () => {
           <img
             src={logo}
             alt="logo"
-            className="mx-auto w-auto h-20 rounded-lg"
+            className="mx-auto w-auto h-20 rounded-lg cursor-pointer hover:scale-110"
+            onClick={() => navigate("/home")}
           />
         </div>
-        <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md z-30">
-          <div className="bg-white px-4 py-8 shadow sm:rounded-lg sm:px-10">
+        <div className="mt-6 mx-auto w-[90%] sm:max-w-lg z-30">
+          <div className="bg-white px-4 py-8 shadow rounded-lg sm:px-10">
             <h2 className="mb-8 text-center text-3xl font-bold tracking-tight text-gray-800">
               {variant === "REGISTER" ? "Registrarse" : "Ingresar"}
             </h2>
@@ -119,6 +123,7 @@ const AuthForm = () => {
                 id="email"
                 label="Email"
                 type="email"
+                placeholder="mail@example.com"
                 register={register}
                 errors={errors}
                 disabled={loading}
@@ -127,6 +132,7 @@ const AuthForm = () => {
                 id="password"
                 label="Contraseña"
                 type="password"
+                placeholder="Mínimo 8 carácteres"
                 register={register}
                 errors={errors}
                 disabled={loading}
@@ -135,6 +141,7 @@ const AuthForm = () => {
                 <Input
                   id="confirmPassword"
                   label="Repetir Contraseña"
+                  placeholder="Mínimo 8 carácteres"
                   type="password"
                   register={register}
                   errors={errors}

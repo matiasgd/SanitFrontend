@@ -1,27 +1,33 @@
 import { createAction, createReducer, PayloadAction } from "@reduxjs/toolkit";
-
-export const logIn = createAction<string>("LOG_IN");
-export const logOut = createAction("LOG_OUT");
+import Cookies from "js-cookie";
+import jwt_decode from "jwt-decode";
 
 interface UserState {
-  profile: string | null;
+  id: string;
+  email: string;
+  profileCompleted?: string;
 }
 
-const storedUser = localStorage.getItem("profile");
-const user: UserState =
-  storedUser !== null
-    ? (JSON.parse(storedUser) as UserState)
-    : { profile: null };
+export const logIn = createAction<UserState>("LOG_IN");
+export const logOut = createAction("LOG_OUT");
+
+const token = Cookies.get("token");
+
+const user: UserState = token
+  ? (jwt_decode(token) as UserState)
+  : { id: "", email: "", profileCompleted: "" };
 
 const initialState: UserState = user;
 
 const userReducer = createReducer(initialState, (builder) => {
-  builder.addCase(logIn, (state, action: PayloadAction<string>) => {
-    state.profile = action.payload;
-  });
-  builder.addCase(logOut, (state) => {
-    state.profile = null;
-  });
+  builder
+    .addCase(logIn, (state, action: PayloadAction<UserState>) => {
+      console.log(action.payload);
+      return { ...state, ...action.payload };
+    })
+    .addCase(logOut, () => {
+      return { id: "", email: "", profileCompleted: "" };
+    });
 });
 
 export default userReducer;
