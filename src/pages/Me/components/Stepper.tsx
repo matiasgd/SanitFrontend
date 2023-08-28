@@ -61,7 +61,7 @@ const Stepper: React.FC = () => {
   const submitProfile: SubmitHandler<FieldValues> = async (data) => {
     try {
       await axios
-        .put(`${import.meta.env.VITE_API_ROUTE}/api/users/${user.id}/edit`, data)
+        .put(`${import.meta.env.VITE_API_ROUTE}api/users/${user.id}/edit`, data)
         .then(() => customMessage("success", "Perfil actualizado!"));
     } catch (error) {
       console.error(error);

@@ -47,21 +47,21 @@ const Dashboard = () => {
   const fetchData = async () => {
     // Patients
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/users/${user.id}/patients`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/users/${user.id}/patients`)
       .then((res) => {
         setPatients(res.data.data);
       })
       .catch((err) => console.log(err));
     // Appointments
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/appointments/doctor/${user.id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/appointments/doctor/${user.id}`)
       .then((res) => {
         setAppointments(res.data.data);
       })
       .catch((err) => console.log(err));
     // Payments
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/payments/doctor/${user.id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/payments/doctor/${user.id}`)
       .then((res) => {
         setPayments(res.data.data);
       })
