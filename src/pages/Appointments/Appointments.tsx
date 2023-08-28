@@ -1,17 +1,17 @@
-import React from "react";
+import axios from "axios";
+import clsx from "clsx";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { Button } from "antd";
 import AppointmentTable from "./components/AppointmentTable";
 import Keypad from "./components/Keypad";
-import { Button } from "antd";
 import Sidebar from "../Me/Sidebar";
-import axios from "axios";
-import moment from "moment";
 
 const Appointments: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);
-  const [paidStatus, setPaidStatus] = useState("Pending");
+  const [paidStatus, setPaidStatus] = useState("Pendiente");
   const [transformedData, setTransformedData] = useState<TransformedData[]>([]);
 
   const formatNumberWithCommas = (value: any) => {
@@ -111,7 +111,9 @@ const Appointments: React.FC = () => {
   const fetchAppointmentsData = async () => {
     // Citas medicas
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/appointments/doctor/${doctorId}`)
+      .get(
+        `${import.meta.env.VITE_API_ROUTE}/api/appointments/doctor/${doctorId}`
+      )
       .then((res) => {
         const originalData = res.data.data;
         transformPaymentData(originalData);
@@ -135,30 +137,44 @@ const Appointments: React.FC = () => {
             gap: "20px",
           }}
         >
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <div style={{ width: "70%" }}>
+          <div className="flex flex-row bg-gray-200 p-5 rounded-2xl">
+            <div className="w-full flex justify-between items-center">
               <Keypad appointments={transformedData} />
-            </div>
-            <div className="flex flex-col gap-5 p-4 align-center justify-center w-1/3 bg-gray-100 rounded-xl">
-              {/* <DateRangePicker /> */}
-              <div className="flex justify-center gap-4">
-                <Button onClick={() => setPaidStatus("Completada")}>
-                  Pago completo
-                </Button>
-                <Button onClick={() => setPaidStatus("Parcial")}>
-                  Pago parcial
-                </Button>
+              <div className="flex p-5 gap-4">
                 <Button
-                  onClick={() => {
-                    setPaidStatus("Pendiente");
-                  }}
+                  onClick={() => setPaidStatus("Pendiente")}
+                  type="ghost"
+                  className={clsx(
+                    `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                    paidStatus === "Pendiente" && "bg-green-200"
+                  )}
                 >
                   Pago Pendiente
+                </Button>
+                <Button
+                  onClick={() => setPaidStatus("Completada")}
+                  type="ghost"
+                  className={clsx(
+                    `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                    paidStatus === "Completada" && "bg-green-200"
+                  )}
+                >
+                  Pago completo
+                </Button>
+                <Button
+                  onClick={() => setPaidStatus("Parcial")}
+                  type="ghost"
+                  className={clsx(
+                    `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                    paidStatus === "Parcial" && "bg-green-200"
+                  )}
+                >
+                  Pago parcial
                 </Button>
               </div>
             </div>
           </div>
-          <div className="p-4">
+          <div className="p-2">
             <AppointmentTable
               appointments={transformedData}
               filterPayment={paidStatus}

@@ -15,19 +15,11 @@ interface KeypadTableProps {
 }
 
 const Keypad: React.FC<KeypadTableProps> = ({ appointments }) => {
-  
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-around",
-        margin: "15px",
-      }}
-    >
+    <div>
       <MetricBox
-        title="Consultas cargadas "
+        title="Consultas Totales"
         metric={appointments.length}
-        color="#F2F7FD"
         currency=""
       />
     </div>
