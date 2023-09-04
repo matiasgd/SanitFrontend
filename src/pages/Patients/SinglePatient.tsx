@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Sidebar from "../Dashboard/Sidebar";
+import Sidebar from "../Me/Sidebar";
 import Patient from "./components/Patient";
 import ClinicalHistory from "./components/ClinicalHistory";
 import PatientApointments from "./components/PatientAppointments";

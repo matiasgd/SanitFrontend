@@ -5,7 +5,7 @@ import { Button, Input, Space, Table } from "antd";
 import type { ColumnType, ColumnsType } from "antd/es/table";
 import type { FilterConfirmProps } from "antd/es/table/interface";
 //import { Highlighter } from 'react-highlight-words';
-import Sidebar from "../Dashboard/Sidebar";
+import Sidebar from "../Me/Sidebar";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import axios from "axios";

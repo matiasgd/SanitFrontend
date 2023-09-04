@@ -7,7 +7,7 @@ import { RootState } from "../../store/store";
 import { Button } from "antd";
 import AppointmentTable from "./components/AppointmentTable";
 import Keypad from "./components/Keypad";
-import Sidebar from "../Dashboard/Sidebar";
+import Sidebar from "../Me/Sidebar";
 
 const Appointments: React.FC = () => {
   const doctorId = useSelector((state: RootState) => state.user.id);

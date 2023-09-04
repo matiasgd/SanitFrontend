@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import Sidebar from "../Dashboard/Sidebar";
+import Sidebar from "../Me/Sidebar";
 import { Button } from "antd";
 import AddressModal from "../create/AddressModal";
 import ServiceModal from "../create/ServiceModal";
 import ServicesBreakdown from "./ServicesBreakdown";
 import logo from "./profile.avif";
 import Modal from "../../commons/Modal";
-import Stepper from "../Dashboard/components/Stepper";
+import Stepper from "../Me/components/Stepper";
 
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
