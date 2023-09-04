@@ -58,7 +58,7 @@ const Patients: React.FC = () => {
 
   const fetchPatientsData = async () => {
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/users/${doctorId}/patients`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/users/${doctorId}/patients`)
       .then((res) => {
         setPatients(res.data.data);
       })

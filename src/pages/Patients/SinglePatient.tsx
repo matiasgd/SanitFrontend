@@ -15,7 +15,7 @@ const SinglePatient = () => {
   const fetchPatientsData = async () => {
     // Busqueda de Paciente
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/patients/${id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/patients/${id}`)
       .then((res) => {
         setPatient(res.data.data);
       })
@@ -23,7 +23,7 @@ const SinglePatient = () => {
 
     // Busqueda de appointments del paciente
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/appointments/patient/${id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/appointments/patient/${id}`)
       .then((res) => {
         setAppointments(res.data.data);
       })
@@ -31,7 +31,7 @@ const SinglePatient = () => {
 
     // Busqueda de appointments del paciente
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/payments/patient/${id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/payments/patient/${id}`)
       .then((res) => {
         console.log(res.data.data, "payments");
         setPayments(res.data.data);

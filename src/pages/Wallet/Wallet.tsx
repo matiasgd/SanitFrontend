@@ -92,7 +92,7 @@ const Wallet: React.FC = () => {
   const fetchPaymentData = async () => {
     // Pagos
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/payments/doctor/${doctorId}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/payments/doctor/${doctorId}`)
       .then((res) => {
         console.log(res.data.data, "data");
         const originalData = res.data.data;

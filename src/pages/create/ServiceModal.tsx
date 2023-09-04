@@ -55,7 +55,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
     setIsLoading(true);
 
     await axios
-      .post(`${import.meta.env.VITE_API_ROUTE}/api/services/new/${doctorId}`, data)
+      .post(`${import.meta.env.VITE_API_ROUTE}api/services/new/${doctorId}`, data)
       .then(() => customMessage("success", "Servicio creado!"))
       .catch((err) => {
         console.log(err);

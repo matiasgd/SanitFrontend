@@ -96,7 +96,7 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
       if (typeOfSearch === "patients") {
         try {
           const patientsResponse = await axios.get(
-            `${import.meta.env.VITE_API_ROUTE}/api/users/${doctorId}/${typeOfSearch}`
+            `${import.meta.env.VITE_API_ROUTE}api/users/${doctorId}/${typeOfSearch}`
           );
           setPatients(patientsResponse.data.data);
         } catch (error) {
@@ -105,7 +105,7 @@ const SelectAutocomplete: React.FC<SelectAutocompleteProps> = ({
       } else if (typeOfSearch === "services") {
         try {
           const servicesResponse = await axios.get(
-            `${import.meta.env.VITE_API_ROUTE}/api/${typeOfSearch}/user/${doctorId}`
+            `${import.meta.env.VITE_API_ROUTE}api/${typeOfSearch}/user/${doctorId}`
           );
           setServices(servicesResponse.data.data);
         } catch (error) {

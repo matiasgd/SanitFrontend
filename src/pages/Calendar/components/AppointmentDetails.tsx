@@ -86,7 +86,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
 
   const confirmAppointment = (status: String) => {
     axios
-      .put(`${import.meta.env.VITE_API_ROUTE}/api/appointments/status/${selected._id}`, {
+      .put(`${import.meta.env.VITE_API_ROUTE}api/appointments/status/${selected._id}`, {
         status: status,
       })
       .then((res) => {
@@ -101,7 +101,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
 
   const addNotes = (notes: String) => {
     axios
-      .put(`${import.meta.env.VITE_API_ROUTE}/api/appointments/update/${selected._id}`, {
+      .put(`${import.meta.env.VITE_API_ROUTE}api/appointments/update/${selected._id}`, {
         notes: notes,
       })
       .then((res) => {
@@ -117,7 +117,7 @@ const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({
     // Busqueda de appointments del paciente
     await axios
       .get(
-        `${import.meta.env.VITE_API_ROUTE}/api/appointments/patient/${selected.patient._id}`
+        `${import.meta.env.VITE_API_ROUTE}api/appointments/patient/${selected.patient._id}`
       )
       .then((res) => {
         console.log(res.data.data, "appointmentsssssss");

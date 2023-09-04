@@ -63,7 +63,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
 
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_ROUTE}/api/patients/new/${doctorId}`,
+        `${import.meta.env.VITE_API_ROUTE}api/patients/new/${doctorId}`,
         data
       );
       customMessage("success", "Paciente creado");

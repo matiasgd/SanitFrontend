@@ -65,7 +65,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({
     delete data.serviceName;
 
     await axios
-      .post(`${import.meta.env.VITE_API_ROUTE}/api/payments/new`, data)
+      .post(`${import.meta.env.VITE_API_ROUTE}api/payments/new`, data)
       .then((res) => {
         const message = res.data.message;
         customMessage("success", message);

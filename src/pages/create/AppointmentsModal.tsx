@@ -64,7 +64,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
     }
 
     await axios
-      .post(`${import.meta.env.VITE_API_ROUTE}/api/appointments/new`, data)
+      .post(`${import.meta.env.VITE_API_ROUTE}api/appointments/new`, data)
       .then(() => customMessage("success", "Se creo una nueva cita."))
       .catch((err) => {
         customMessage("error", "Algo salió mal.");
@@ -78,7 +78,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const fetchData = async () => {
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/services/${serviceId}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/services/${serviceId}`)
       .then((res) => {
         setServiceData(res.data.data.price[0].price);
       })
@@ -87,7 +87,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const fetchAddressData = async () => {
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/addresses/doctor/${doctorId}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/addresses/doctor/${doctorId}`)
       .then((res) => {
         const addresses = res.data.data;
         const options = addresses.map((address: any) => ({
@@ -101,7 +101,7 @@ const AppointmentModal: React.FC<AppointmentModalProps> = ({
 
   const fetchAppointmentsData = async () => {
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/addresses/${address}/allschedule`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/addresses/${address}/allschedule`)
       .then((res) => {
         console.log(res.data.data, "Appointments");
       })

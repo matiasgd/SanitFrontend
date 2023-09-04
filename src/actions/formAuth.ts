@@ -15,7 +15,7 @@ export const handleFormRegister = async (data: RegistrationData) => {
   }
   // New User
   await axios
-    .post(`${import.meta.env.VITE_API_ROUTE}/api/users/new`, data)
+    .post(`${import.meta.env.VITE_API_ROUTE}api/users/new`, data)
     .then((res) => {
       customMessage("success", res?.data?.message);
     })
@@ -26,7 +26,7 @@ export const handleFormLogin = async (data: RegistrationData) => {
   let res: any;
   // Login User
   await axios
-    .post(`${import.meta.env.VITE_API_ROUTE}/api/auth/login`, data, {
+    .post(`${import.meta.env.VITE_API_ROUTE}api/auth/login`, data, {
       withCredentials: true,
     })
     .then((token) => {

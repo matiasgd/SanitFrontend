@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
   const getUser = async () => {
     // Get user Info
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/users/${user.id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/users/${user.id}`)
       .then((user) => {
         setUserData(user.data.user);
       })
@@ -34,7 +34,7 @@ const ProfilePage: React.FC = () => {
   const fetchData = async () => {
     // services
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/services/user/${user.id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/services/user/${user.id}`)
       .then((res) => {
         setServices(res.data.data);
       })
@@ -42,7 +42,7 @@ const ProfilePage: React.FC = () => {
 
     // addresses
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/addresses/doctor/${user.id}`)
+      .get(`${import.meta.env.VITE_API_ROUTE}api/addresses/doctor/${user.id}`)
       .then((res) => {
         setAddresses(res.data.data);
       })
