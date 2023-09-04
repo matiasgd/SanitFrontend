@@ -8,6 +8,7 @@ import Appointments from "./pages/Appointments/Appointments";
 import Home from "./pages/Home/Home";
 import Wallet from "./pages/Wallet/Wallet";
 import Stepper from "./pages/Me/components/Stepper";
+import CompletePatient from "./pages/Patients/CompletePatient";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <Route path="/" element={<AuthForm />} />
       <Route path="/login" element={<AuthForm />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/patient/complete/:token" element={<CompletePatient />} />
       <Route path="/patient/:id" element={<Patient />} />
       <Route path="/patients" element={<Patients />} />
       <Route path="/appointments" element={<Appointments />} />

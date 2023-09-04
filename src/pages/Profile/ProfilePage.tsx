@@ -139,7 +139,7 @@ const ProfilePage: React.FC = () => {
               value={selectedAddress}
             >
               <option value="">Tus consultorios</option>
-              {addresses.map((address:any) => (
+              {addresses.map((address: any) => (
                 <option key={address._id} value={address._id}>
                   {address.addressName}
                 </option>
@@ -151,7 +151,7 @@ const ProfilePage: React.FC = () => {
               services={
                 selectedAddress
                   ? services.filter(
-                      (service:any) => service.address === selectedAddress
+                      (service: any) => service.address === selectedAddress
                     )
                   : services
               }

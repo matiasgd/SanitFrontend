@@ -146,7 +146,7 @@ const Appointments: React.FC = () => {
                   type="ghost"
                   className={clsx(
                     `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                    paidStatus === "Pendiente" && "bg-green-200"
+                    paidStatus === "Pendiente" && "bg-[#FECACA]"
                   )}
                 >
                   Pago Pendiente
@@ -156,7 +156,7 @@ const Appointments: React.FC = () => {
                   type="ghost"
                   className={clsx(
                     `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                    paidStatus === "Completada" && "bg-green-200"
+                    paidStatus === "Completada" && "bg-[#BBF7D0]"
                   )}
                 >
                   Pago completo
@@ -166,7 +166,7 @@ const Appointments: React.FC = () => {
                   type="ghost"
                   className={clsx(
                     `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                    paidStatus === "Parcial" && "bg-green-200"
+                    paidStatus === "Parcial" && "bg-[#FEF08A]"
                   )}
                 >
                   Pago parcial

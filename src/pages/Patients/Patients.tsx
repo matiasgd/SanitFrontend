@@ -82,7 +82,7 @@ const Patients: React.FC = () => {
   const handleReset = (clearFilters: () => void) => {
     clearFilters();
     setSearchText("");
-    console.log(searchText)  // Modificar logica
+    console.log(searchText); // Modificar logica
   };
 
   const getColumnSearchProps = (

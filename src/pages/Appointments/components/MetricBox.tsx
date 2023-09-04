@@ -5,30 +5,10 @@ interface MetricBoxProps {
 }
 
 const MetricBox: React.FC<MetricBoxProps> = ({ title, metric, currency }) => {
-  const boxStyle: React.CSSProperties = {
-    backgroundColor: "white",
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-    padding: "10px",
-    display: "inline-block",
-    borderRadius: "7.5px",
-    minWidth: "175px",
-    textAlign: "center" as const,
-  };
-
-  const titleStyle = {
-    fontSize: "16px",
-    color: "gray",
-  };
-
-  const metricStyle = {
-    fontWeight: "bold",
-    fontSize: "25px",
-  };
-
   return (
-    <div style={boxStyle}>
-      <h2 style={titleStyle}>{title}</h2>
-      <p style={metricStyle}>{`${currency} ${metric}`}</p>
+    <div className="bg-white shadow-md shadow-gray-400 p-2 flex flex-col rounded-lg text-center min-w-[175px]">
+      <h2 className="text-gray-500 font-semibold">{title}</h2>
+      <p className="font-bold text-3xl">{`${currency} ${metric}`}</p>
     </div>
   );
 };

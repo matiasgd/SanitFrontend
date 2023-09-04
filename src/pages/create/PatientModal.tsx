@@ -14,6 +14,7 @@ import { RootState } from "../../store/store";
 interface PatientModalProps {
   isOpen?: boolean;
   onClose: () => void;
+  type?: string;
 }
 
 const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
@@ -59,12 +60,13 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
 
   const submitModal: SubmitHandler<FieldValues> = async (data) => {
     setIsLoading(true);
+
     try {
-      customMessage("success", "Abrir la Consola");
       await axios.post(
         `${import.meta.env.VITE_API_ROUTE}api/patients/new/${doctorId}`,
         data
       );
+      customMessage("success", "Paciente creado");
     } catch (error) {
       customMessage("error", "Algo salió mal.");
       console.error(error);

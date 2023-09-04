@@ -11,7 +11,7 @@ import {
   TbCoin,
 } from "react-icons/tb";
 import AppointmentsModal from "../create/AppointmentsModal";
-import PatientModal from "../create/PatientModal";
+import FastPatientModal from "../create/FastPatientModal";
 import SearchBar from "./components/SearchBar";
 import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
@@ -22,10 +22,9 @@ interface Appointment {
 }
 
 interface Payments {
- amount: number;
- amountUSD: number;
+  amount: number;
+  amountUSD: number;
 }
-
 
 const Dashboard = () => {
   // Redux
@@ -91,9 +90,12 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex w-full p-4">
-        <PatientModal
+        <FastPatientModal
           isOpen={isOpenPatientsModal}
-          onClose={() => setOpenPatientsModal(false)}
+          onClose={() => {
+            setOpenPatientsModal(false);
+            fetchData();
+          }}
         />
         <AppointmentsModal
           isOpen={isOpenAppointmentsModal}
@@ -197,7 +199,7 @@ const Dashboard = () => {
                     type="ghost"
                     className={clsx(
                       `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                      currency === "ARS" && "bg-green-300"
+                      currency === "ARS" && "bg-[#BBF7D0]"
                     )}
                   >
                     ARS
@@ -207,7 +209,7 @@ const Dashboard = () => {
                     type="ghost"
                     className={clsx(
                       `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                      currency === "USD" && "bg-green-300"
+                      currency === "USD" && "bg-[#BBF7D0]"
                     )}
                   >
                     USD
