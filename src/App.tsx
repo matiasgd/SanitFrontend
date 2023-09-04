@@ -1,13 +1,14 @@
 import { Routes, Route } from "react-router";
 import AuthForm from "./pages/Login/AuthForm";
-import Dashboard from "./pages/Me/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import ProfilePage from "./pages/Profile/ProfilePage";
 import Patient from "./pages/Patients/SinglePatient";
 import Patients from "./pages/Patients/Patients";
 import Appointments from "./pages/Appointments/Appointments";
 import Home from "./pages/Home/Home";
 import Wallet from "./pages/Wallet/Wallet";
-import Stepper from "./pages/Me/components/Stepper";
+import Stepper from "./pages/Dashboard/components/Stepper";
+import CompletePatient from "./pages/Patients/CompletePatient";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <Route path="/" element={<AuthForm />} />
       <Route path="/login" element={<AuthForm />} />
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/patient/complete/:token" element={<CompletePatient />} />
       <Route path="/patient/:id" element={<Patient />} />
       <Route path="/patients" element={<Patients />} />
       <Route path="/appointments" element={<Appointments />} />

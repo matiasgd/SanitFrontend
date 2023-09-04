@@ -6,7 +6,7 @@ import IncomeTable from "./components/IncomeTable";
 import Keypad from "./components/Keypad";
 //import DateRangePicker from "./components/DataRangePicker";
 import { Button } from "antd";
-import Sidebar from "../Me/Sidebar";
+import Sidebar from "../Dashboard/Sidebar";
 import axios from "axios";
 import moment from "moment";
 

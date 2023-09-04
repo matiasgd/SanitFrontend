@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import Sidebar from "../Me/Sidebar";
+import Sidebar from "../Dashboard/Sidebar";
 import { Button } from "antd";
 import AddressModal from "../create/AddressModal";
 import ServiceModal from "../create/ServiceModal";
 import ServicesBreakdown from "./ServicesBreakdown";
 import logo from "./profile.avif";
 import Modal from "../../commons/Modal";
-import Stepper from "../Me/components/Stepper";
+import Stepper from "../Dashboard/components/Stepper";
 
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user);
@@ -139,7 +139,7 @@ const ProfilePage: React.FC = () => {
               value={selectedAddress}
             >
               <option value="">Tus consultorios</option>
-              {addresses.map((address:any) => (
+              {addresses.map((address: any) => (
                 <option key={address._id} value={address._id}>
                   {address.addressName}
                 </option>
@@ -151,7 +151,7 @@ const ProfilePage: React.FC = () => {
               services={
                 selectedAddress
                   ? services.filter(
-                      (service:any) => service.address === selectedAddress
+                      (service: any) => service.address === selectedAddress
                     )
                   : services
               }

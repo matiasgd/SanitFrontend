@@ -11,7 +11,7 @@ import {
   TbCoin,
 } from "react-icons/tb";
 import AppointmentsModal from "../create/AppointmentsModal";
-import PatientModal from "../create/PatientModal";
+import FastPatientModal from "../create/FastPatientModal";
 import SearchBar from "./components/SearchBar";
 import Calendar from "../Calendar/Calendar";
 import Sidebar from "./Sidebar";
@@ -92,9 +92,12 @@ const Dashboard = () => {
   return (
     <>
       <div className="flex w-full p-4">
-        <PatientModal
+        <FastPatientModal
           isOpen={isOpenPatientsModal}
-          onClose={() => setOpenPatientsModal(false)}
+          onClose={() => {
+            setOpenPatientsModal(false);
+            fetchData();
+          }}
         />
         <AppointmentsModal
           isOpen={isOpenAppointmentsModal}

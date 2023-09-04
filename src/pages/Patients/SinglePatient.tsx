@@ -1,11 +1,10 @@
-import Sidebar from "../Me/Sidebar";
-import Patient from "./components/Patient";
-import ClinicalHistory from "./components/ClinicalHistory";
-import PatientApointments from "./components/PatientAppointments";
-
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Sidebar from "../Dashboard/Sidebar";
+import Patient from "./components/Patient";
+import ClinicalHistory from "./components/ClinicalHistory";
+import PatientApointments from "./components/PatientAppointments";
 
 const SinglePatient = () => {
   const { id } = useParams();
@@ -22,7 +21,7 @@ const SinglePatient = () => {
       })
       .catch((err) => console.log(err));
 
-    // Busqueda de appointments del paciente    
+    // Busqueda de appointments del paciente
     await axios
       .get(`${import.meta.env.VITE_API_ROUTE}/api/appointments/patient/${id}`)
       .then((res) => {
