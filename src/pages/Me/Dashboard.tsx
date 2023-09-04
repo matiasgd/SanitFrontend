@@ -22,10 +22,9 @@ interface Appointment {
 }
 
 interface Payments {
- amount: number;
- amountUSD: number;
+  amount: number;
+  amountUSD: number;
 }
-
 
 const Dashboard = () => {
   // Redux
@@ -54,7 +53,9 @@ const Dashboard = () => {
       .catch((err) => console.log(err));
     // Appointments
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}/api/appointments/doctor/${user.id}`)
+      .get(
+        `${import.meta.env.VITE_API_ROUTE}/api/appointments/doctor/${user.id}`
+      )
       .then((res) => {
         setAppointments(res.data.data);
       })
@@ -197,7 +198,7 @@ const Dashboard = () => {
                     type="ghost"
                     className={clsx(
                       `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                      currency === "ARS" && "bg-green-300"
+                      currency === "ARS" && "bg-[#BBF7D0]"
                     )}
                   >
                     ARS
@@ -207,7 +208,7 @@ const Dashboard = () => {
                     type="ghost"
                     className={clsx(
                       `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                      currency === "USD" && "bg-green-300"
+                      currency === "USD" && "bg-[#BBF7D0]"
                     )}
                   >
                     USD
