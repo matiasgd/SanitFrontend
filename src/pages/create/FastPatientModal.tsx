@@ -34,12 +34,12 @@ const FastPatientModal: React.FC<FastPatientProps> = ({ isOpen, onClose }) => {
     setIsLoading(true);
     try {
       await axios.post(
-        `${import.meta.env.VITE_API_ROUTE}/api/patients/new/${doctorId}`,
+        `${import.meta.env.VITE_API_ROUTE}api/patients/new/${doctorId}`,
         data
       );
       customMessage("success", "Paciente creado");
       await axios.post(
-        `${import.meta.env.VITE_API_ROUTE}/api/patients/form/${doctorId}`,
+        `${import.meta.env.VITE_API_ROUTE}api/patients/form/${doctorId}`,
         data
       );
     } catch (error) {
