@@ -79,7 +79,7 @@ const PatientModal: React.FC<PatientModalProps> = ({ isOpen, onClose }) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <form
         onSubmit={handleSubmit(submitModal)}
-        className="flex flex-col gap-4 w-full"
+        className="flex flex-col  gap-4"
       >
         <div className="flex justify-center m-3 ">
           <p className="text-md font-semibold">Nuevo paciente</p>
