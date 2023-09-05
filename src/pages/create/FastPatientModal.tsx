@@ -51,64 +51,66 @@ const FastPatientModal: React.FC<FastPatientProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <form
-        onSubmit={handleSubmit(submitModal)}
-        className="flex flex-col gap-4 w-full"
-      >
-        <div className="flex flex-col justify-center gap-4">
-          <p className="text-md font-bold">Crear Paciente</p>
-          <p className="text-sm">
-            Genera un paciente rápido y fácil con los datos mínimos, le
-            mandaremos un mail para que complete el resto.
-          </p>
-        </div>
-        <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
-          <p className="text-sm font-semibold">Datos Generales</p>
-        </div>
-        <div>
-          <div className="flex flex-col gap-4 justify-center">
-            <Input
-              id="name"
-              label="Nombre"
-              placeholder="Nombre del paciente"
-              type="text"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              id="lastName"
-              label="Apellido"
-              placeholder="Apellido del paciente"
-              type="text"
-              register={register}
-              errors={errors}
-            />
-            <Input
-              id="email"
-              label="Email"
-              placeholder="Email del paciente"
-              type="email"
-              register={register}
-              errors={errors}
-            />
+    <div className="flex flex-col items-center">
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <form
+          onSubmit={handleSubmit(submitModal)}
+          className="flex flex-col gap-4 w-full"
+        >
+          <div className="flex flex-col justify-center gap-4">
+            <p className="text-md font-bold">Crear Paciente</p>
+            <p className="text-sm">
+              Genera un paciente rápido y fácil con los datos mínimos, le
+              mandaremos un mail para que complete el resto.
+            </p>
           </div>
-        </div>
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <Button
-            disabled={isLoading}
-            secondary
-            type="button"
-            onClick={onClose}
-          >
-            Cancelar
-          </Button>
-          <Button disabled={isLoading} type="submit">
-            Crear
-          </Button>
-        </div>
-      </form>
-    </Modal>
+          <div className="flex justify-center bg-[#EEEFF4] rounded-[20px] h-8 items-center">
+            <p className="text-sm font-semibold">Datos Generales</p>
+          </div>
+          <div>
+            <div className="flex flex-col gap-4 justify-center">
+              <Input
+                id="name"
+                label="Nombre"
+                placeholder="Nombre del paciente"
+                type="text"
+                register={register}
+                errors={errors}
+              />
+              <Input
+                id="lastName"
+                label="Apellido"
+                placeholder="Apellido del paciente"
+                type="text"
+                register={register}
+                errors={errors}
+              />
+              <Input
+                id="email"
+                label="Email"
+                placeholder="Email del paciente"
+                type="email"
+                register={register}
+                errors={errors}
+              />
+            </div>
+          </div>
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <Button
+              disabled={isLoading}
+              secondary
+              type="button"
+              onClick={onClose}
+            >
+              Cancelar
+            </Button>
+            <Button disabled={isLoading} type="submit">
+              Crear
+            </Button>
+          </div>
+        </form>
+      </Modal>
+    </div>
   );
 };
 

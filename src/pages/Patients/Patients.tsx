@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import PatientModal from "../create/PatientModal";
 
 interface DataType {
   _id: string;
@@ -32,6 +33,7 @@ const Patients: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [patients, setPatients] = useState<DataType[]>([]);
+  const [isOpenPatientsModal, setOpenPatientsModal] = useState(false);
   const searchInput = useRef<InputRef>(null);
   let user = useSelector((state: RootState) => state.user);
   const doctorId = user.id;
@@ -274,10 +276,27 @@ const Patients: React.FC = () => {
 
   return (
     <div className="flex w-full p-4">
+      <PatientModal
+        isOpen={isOpenPatientsModal}
+        onClose={() => {
+          setOpenPatientsModal(false);
+        }}
+      />
       <div>
         <Sidebar />
       </div>
-      <div className="w-full px-4">
+      <div className="flex flex-col w-full px-4">
+        <div className="bg-white shadow-md shadow-gray-400 p-3 flex flex-col rounded-lg text-center mb-5 mt-3">
+          <div className="flex items-ends text-sm text-gray-400">
+            <Button
+              type="ghost"
+              className="bg-white text-black font-bold justify-center text-center mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+              onClick={() => setOpenPatientsModal(true)}
+            >
+              (+) Crear paciente
+            </Button>
+          </div>
+        </div>
         <Table columns={columns} dataSource={transformedData} />
       </div>
     </div>

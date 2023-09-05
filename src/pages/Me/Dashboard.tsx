@@ -53,7 +53,9 @@ const Dashboard = () => {
       .catch((err) => console.log(err));
     // Appointments
     await axios
-      .get(`${import.meta.env.VITE_API_ROUTE}api/appointments/doctor/${user.id}`)
+      .get(
+        `${import.meta.env.VITE_API_ROUTE}api/appointments/doctor/${user.id}`
+      )
       .then((res) => {
         setAppointments(res.data.data);
       })
