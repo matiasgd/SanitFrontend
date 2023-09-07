@@ -22,7 +22,6 @@ const initialState: UserState = user;
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(logIn, (state, action: PayloadAction<UserState>) => {
-      console.log(action.payload);
       return { ...state, ...action.payload };
     })
     .addCase(logOut, () => {
