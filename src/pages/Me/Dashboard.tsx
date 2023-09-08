@@ -86,8 +86,10 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    fetchData();
-  }, [user.id]);
+    if (user?.id) {
+      fetchData();
+    }
+  }, [user]);
 
   return (
     <>

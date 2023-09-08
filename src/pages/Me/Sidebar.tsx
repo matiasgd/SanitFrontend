@@ -33,13 +33,16 @@ interface UserDataProps {
 }
 
 const Sidebar: React.FC = () => {
+  // States
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const [userData, setUserData] = useState<UserDataProps | null>(null);
+  // Location
   const location = useLocation();
   const navigate = useNavigate();
+  // Redux
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
-  const [userData, setUserData] = useState<UserDataProps | null>(null);
 
   const FetchUserData = async () => {
     try {
@@ -72,22 +75,25 @@ const Sidebar: React.FC = () => {
 
   const handleLogOut = async () => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_ROUTE}api/auth/logout`);
-      dispatch(logOut());
-      customMessage("success", "Sesión finalizada, hasta la próxima!");
-      document.cookie =
-        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      navigate("/login");
+      await axios
+        .post(`${import.meta.env.VITE_API_ROUTE}api/auth/logout`, null, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          customMessage("success", res.data);
+          dispatch(logOut());
+        });
     } catch (error) {
       console.error(error);
-      customMessage("error", "Intente otra vez.");
+      customMessage("error", "Algo salió mal, intente nuevamente");
     }
   };
- 
 
   useEffect(() => {
-    FetchUserData();
-  }, []);
+    if (user?.id) {
+      FetchUserData();
+    }
+  }, [user]);
 
   return (
     <div className="flex h-[95vh]">
@@ -102,7 +108,7 @@ const Sidebar: React.FC = () => {
             </div>
           )}
           <ul className="justify-center items-center p-1">
-            {isExpanded && <li className="font-bold p-4">Opciones</li>}
+            {isExpanded && <li className="font-bold p-4">Administrar</li>}
             {sections.map((section, i) => (
               <Link to={section.route} key={i}>
                 <li
@@ -122,7 +128,10 @@ const Sidebar: React.FC = () => {
           </ul>
         </div>
         <div className="flex-col w-full py-4 border-t-2 border-gray-300">
-          <div className="flex justify-start items-center gap-2 ml-3">
+          <div
+            className="flex justify-start items-center gap-2 ml-3 cursor-pointer"
+            onClick={() => navigate("/me")}
+          >
             <Avatar
               icon={<UserOutlined />}
               className="bg-gray-400 hover:bg-blue-400"
