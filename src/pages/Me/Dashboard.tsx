@@ -202,8 +202,8 @@ const Dashboard = () => {
                     onClick={() => setCurrency("ARS")}
                     type="ghost"
                     className={clsx(
-                      `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                      currency === "ARS" && "bg-[#BBF7D0]"
+                      `font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                      currency === "ARS" ? "bg-green-200" : "bg-white"
                     )}
                   >
                     ARS
@@ -212,8 +212,8 @@ const Dashboard = () => {
                     onClick={() => setCurrency("USD")}
                     type="ghost"
                     className={clsx(
-                      `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                      currency === "USD" && "bg-[#BBF7D0]"
+                      `font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                      currency === "USD" ? "bg-green-200" : "bg-white"
                     )}
                   >
                     USD

@@ -14,6 +14,7 @@ import {
   handleGoogleLogin,
   handleGoogleRegister,
 } from "../../actions/googleAuth";
+import { LoadingOutlined } from "@ant-design/icons";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -150,7 +151,13 @@ const AuthForm = () => {
               )}
               <div>
                 <Button disabled={loading} fullWidth type="submit">
-                  {variant === "LOGIN" ? "Iniciar Sesión" : "Registrarse"}
+                  {loading ? (
+                    <LoadingOutlined className="text-2xl" />
+                  ) : variant === "LOGIN" ? (
+                    "Iniciar Sesión"
+                  ) : (
+                    "Registrarse"
+                  )}
                 </Button>
               </div>
             </form>

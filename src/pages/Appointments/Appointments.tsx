@@ -145,8 +145,8 @@ const Appointments: React.FC = () => {
                   onClick={() => setPaidStatus("Pendiente")}
                   type="ghost"
                   className={clsx(
-                    `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                    paidStatus === "Pendiente" && "bg-[#FECACA]"
+                    `text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                    paidStatus === "Pendiente" ? "bg-red-200" : "bg-white"
                   )}
                 >
                   Pago Pendiente
@@ -155,8 +155,8 @@ const Appointments: React.FC = () => {
                   onClick={() => setPaidStatus("Completada")}
                   type="ghost"
                   className={clsx(
-                    `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                    paidStatus === "Completada" && "bg-[#BBF7D0]"
+                    `text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                    paidStatus === "Completada" ? "bg-green-200" : "bg-white"
                   )}
                 >
                   Pago completo
@@ -165,8 +165,8 @@ const Appointments: React.FC = () => {
                   onClick={() => setPaidStatus("Parcial")}
                   type="ghost"
                   className={clsx(
-                    `bg-white text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
-                    paidStatus === "Parcial" && "bg-[#FEF08A]"
+                    `text-black font-bold justify-center text-center mr-2 border-2 border-black shadow-sm shadow-black outline-none`,
+                    paidStatus === "Parcial" ? "bg-yellow-200" : "bg-white"
                   )}
                 >
                   Pago parcial

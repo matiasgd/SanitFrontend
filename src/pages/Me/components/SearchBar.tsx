@@ -60,8 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
   }
 
   return (
-    <div 
-    className="flex justify-center items-center h-12 w-full rounded-full bg-gray-200">
+    <div className="flex justify-center items-center h-12 w-full rounded-full bg-gray-200">
       <SearchOutlined className="px-2 text-gray-600" />
       <AutoComplete
         className="w-full"
@@ -78,18 +77,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
         onSelect={(selectedValue) => handleSelect(selectedValue)}
       />
       <div className="font-semibold ml-2">en:</div>
-      <div
-        className="flex bg-white rounded-full mx-2"
-      >
+      <div className="flex bg-white rounded-full mx-2">
         <Button
           type="ghost"
           onClick={() => {
             setSelectedButton("Pacientes");
           }}
           className={clsx(
-            `flex rounded-full text-black bg-white hover:text-blue-500 hover:font-semibold`,
-            selectedButton === "Pacientes" &&
-              "bg-[#F2F7FD] text-blue-500 font-semibold"
+            `flex rounded-full text-black hover:text-blue-500 hover:font-semibold`,
+            selectedButton === "Pacientes"
+              ? "bg-blue-100 text-blue-500 font-semibold"
+              : "bg-white"
           )}
         >
           Pacientes
@@ -100,9 +98,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
             setSelectedButton("Consultas");
           }}
           className={clsx(
-            `flex rounded-full text-black bg-white hover:text-blue-500 hover:font-semibold`,
-            selectedButton === "Consultas" &&
-              "bg-red-500 text-blue-500 font-semibold"
+            `flex rounded-full text-black hover:text-blue-500 hover:font-semibold`,
+            selectedButton === "Consultas"
+              ? "bg-blue-100 text-blue-500 font-semibold"
+              : "bg-white"
           )}
         >
           Consultas
@@ -113,9 +112,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
             setSelectedButton("Pagos");
           }}
           className={clsx(
-            `flex rounded-full text-black bg-white hover:text-blue-500 hover:font-semibold`,
-            selectedButton === "Pagos" &&
-              "bg-[#F2F7FD] text-blue-500 font-semibold"
+            `flex rounded-full text-black hover:text-blue-500 hover:font-semibold`,
+            selectedButton === "Pagos"
+              ? "bg-blue-100 text-blue-500 font-semibold"
+              : "bg-white"
           )}
         >
           Pagos
