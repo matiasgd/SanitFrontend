@@ -26,6 +26,7 @@ interface RegistrationData {
 
 const AuthForm = () => {
   const [variant, setVariant] = useState<Variant>("LOGIN");
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -100,6 +101,12 @@ const AuthForm = () => {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (passwordRecovery) {      
+      navigate("/password");
+    }
+  }, [passwordRecovery]);
 
   return (
     <div className="relative h-[100vh]">
@@ -185,7 +192,6 @@ const AuthForm = () => {
                 />
               </div>
             </div>
-
             <div className="flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
               <div>
                 {variant === "LOGIN"
@@ -194,6 +200,19 @@ const AuthForm = () => {
               </div>
               <div onClick={toggleVariant} className="underline cursor-pointer">
                 {variant === "LOGIN" ? "Crear cuenta" : "Iniciar sesión"}
+              </div>
+            </div>
+            <div className="flex gap-2 justify-center text-sm mt-2 px-2 text-gray-500">
+              <div>
+                {variant === "LOGIN" ? "No recordas tu contraseña?" : ""}
+              </div>
+              <div
+                onClick={() =>
+                  setPasswordRecovery(passwordRecovery === false ? true : false)
+                }
+                className="underline cursor-pointer"
+              >
+                {variant === "LOGIN" ? "Recuperar contraseña" : ""}
               </div>
             </div>
           </div>
