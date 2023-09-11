@@ -160,8 +160,8 @@ const Sidebar: React.FC = () => {
               className={clsx(
                 `bg-gray-400`,
                 theme === "dark"
-                  ? "hover:bg-yellow-200 hover:text-gray-400"
-                  : "hover:bg-blue-900"
+                  ? "hover:bg-yellow-200 hover:text-secondary"
+                  : "hover:bg-secondary hover:text-yellow-200"
               )}
               onClick={handleChangeTheme}
             />
@@ -170,7 +170,8 @@ const Sidebar: React.FC = () => {
                 className="text-sm font-semibold text-gray-500 dark:text-gray-400"
                 onClick={handleChangeTheme}
               >
-                Cambiar Tema
+                {theme === "dark" && "Light mode"}
+                {theme === "light" && "Dark mode"}
               </p>
             )}
           </div>

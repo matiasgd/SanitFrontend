@@ -26,7 +26,12 @@ export default {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#EB6350",
+        secondary: "#154E64",
+      },
+    },
   },
   plugins: [
     FlipCard,
