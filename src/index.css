@@ -7,3 +7,7 @@ body,
 :root {
   height: 100%;
 }
+
+:root.dark #root {
+  background-color: #404040; /* Replace with your desired dark background color */
+}
