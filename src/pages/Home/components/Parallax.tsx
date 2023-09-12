@@ -1,4 +1,4 @@
-import patient from "../../../images/patient.png";
+import dashboard from "../../../images/dashboard.png";
 import wallet from "../../../images/wallet.png";
 
 const Parallax = () => {
@@ -7,17 +7,17 @@ const Parallax = () => {
       <div
         className="min-h-screen flex justify-center items-center bg-no-repeat bg-fixed bg-center bg-contain"
         style={{
-          backgroundImage: `url(${patient})`,
+          backgroundImage: `url(${dashboard})`,
         }}
       >
-        <p className="text-center text-blue-500 font-black text-5xl">
-          Paciente
+        <p className="text-center text-secondary font-black text-5xl">
+          Dashboard
         </p>
       </div>
 
       <div className="p-10 flex flex-col gap-y-5 text-center">
-        <p className="text-blue-500 font-black text-4xl">
-          Administra Pacientes
+        <p className="text-secondary font-black text-4xl">
+          Administra tu jornada laboral
         </p>
         <p className="font-bold text-md">
           Visualiza los datos, consultas y status de pagos de cada uno de tus
@@ -31,11 +31,11 @@ const Parallax = () => {
           backgroundImage: `url(${wallet})`,
         }}
       >
-        <p className="text-center text-blue-500 font-black text-5xl">Wallet</p>
+        <p className="text-center text-secondary font-black text-5xl">Wallet</p>
       </div>
       <div className="p-10 flex flex-col gap-y-5 text-center">
-        <p className="text-blue-500 font-black text-4xl">
-          Administra tus Ingresos
+        <p className="text-secondary font-black text-4xl">
+          Administra tus ingresos
         </p>
         <p className="font-bold text-md">
           Visualiza el historial de ingresos efectivos y pendientes en varias

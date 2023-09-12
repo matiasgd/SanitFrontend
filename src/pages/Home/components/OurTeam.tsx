@@ -3,8 +3,8 @@ import FlipCard from "./FlipCard";
 
 const OurTeam: React.FC = () => {
   return (
-    <div className=" xl:ml-20 mr-20 sm:px-16 px-6 sm:py-16 py-10">
-      <p className="text-center text-blue-500 font-black text-4xl">
+    <div className="xl:ml-20 mr-20 sm:px-16 px-6 sm:py-16 py-10">
+      <p className="text-center text-secondary font-black text-4xl">
         Nuestro Equipo
       </p>
       <h3 className="mt-5 text-md font-bold text-center">

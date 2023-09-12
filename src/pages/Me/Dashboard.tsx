@@ -110,10 +110,12 @@ const Dashboard = () => {
         />
         <Sidebar />
         <div className="flex flex-col gap-4 w-full px-4">
-          <div className="flex flex-col w-full gap-4 p-5 shadow-lg rounded-lg">
-            <div className="flex gap-4">
-              <div className="flex flex-col w-[30%]justify-center items-center bg-gray-200 rounded-xl p-2">
-                <p className="font-bold text-lg">Tu Actividad General</p>
+          <div className="flex flex-col w-full gap-4 p-5 shadow-lg rounded-lg dark:bg-neutral-600">
+            <div className="flex gap-4 ">
+              <div className="flex flex-col w-[30%]justify-center items-center bg-gray-200 dark:bg-neutral-800 rounded-xl p-2">
+                <p className="font-bold text-lg dark:text-gray-400">
+                  Tu Actividad General
+                </p>
                 <div className="flex">
                   <Button
                     type="link"
@@ -145,7 +147,7 @@ const Dashboard = () => {
             </div>
 
             <div className="flex flex-row w-full gap-4">
-              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
+              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3 dark:bg-neutral-400">
                 <Avatar className="bg-red-200">
                   <TbStethoscope className="text-3xl text-[#EB6350]" />
                 </Avatar>
@@ -154,14 +156,14 @@ const Dashboard = () => {
                   <h2 className="text-[60px]">{appointments.length}</h2>
                   <Button
                     type="ghost"
-                    className="bg-white text-black font-bold justify-center text-center  mr-4 border-2 border-black shadow-sm shadow-black outline-none"
+                    className="bg-white text-black font-bold justify-center text-center mr-4 border-2 border-black shadow-sm shadow-black outline-none"
                     onClick={() => setIsOpenAppointmentsModal(true)}
                   >
                     (+) Nueva
                   </Button>
                 </div>
               </div>
-              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
+              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3 dark:bg-neutral-400">
                 <Avatar className="bg-blue-200">
                   <TbUserPlus className="text-3xl text-blue-500" />
                 </Avatar>
@@ -177,7 +179,7 @@ const Dashboard = () => {
                   </Button>
                 </div>
               </div>
-              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
+              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3 dark:bg-neutral-400">
                 <Avatar className="bg-yellow-100">
                   <TbReportMedical className="text-3xl text-yellow-600" />
                 </Avatar>
@@ -188,7 +190,7 @@ const Dashboard = () => {
                   </h2>
                 </div>
               </div>
-              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3">
+              <div className="flex gap-4 bg-gray-200 rounded-xl p-2 w-1/3 dark:bg-neutral-400">
                 <Avatar className="bg-green-100">
                   <TbCoin className="text-3xl text-green-600" />
                 </Avatar>

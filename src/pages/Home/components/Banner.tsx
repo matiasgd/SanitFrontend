@@ -9,24 +9,16 @@ const contentStyle: React.CSSProperties = {
   lineHeight: "400px",
   textAlign: "center",
   background: "#364d79",
+  width: "100%",
 };
 
 const App: React.FC = () => (
   <Carousel autoplay className="mt-20">
-    <div>
+    <div className="w-full">
       <img src={banner1} style={contentStyle} alt="Sanit" />
     </div>
     <div>
       <img src={logo} alt="Sanit" style={contentStyle} />
-    </div>
-    <div>
-      <h3 style={contentStyle}>2</h3>
-    </div>
-    <div>
-      <h3 style={contentStyle}>3</h3>
-    </div>
-    <div>
-      <h3 style={contentStyle}>4</h3>
     </div>
   </Carousel>
 );
