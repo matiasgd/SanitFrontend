@@ -95,9 +95,9 @@ const Calendar: React.FC<CalendarProps> = ({ appointments }) => {
     <div className="flex gap-5 rounded-xl">
       <div style={boxStyle}>
         <div style={header}>
-          <div className="text-xl font-bold justify-center items-center">
+          <div className="text-xl font-bold justify-center items-center dark:text-neutral-400">
             Consultas de Hoy:{" "}
-            <span className="text-red-600">{todayAppointments.length}</span>
+            <span className="text-red-400">{todayAppointments.length}</span>
           </div>
         </div>
         <div style={appointmentsBox}>

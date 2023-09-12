@@ -29,8 +29,7 @@ const Navbar = () => {
   return (
     <nav className="sm:px-16 px-6 w-full flex items-center py-5 fixed top-0 z-20 bg-secondary">
       <div className="w-full flex justify-between items-center max-w-7xl mx-auto">
-        <Link
-          to="/"
+        <div
           className="flex items-center gap-2"
           onClick={() => {
             setActive("");
@@ -41,7 +40,7 @@ const Navbar = () => {
             Sanit &nbsp; <span className="text-primary">|&nbsp;&nbsp;</span>
             <span className="lg:block hidden"> We Care</span>
           </p>
-        </Link>
+        </div>
         <Link
           to="/login"
           className="outline-none border-none text-white hover:text-primary hover:font-bold font-medium text-lg cursor-pointer"

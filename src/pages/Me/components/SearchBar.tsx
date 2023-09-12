@@ -60,8 +60,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ patients, appointments }) => {
   }
 
   return (
-    <div className="flex justify-center items-center h-12 w-full rounded-full bg-gray-200">
-      <SearchOutlined className="px-2 text-gray-600" />
+    <div className="flex justify-center items-center h-12 w-full rounded-full bg-gray-200 dark:bg-neutral-400">
+      <SearchOutlined className="px-2 text-gray-600 dark:text-neutral-900" />
       <AutoComplete
         className="w-full"
         options={searchOptions()
