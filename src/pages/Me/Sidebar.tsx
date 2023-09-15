@@ -37,9 +37,9 @@ const Sidebar: React.FC = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const [theme, setTheme] = useState(() => {
-    // if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    //   return "dark";
-    // }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
     return "light";
   });
   const [userData, setUserData] = useState<UserDataProps | null>(null);
